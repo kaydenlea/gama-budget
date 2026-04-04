@@ -11,6 +11,8 @@ Human judgment remains mandatory for cold-start architecture, scale risks, subtl
 - human review before merge or release
 - local deterministic review gates before push where configured
 
+If only one agent tool is available locally, use a fresh-context review pass in that same tool as the independent-review fallback. That fallback does not remove the need for PR-stage AI review where configured or for human review.
+
 ## Review Focus
 
 Reviewers must check:
@@ -25,6 +27,10 @@ Reviewers must check:
 ## Handling Disagreement
 
 Disagreement between reviewers is valuable. Resolve it before merging by reconciling the spec, design intent, and verification evidence.
+
+## Post-Implementation Iteration
+
+Do not stop at the first review pass. Accepted findings should trigger another debug, implementation, and verification loop before the change is considered ready. The goal is not to collect review comments; the goal is to converge on a change that survives repeated checking.
 
 ## If CodeRabbit Is Unavailable
 

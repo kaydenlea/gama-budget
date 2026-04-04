@@ -35,6 +35,19 @@ Refresh the product brief or PRD when:
 - reimbursement, privacy, or shared-household assumptions change
 - the narrative or mission framing needs correction
 
+Refresh architecture or security docs when:
+
+- the file or service boundaries change materially
+- a new trust boundary, storage pattern, provider integration, or privileged path is introduced
+- the implementation changes how auth, RLS, secrets, retention, or rollback work
+- web and mobile lane responsibilities shift
+
+Refresh the task spec only, without reopening higher-level docs, when:
+
+- the product framing is stable
+- the architecture remains within the existing documented boundaries
+- the work changes implementation detail rather than product direction or trust assumptions
+
 ## Product-Specific Guardrails
 
 The product docs must preserve these truths:

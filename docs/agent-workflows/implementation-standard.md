@@ -12,10 +12,12 @@ Implement in narrow slices with a clear outcome, verification step, and rollback
 - Change only the files required for the current slice.
 - Prefer root-cause fixes and the simplest correct design.
 - Treat balanced elegance as the target quality bar: the simplest correct solution with no brittle cleverness and no unnecessary abstraction.
+- If a fix feels ugly, pause and re-evaluate whether the root cause is actually understood and whether a more elegant solution is warranted.
 - Avoid workaround chains, speculative abstractions, and broad refactors without a spec.
 - Keep lane ownership clean: shared packages for domain logic and contracts, platform packages for platform UI and UX.
 - Update specs and docs as design reality changes during implementation.
 - Fix ordinary bugs autonomously when the root cause and verification path are sufficiently clear.
+- Mark progress in the active checklist as slices complete and add high-level review notes as implementation decisions change.
 
 ## Boundary Checks
 

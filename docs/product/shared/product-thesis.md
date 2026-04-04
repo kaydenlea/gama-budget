@@ -9,6 +9,7 @@ The research-driven gaps to preserve are:
 - fragmentation tax across multiple finance tools
 - mirror tracking instead of decision support
 - sync reliability pain
+- recurring-subscription burden inside the subscription economy
 - category fatigue and admin residue
 - shame cycle and avoidance
 - household friction
@@ -26,6 +27,7 @@ The research-driven gaps to preserve are:
 - minimize work for users
 - avoid making the app feel like a chore
 - provide guidance, suggestions, recommendations, and warnings
+- prefer proactive behavioral modification that is actionable, not just observable
 - give users context, not just raw information
 - short-term clarity first
 - event and narrative intelligence second
@@ -46,3 +48,4 @@ The research-driven gaps to preserve are:
 
 PocketCurb should feel like Clarity-as-a-Service. The decision layer is the product: Safe-to-Spend, Crisis Cushion, daily guidance, cash-flow visibility, and narrative intelligence that explains what happened and what it means next.
 
+That means recurring charges, reimbursement drag, shared-spending distortion, and near-term cash-flow pressure should turn into timely suggestions or warnings instead of leaving the user to perform retrospective cleanup manually.

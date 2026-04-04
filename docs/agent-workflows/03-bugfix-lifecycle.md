@@ -11,9 +11,10 @@ Bugfixes should still follow a disciplined workflow. The default is reproduce, i
 5. Write a focused bugfix spec when the issue is non-trivial, risky, cross-cutting, or security-sensitive.
 6. Fix the root cause, not only the symptom.
 7. Verify before and after behavior where relevant, and rerun the proof set after the fix.
-8. Reconcile docs or runbooks if the bug revealed stale guidance or a stable lesson.
-9. Apply the correct release gate when the bug touches sensitive flows.
-10. Promote repeated lessons into shared docs, rules, or skills when the lesson is stable.
+8. Run an independent review or fresh-context review pass, debug any accepted findings, and rerun verification before treating the bugfix as ready.
+9. Reconcile docs or runbooks if the bug revealed stale guidance or a stable lesson.
+10. Apply the correct release gate when the bug touches sensitive flows.
+11. Promote repeated lessons into shared docs, rules, or skills when the lesson is stable.
 
 ## Bugfix Rules
 
@@ -22,3 +23,4 @@ Bugfixes should still follow a disciplined workflow. The default is reproduce, i
 - compare before and after behavior when relevant
 - if the fix gets ugly, question whether the real root cause has been identified
 - use Gate B when the bug touches auth, RLS, secrets, storage, privacy, deletion, or other trust-critical flows
+- once the root cause and verification path are clear, fix ordinary bugs autonomously without unnecessary back-and-forth from the user

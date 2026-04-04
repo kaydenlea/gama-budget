@@ -35,6 +35,7 @@
     "review:ai": "node ./scripts/review-ai.mjs",
     "ai:check": "node ./scripts/check-ai-review-readiness.mjs",
     "review:ready": "node ./scripts/review-ready.mjs",
+    "pr:metadata:check": "node ./scripts/check-pr-metadata.mjs",
     "verify": "node ./scripts/verify.mjs",
     "audit": "node ./scripts/pnpm.mjs audit --audit-level=critical",
     "approve-builds": "node ./scripts/pnpm.mjs approve-builds",

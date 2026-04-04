@@ -2,9 +2,14 @@
 
 Describe the change and the user or operational outcome.
 
-## Spec
+## Planning Artifacts
 
-Link the active spec or explain why a formal spec was not required.
+- Product brief:
+- PRD:
+- Feature spec or bugfix spec:
+- Implementation plan:
+
+If any artifact was not required, explain why.
 
 ## Release Gate
 
@@ -30,6 +35,8 @@ If this is Gate B, Gate C, or Gate D, link the completed `docs/runbooks/security
 ## Review
 
 - [ ] human review required
+- [ ] every touched file reviewed against the active spec or plan
+- [ ] independent review completed using a second tool or a fresh review-only context when only one tool was available
 - [ ] Codex PR review requested or completed where configured
 - [ ] CodeRabbit review completed if installed
 - [ ] local review artifact checked if CodeRabbit is unavailable

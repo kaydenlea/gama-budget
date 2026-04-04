@@ -9,13 +9,23 @@ Use this lifecycle for non-trivial product, infrastructure, or shared-package wo
 3. Create or refine the product brief or PRD if the work is still ambiguous at the product-definition level.
 4. Create or refine the feature spec.
 5. Write the implementation plan.
-6. Review the plan before coding when the task is complex, risky, or cross-cutting.
+6. Review the plan before coding.
+   Use a second model or tool when available.
+   If only one agent tool is available, use a fresh review-oriented context in that same tool and record that fallback in the plan or review notes.
 7. Implement in small slices.
-8. Verify after each slice.
-9. Re-plan if the current design is no longer correct.
-10. Update docs and specs while the work is in progress.
-11. Run independent review, PR AI review where configured, and human review.
+8. After each slice, run the matching verification loop and then reopen the spec or plan to confirm the design still matches reality.
+9. Re-plan immediately if the current design is no longer correct, if file scope expands materially, or if verification shows an assumption was wrong.
+10. Update docs and specs while the work is in progress, not only at the end.
+11. Run independent review, debug or iterate on the findings, then complete PR AI review where configured and human review.
 12. Reconcile docs and apply the correct release gate before merge.
+
+## Required Checkpoints
+
+- Before coding: the feature spec and implementation plan must be concrete enough that another engineer could execute them without guessing.
+- After each slice: verification must run before the next slice starts.
+- Every checkpoint: inspect the active spec or plan for drift instead of trusting the current implementation blindly.
+- After implementation: run a review-debug-verify loop until the remaining findings and residual risks are acceptable.
+- Before merge: review every touched file against the feature spec, implementation plan, and release gate, not only the diff summary.
 
 ## What The Feature Spec Must Contain
 
@@ -51,3 +61,5 @@ Use this lifecycle for non-trivial product, infrastructure, or shared-package wo
 - do not prematurely centralize platform-specific UI
 - push privileged or rate-limited backend work behind Edge Functions
 - stop and re-plan when implementation broadens file scope materially
+- for UI work, attach visual verification evidence when tooling is available; otherwise document the fallback verification method explicitly
+- for risky or cross-cutting work, treat plan review before coding as required rather than optional

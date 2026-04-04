@@ -2,7 +2,7 @@
 
 ## Phase 1: Trusted Daily Clarity
 
-Ship Safe-to-Spend, Daily Spending Meter, transaction capture or simulation, today’s list, and the first forward-looking cash-flow view.
+Ship Safe-to-Spend, Daily Spending Meter, transaction capture or simulation, today's list, recurring-payment visibility, proactive daily guidance, and the first forward-looking cash-flow view.
 
 ## Phase 2: Shared Spending and Event Intelligence
 
@@ -14,5 +14,4 @@ Add stronger running-balance views, Crisis Cushion reporting, smarter alerts, an
 
 ## Phase 4: Long-Term Optimization
 
-Connect daily behavior to longer-term goals such as FIRE, investments, and strategic cash placement without weakening the short-term clarity core.
-
+Connect daily behavior to longer-term goals such as FIRE, investments, strategic cash placement, and configurable guidance profiles without weakening the short-term clarity core.

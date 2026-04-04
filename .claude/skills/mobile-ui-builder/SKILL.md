@@ -9,6 +9,6 @@ description: Build or refine PocketCurb mobile UI for the primary product lane. 
 2. Optimize for daily clarity, Safe-to-Spend trust, fast transaction handling, reimbursement correctness, and privacy-first shared finance.
 3. Keep flows low-friction and avoid chore-like UX.
 4. Use shared packages for business logic and contracts, not for mobile-specific interaction design.
-5. Prefer visual verification when tooling is available.
-6. Reconcile docs if the implemented UX changes the planned behavior.
-
+5. External tools such as Stitch, Gemini image generation, or 21st.dev may inform ideation, but they are not the source of truth. Keep sensitive data out of them and record material reference provenance in the active spec or review notes.
+6. Prefer visual verification when tooling is available, and explicitly check touch targets, safe areas, reduced-motion friendliness, and primary-state legibility.
+7. Reconcile docs if the implemented UX changes the planned behavior.

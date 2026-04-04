@@ -16,7 +16,11 @@ Use this runbook when the request is something like "fix this bug", "this crashe
 9. Verify before and after behavior where relevant, then rerun the proof set.
 10. Update docs or runbooks if the bug exposed stale guidance or a stable lesson.
 11. Apply the correct release gate if the bug touches sensitive flows.
-12. Complete PR-stage Codex review where configured, CodeRabbit where installed, and human review before merge.
+12. Run an independent review pass.
+    Prefer a second tool or model when available.
+    If only one agent tool is available, use a fresh review-only context in that same tool and still require PR-stage AI review plus human review before merge.
+13. Debug and iterate on accepted review findings, rerun verification, and manually read every touched file before commit or merge.
+14. Complete PR-stage Codex review where configured, CodeRabbit where installed, and human review before merge.
 
 ## Useful Commands
 

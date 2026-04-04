@@ -13,12 +13,13 @@
 9. Safe-to-Spend number.
 10. Privacy toggle on shared categories or contexts.
 11. Rollover budgeting.
+12. Proactive warnings and suggestions on daily guidance surfaces when short-term cash-flow or spending pressure changes materially.
 
 ## Later Features
 
 1. Multiple currencies.
 2. Voice or whisper-style transaction capture.
-3. Budget modes, including FIRE-oriented modes.
+3. Budget modes and configurable guidance profiles, including FIRE-oriented modes.
 4. Gap-fill behavior that connects FIRE planning to daily budgeting.
 5. Real-time long-term impact and FIRE-date movement.
 6. Exportable reports to Excel or Sheets.

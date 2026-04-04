@@ -30,6 +30,10 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --ignore-scripts
 
+      - name: Validate PR Metadata
+        if: github.event_name == 'pull_request'
+        run: pnpm pr:metadata:check
+
       - name: Run Verification
         run: pnpm verify
 
