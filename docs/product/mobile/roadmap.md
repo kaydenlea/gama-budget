@@ -2,7 +2,7 @@
 
 ## Phase 1: Trusted Daily Clarity
 
-Ship Safe-to-Spend, Daily Spending Meter, transaction capture or simulation, today's list, recurring-payment visibility, proactive daily guidance, and the first forward-looking cash-flow view.
+Ship Safe-to-Spend, Daily Spending Meter, transaction capture or simulation, today's list, recurring-payment visibility, lightweight running-balance awareness, proactive daily guidance, and the first forward-looking cash-flow view.
 
 ## Phase 2: Shared Spending and Event Intelligence
 

@@ -6,6 +6,7 @@
 - Daily Spending Meter and daily budget setting
 - transaction entry and purchase simulation
 - today's transaction feed
+- lightweight running-balance awareness on primary decision surfaces
 - event or trip auto-grouping with editable assignment
 - ambiguous-assignment flagging
 - shared split handling and reimbursement-aware tracking
@@ -20,7 +21,7 @@
 - voice capture
 - investments and asset tracking
 - full FIRE planning mode
-- running-balance depth beyond the first trust-building surfaces
+- deeper running-balance analytics beyond the first trust-building surfaces
 - advanced profile personalization beyond early guidance defaults
 - business and tax planning depth
 - spreadsheet import and export polish
