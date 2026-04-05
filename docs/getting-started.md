@@ -25,6 +25,11 @@ pnpm mobile:start
 pnpm mobile:dev
 ```
 
+Before launching a lane that depends on public environment variables, copy the lane example file and fill in the values you actually need:
+
+- `apps/mobile/.env.example`
+- `apps/web/.env.example`
+
 That command:
 
 - installs workspace dependencies
@@ -39,11 +44,7 @@ Codex review belongs at the pull-request stage. Claude users still get the same 
 ## Install Discipline
 
 - Do not keep retrying broad `pnpm install` or `corepack pnpm install` commands after the same hang or failure repeats.
-- Prefer the repo-owned entrypoints first:
-  - `node ./scripts/bootstrap-local.mjs`
-  - `node ./scripts/pnpm.mjs <args>`
-  - `pnpm mobile:start`
-  - `pnpm mobile:dev`
+- Prefer the repo-owned entrypoints first: `node ./scripts/bootstrap-local.mjs`, `node ./scripts/pnpm.mjs <args>`, `pnpm mobile:start`, and `pnpm mobile:dev`.
 - If install behavior is flaky, separate the problem:
   - CI package-manager bootstrap problem
   - local machine package-manager problem
@@ -123,6 +124,13 @@ In practice, this means the agent should usually know to:
 - apply the security and release-gate rules
 - run verification before claiming the task is done
 - avoid client secret exposure and other banned patterns that the policy checks catch quickly
+
+## Environment Examples
+
+- keep mobile public variables in `apps/mobile/.env`
+- keep web public variables in `apps/web/.env.local` or another Next.js-supported env file
+- start from the committed `.env.example` files instead of inventing variable names ad hoc
+- do not place privileged secrets, service-role material, or private integration credentials in public client env files
 
 ## Important Limits
 

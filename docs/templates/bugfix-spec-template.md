@@ -35,6 +35,7 @@ List nearby failure modes or regressions to watch for.
 ## Verification Plan
 
 State how the bug will be proven fixed, how before/after behavior will be compared when relevant, and what regression checks must run.
+If the bug touches trust-critical boundaries, also list any applicable remaining feature-dependent obligations from `docs/security/security-review-baseline.md` and classify them.
 
 ## Review Notes
 

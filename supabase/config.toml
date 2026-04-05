@@ -4,6 +4,9 @@ project_id = "pocketcurb-local"
 enabled = true
 
 [functions.safe-to-spend]
+# Keep Supabase's built-in JWT gate disabled here because the function uses
+# shared code-owned JWT verification in supabase/functions/_shared/auth.ts.
+# Do not treat this as a public unauthenticated endpoint.
 verify_jwt = false
 
 [db]

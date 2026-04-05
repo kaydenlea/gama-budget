@@ -24,6 +24,7 @@ Example: `Gate A - routine product and tooling work`
 
 See `docs/runbooks/release-gates.md` for the full definitions.
 If this is Gate B, Gate C, or Gate D, link the completed `docs/runbooks/security-release-checklist.md` evidence.
+- Applicable `docs/security/security-review-baseline.md` obligations: list each applicable item as addressed, deferred with rationale, or not applicable
 
 ## Verification
 
@@ -54,6 +55,7 @@ If this is Gate B, Gate C, or Gate D, link the completed `docs/runbooks/security
 - [ ] local review artifact checked if CodeRabbit is unavailable
 - Independent review method: state whether this used a second model/tool or a fresh-context same-tool fallback
 - Independent review outcome: summarize findings and whether they were resolved
+- Security baseline obligation review: state which applicable remaining feature-dependent obligations were addressed, deferred with rationale, or not applicable
 - Human review status: pending before merge
 
 ## Codex Review Prompt

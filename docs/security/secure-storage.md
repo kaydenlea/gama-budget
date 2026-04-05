@@ -4,6 +4,7 @@
 
 - use Expo SecureStore for auth tokens and other sensitive values
 - use MMKV only for non-sensitive preferences and cache state
+- use approved non-sensitive MMKV prefixes such as `cache:`, `pref:`, `query:`, or `ui:` so the storage boundary stays explicit in code
 - do not place password-reset state, recovery tokens, export tokens, credentials, or session material in MMKV
 - do not place sensitive data in logs, analytics payloads, or insecure persistence
 - prefer the repository storage helpers over raw storage calls so boundary rules stay enforceable

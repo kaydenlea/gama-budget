@@ -13,6 +13,7 @@ State the slice or feature this plan covers.
 ## Preconditions
 
 List required context, docs, credentials, or prerequisites.
+Include any applicable remaining feature-dependent obligations from `docs/security/security-review-baseline.md` that must be classified before coding.
 
 ## File-Level Plan
 

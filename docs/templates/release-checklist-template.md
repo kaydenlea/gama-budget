@@ -20,6 +20,7 @@
 - security review complete
 - secrets and env reviewed
 - auth or RLS impacts checked
+- applicable remaining feature-dependent obligations from `docs/security/security-review-baseline.md` classified and reconciled
 - disclosures updated if needed
 
 ## Operations

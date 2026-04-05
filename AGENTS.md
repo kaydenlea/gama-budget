@@ -37,7 +37,7 @@ PocketCurb is a security-first pnpm monorepo for a personal finance product that
 16. For framework scaffolds and toolchain setup, start from official generator and documentation baselines rather than inventing the shape manually. Use official sources such as `create-expo-app`, Expo Router installation docs, NativeWind installation docs, `create-next-app`, and Tailwind installation docs. If the local environment blocks generator execution, compare the existing app directly against the official documented baseline before finalizing changes.
 # Default Execution Workflow
 
-1. Review the relevant product, workflow, architecture, security, and lessons context before substantive work starts.
+1. Review the relevant product, workflow, architecture, security, and lessons context before substantive work starts. When work touches auth, schema, sensitive mobile flows, analytics or monitoring, exports, deletion, or other trust-critical boundaries, also review `docs/security/security-review-baseline.md` and classify any applicable remaining feature-dependent obligations before coding.
 2. Identify whether the task is trivial or non-trivial.
    If the user prompt is short, treat it as an entry point into the workflow, not permission to skip the workflow. Examples: "add this feature", "fix this bug", "build this screen", "add the landing page", and "support shared budgets" should trigger the correct brief, PRD, spec, plan, verification, review, and release path automatically.
 3. Start from the right product context. For new product work, create or refine a product brief and PRD before feature planning when scope, positioning, or user value is still fuzzy.
@@ -140,6 +140,7 @@ Work is done only when all of the following are true:
 - `pnpm lint`
 - `pnpm typecheck`
 - `pnpm test`
+- `pnpm test:coverage`
 - `pnpm test:unit`
 - `pnpm test:integration`
 - `pnpm test:e2e`

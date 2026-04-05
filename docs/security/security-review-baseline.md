@@ -28,6 +28,31 @@ This document summarizes the minimum current security baseline that must remain 
 - App Attest and Play Integrity remain required before launch of sensitive mobile flows where device trust materially affects risk
 - feature-specific audit-event coverage still needs to expand as real export, deletion, reimbursement, shared-visibility, and linked-account flows are implemented
 
+## Feature Trigger Rules
+
+Future work must not leave the remaining feature-dependent release blockers implicit.
+
+When planning, reviewing, or releasing work that touches one of the trigger areas below, explicitly classify the matching blocker as:
+
+- addressed in this change
+- deferred with rationale and decision trigger
+- not applicable to this change
+
+Trigger map:
+
+- schema-backed feature work:
+  - classify the production-schema and table-by-table RLS obligation
+- sensitive or abuse-prone Edge Function work:
+  - classify the real rate-limiter obligation
+- sensitive mobile flows where device trust affects risk:
+  - classify the App Attest / Play Integrity obligation
+- exports, deletion, reimbursements, linked-account work, shared visibility, or other trust-sensitive flows:
+  - classify the feature-specific audit-event coverage obligation
+- analytics, monitoring, or third-party SDK rollout:
+  - classify disclosure, retention, and monitoring separation obligations alongside the security baseline and privacy docs
+
+The active feature spec, implementation plan, PR body, and release evidence should point out the applicable classifications rather than assuming reviewers will remember them from old review notes.
+
 ## Release Interpretation
 
 - passing verification means the current baseline rules hold; it does not mean future finance features are automatically safe without new review

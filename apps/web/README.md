@@ -18,6 +18,7 @@ What this lane should not do yet:
 
 Environment note:
 
+- start from `apps/web/.env.example` for local configuration
 - set `NEXT_PUBLIC_SITE_URL` before production launch so canonical URLs, sitemap entries, and metadata use the real web origin
 - prefer a fully qualified origin such as `https://pocketcurb.com`; bare hosts are normalized, and blank or invalid values fall back to the production default
 

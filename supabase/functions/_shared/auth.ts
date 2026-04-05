@@ -64,8 +64,8 @@ export function readBearerToken(request: Request): string | null {
   return token;
 }
 
-export function unauthorizedResponse(): Response {
-  return jsonResponse({ error: "Unauthorized" }, 401);
+export function unauthorizedResponse(request?: Request): Response {
+  return jsonResponse({ error: "Unauthorized" }, 401, request);
 }
 
 export async function requireAuthenticatedUser(request: Request): Promise<AuthenticatedUser> {

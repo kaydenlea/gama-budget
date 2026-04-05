@@ -1,23 +1,23 @@
-import { corsHeaders } from "./cors.ts";
+import { buildCorsHeaders } from "./cors.ts";
 
-export function jsonResponse(payload: unknown, status = 200) {
+export function jsonResponse(payload: unknown, status = 200, request?: Request) {
   return new Response(JSON.stringify(payload), {
     status,
     headers: {
-      ...corsHeaders,
+      ...buildCorsHeaders(request),
       "cache-control": "no-store"
     }
   });
 }
 
-export function methodNotAllowedResponse() {
-  return jsonResponse({ error: "Method not allowed" }, 405);
+export function methodNotAllowedResponse(request?: Request) {
+  return jsonResponse({ error: "Method not allowed" }, 405, request);
 }
 
-export function tooManyRequestsResponse() {
-  return jsonResponse({ error: "Rate limited" }, 429);
+export function tooManyRequestsResponse(request?: Request) {
+  return jsonResponse({ error: "Rate limited" }, 429, request);
 }
 
-export function userSafeServerErrorResponse() {
-  return jsonResponse({ error: "Request could not be completed" }, 500);
+export function userSafeServerErrorResponse(request?: Request) {
+  return jsonResponse({ error: "Request could not be completed" }, 500, request);
 }

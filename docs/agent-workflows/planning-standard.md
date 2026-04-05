@@ -29,6 +29,7 @@ Every non-trivial plan must include:
 - rollback or recovery considerations
 - verification criteria for each implementation slice
 - documentation updates required to keep reality aligned with docs
+- explicit classification of any applicable remaining feature-dependent obligations from `docs/security/security-review-baseline.md`
 - a checklist that can be marked off as slices complete
 
 ## Planning Quality Bar
@@ -39,6 +40,7 @@ Every non-trivial plan must include:
 - Use planning discipline for verification work too, not only for building.
 - Ensure the plan respects mobile vs web separation and does not prematurely share UI patterns.
 - Check whether security-sensitive work must go through Supabase Edge Functions rather than direct client access.
+- Check whether the work triggers any remaining feature-dependent obligations in `docs/security/security-review-baseline.md`, and record whether each one is addressed now, deferred with rationale, or not applicable.
 - Treat plan quality as the main defense against silent architectural drift, especially in new or still-forming codebases.
 
 ## Exit Criteria

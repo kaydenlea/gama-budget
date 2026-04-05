@@ -25,6 +25,7 @@ Reviewers must check:
 - rollback safety and operational readiness
 - documentation alignment and ADR impact
 - test adequacy and missing verification
+- whether any applicable remaining feature-dependent obligations from `docs/security/security-review-baseline.md` were explicitly classified instead of being silently ignored
 
 ## PR-Stage Codex Review
 

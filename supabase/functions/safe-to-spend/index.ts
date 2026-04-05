@@ -25,36 +25,36 @@ Deno.serve(async (request: Request): Promise<Response> => {
     }
 
     if (request.method !== "POST") {
-      return methodNotAllowedResponse();
+      return methodNotAllowedResponse(request);
     }
 
     const authenticatedUser = await requireAuthenticatedUser(request);
 
     const rateLimit = await enforceFunctionRateLimit("safe-to-spend", authenticatedUser.userId);
     if (!rateLimit.allowed) {
-      return tooManyRequestsResponse();
+      return tooManyRequestsResponse(request);
     }
 
     return jsonResponse({
       message:
         "Safe-to-Spend Edge Function scaffold ready. Replace this with server-authoritative decision logic once the real schema exists."
-    });
+    }, 200, request);
   } catch (error) {
     if (error instanceof UnauthorizedFunctionRequestError) {
-      return unauthorizedResponse();
+      return unauthorizedResponse(request);
     }
 
     if (error instanceof FunctionConfigurationError) {
       console.error("safe-to-spend auth misconfiguration", error.message);
-      return userSafeServerErrorResponse();
+      return userSafeServerErrorResponse(request);
     }
 
     if (error instanceof SensitiveFunctionRateLimitNotImplementedError) {
       console.error("safe-to-spend release blocker", error.message);
-      return userSafeServerErrorResponse();
+      return userSafeServerErrorResponse(request);
     }
 
     console.error("safe-to-spend unexpected failure", error);
-    return userSafeServerErrorResponse();
+    return userSafeServerErrorResponse(request);
   }
 });

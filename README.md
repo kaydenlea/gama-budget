@@ -96,6 +96,7 @@ Primary commands:
 - `pnpm supabase:functions:check`
 - `pnpm typecheck`
 - `pnpm test`
+- `pnpm test:coverage`
 - `pnpm verify`
 - `pnpm verify:mobile`
 - `pnpm verify:web`
@@ -138,6 +139,7 @@ Then use:
 - [docs/product](./docs/product) for mission, product thesis, MVP scope, and lane strategy
 - [docs/architecture](./docs/architecture) for system boundaries and storage/data flow
 - [docs/security](./docs/security) and [docs/runbooks](./docs/runbooks) for threat model, auth, privacy, retention, incident response, rollback, monitoring, and release gates
+- [SECURITY.md](./SECURITY.md) for private vulnerability reporting guidance
 - [docs/templates](./docs/templates) for reusable product-brief, PRD, feature-spec, implementation-plan, bugfix, review, release, ADR, and postmortem templates
 - [docs/specs/mobile/_template.md](./docs/specs/mobile/_template.md) and [docs/specs/web/_template.md](./docs/specs/web/_template.md) for non-trivial work
 

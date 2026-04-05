@@ -324,6 +324,7 @@ export const requiredRootScripts = [
   "supabase:functions:check",
   "typecheck",
   "test",
+  "test:coverage",
   "test:unit",
   "test:integration",
   "test:e2e",

@@ -5,23 +5,25 @@ Use this lifecycle for non-trivial product, infrastructure, or shared-package wo
 ## Sequence
 
 1. Confirm product context from the relevant product docs.
-2. Clarify important unknowns before planning if they materially change product behavior, architecture, privacy, or release risk.
-3. Create or refine the product brief or PRD if the work is still ambiguous at the product-definition level.
-4. Create or refine the feature spec.
-5. Write the implementation plan.
-6. Review the plan before coding.
+2. If the work touches auth, schema, sensitive mobile flows, analytics or monitoring, exports, deletion, shared visibility, or other trust-critical boundaries, review `docs/security/security-review-baseline.md` and identify any applicable remaining feature-dependent obligations.
+3. Clarify important unknowns before planning if they materially change product behavior, architecture, privacy, or release risk.
+4. Create or refine the product brief or PRD if the work is still ambiguous at the product-definition level.
+5. Create or refine the feature spec.
+6. Write the implementation plan.
+7. Review the plan before coding.
    Use a second model or tool when available.
    If only one agent tool is available, use a fresh review-oriented context in that same tool and record that fallback in the plan or review notes.
-7. Implement in small slices.
-8. After each slice, run the matching verification loop and then reopen the spec or plan to confirm the design still matches reality.
-9. Re-plan immediately if the current design is no longer correct, if file scope expands materially, or if verification shows an assumption was wrong.
-10. Update docs and specs while the work is in progress, not only at the end.
-11. Run independent review, debug or iterate on the findings, then complete PR AI review where configured and human review.
-12. Reconcile docs and apply the correct release gate before merge.
+8. Implement in small slices.
+9. After each slice, run the matching verification loop and then reopen the spec or plan to confirm the design still matches reality.
+10. Re-plan immediately if the current design is no longer correct, if file scope expands materially, or if verification shows an assumption was wrong.
+11. Update docs and specs while the work is in progress, not only at the end.
+12. Run independent review, debug or iterate on the findings, then complete PR AI review where configured and human review.
+13. Reconcile docs and apply the correct release gate before merge.
 
 ## Required Checkpoints
 
 - Before coding: the feature spec and implementation plan must be concrete enough that another engineer could execute them without guessing.
+- Before coding: any applicable remaining feature-dependent obligations from `docs/security/security-review-baseline.md` must be classified as addressed, deferred with rationale, or not applicable.
 - After each slice: verification must run before the next slice starts.
 - Every checkpoint: inspect the active spec or plan for drift instead of trusting the current implementation blindly.
 - After implementation: run a review-debug-verify loop until the remaining findings and residual risks are acceptable.

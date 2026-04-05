@@ -4,11 +4,18 @@ export const appCacheStorage = new MMKV({
   id: "pocketcurb-cache"
 });
 
-const sensitiveKeyPattern = /(token|secret|session|password|credential|auth)/i;
+const allowedNonSensitivePrefixes = ["cache:", "pref:", "query:", "ui:"] as const;
+const sensitiveKeyPattern = /(token|secret|session|password|credential|auth|jwt|api[-_]?key|private|pin|biometric)/i;
 
 function assertNonSensitiveKey(key: string) {
   if (sensitiveKeyPattern.test(key)) {
     throw new Error(`Sensitive key "${key}" must not be stored in MMKV.`);
+  }
+
+  if (!allowedNonSensitivePrefixes.some((prefix) => key.startsWith(prefix))) {
+    throw new Error(
+      `MMKV key "${key}" must use an approved non-sensitive prefix: ${allowedNonSensitivePrefixes.join(", ")}.`,
+    );
   }
 }
 

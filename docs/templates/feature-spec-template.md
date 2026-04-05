@@ -53,6 +53,7 @@ List edge cases, negative paths, and failure modes.
 ## Security and Privacy Implications
 
 Describe auth, authorization, storage, privacy, disclosure, or abuse implications.
+List any applicable remaining feature-dependent obligations from `docs/security/security-review-baseline.md` and classify each one as addressed now, deferred with rationale, or not applicable.
 
 ## Future Extensibility Notes
 
