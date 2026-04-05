@@ -52,11 +52,10 @@ PocketCurb is a security-first pnpm monorepo for a personal finance product that
 12. Update the spec, product docs, runbooks, and decision records as reality changes.
 13. Run an independent review again after implementation. Review every touched file before final commit or merge; do not rely on tests or summaries alone.
 14. Debug and iterate on post-implementation review findings before commit or push. Do not treat the first passing implementation as automatically ready.
-15. Record local verification and independent-review evidence for substantive changes before treating a branch as review-ready. If only one model or tool is available, record the fresh-context same-tool fallback explicitly.
-16. Require PR-stage AI review where configured and human review before final commit or merge for substantive agent-generated work.
-17. Apply the correct release gate before merge or deployment.
-18. Use the local pre-commit and pre-push gates where configured, keep strict deterministic review enabled locally, and require AI review at the pull-request stage before merge.
-19. For ordinary bugs, fix them autonomously once the likely root cause and verification path are clear.
+15. Require PR-stage AI review where configured and human review before final commit or merge for substantive agent-generated work.
+16. Apply the correct release gate before merge or deployment.
+17. Use the local pre-commit and pre-push gates where configured, keep strict deterministic review enabled locally, and require AI review at the pull-request stage before merge.
+18. For ordinary bugs, fix them autonomously once the likely root cause and verification path are clear.
 
 # Definition of Done
 
@@ -159,7 +158,6 @@ Work is done only when all of the following are true:
 - `pnpm supabase:functions:check`
 - `pnpm push:check`
 - `pnpm review:local`
-- `pnpm review:evidence -- --verification-command "<cmd>" --verification-summary "<summary>" --independent-review-method "<method>" --independent-review-summary "<summary>"`
 - `pnpm review:ai`
 - `pnpm ai:check`
 - `pnpm review:ready`

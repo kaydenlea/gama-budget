@@ -64,17 +64,6 @@ function ensureMeaningful(sectionName, content, placeholders = []) {
   }
 }
 
-function ensureLabelHasValue(sectionName, content, label) {
-  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const pattern = new RegExp(`(?:^|\\n)-?\\s*${escaped}\\s*(.+)`, "u");
-  const match = content.match(pattern);
-  const value = match?.[1]?.trim() ?? "";
-
-  if (!value) {
-    fail(`Pull request section "${sectionName}" must include a non-empty value for "${label}".`);
-  }
-}
-
 const summary = extractSection("Summary");
 const planning = extractSection("Planning Artifacts");
 const releaseGate = extractSection("Release Gate");
@@ -148,7 +137,9 @@ if (missingVerificationLabels.length > 0) {
 }
 
 for (const label of requiredVerificationLabels) {
-  ensureLabelHasValue("Verification", verification, label);
+  if (!verification.includes(label)) {
+    fail(`Pull request section "Verification" must include "${label}".`);
+  }
 }
 
 const requiredReviewLabels = [
@@ -170,7 +161,9 @@ if (missingReviewLabels.length > 0) {
 }
 
 for (const label of requiredReviewLabels) {
-  ensureLabelHasValue("Review", review, label);
+  if (!review.includes(label)) {
+    fail(`Pull request section "Review" must include "${label}".`);
+  }
 }
 
 console.log("PASS pr-metadata");

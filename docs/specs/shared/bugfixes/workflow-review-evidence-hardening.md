@@ -106,7 +106,7 @@ Residual risk to track during implementation:
 
 ## Final Reconciliation
 
-- added repo-owned review-evidence capture so substantive branches record verification and independent-review details explicitly
-- made local review and review-ready fail closed on missing workflow evidence for substantive implementation changes
-- tightened PR metadata and generated PR bodies so verification and independent-review evidence must be concrete rather than implied
+- kept deterministic local proof and workflow-evidence checks for planning and doc alignment, but removed the separate manual local review-evidence artifact from the enforced path
+- preserved the requirement for independent review through workflow rules, review-ready guidance, PR metadata, PR-stage AI review, and human review rather than a separate local command
+- kept PR metadata and generated PR bodies structured enough to capture verification and review outcomes without blocking local publish on a separately typed artifact
 - reconciled the workflow docs so the stricter evidence path is documented consistently

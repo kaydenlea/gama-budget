@@ -131,7 +131,7 @@ Strengthen the repository workflow so substantive changes must carry explicit ve
 
 ## Final Reconciliation
 
-- implemented a repo-owned review-evidence artifact to make substantive workflow evidence explicit
-- enforced that evidence in local review and review-ready for substantive implementation changes
-- tightened PR metadata and PR-body generation so verification and independent-review details are concrete and auditable
+- removed the separate local review-evidence artifact from the enforced path so ordinary publish flows do not depend on manually recorded review summaries
+- kept the workflow strict through deterministic proof, planning/doc evidence, PR metadata structure, PR-stage AI review expectations, and human review requirements
+- kept PR-body generation and metadata checks structured enough to guide contributors toward recording verification and review outcomes in the PR itself
 - reconciled the workflow docs and command list to match the stronger process

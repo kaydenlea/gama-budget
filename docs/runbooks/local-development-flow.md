@@ -15,9 +15,9 @@
 3. Let `pre-commit` run local verification before each commit.
 4. Push a feature branch, not `main`.
 5. Let `pre-push` run the local gate and block unsafe pushes.
-6. Record review evidence for substantive implementation work with `pnpm review:evidence -- --verification-command "<cmd>" --verification-summary "<summary>" --independent-review-method "<method>" --independent-review-summary "<summary>"`.
-   If only one model or tool was available, record the fresh-context same-tool fallback explicitly in the independent-review method.
-   Re-run `pnpm review:evidence` after additional edits so the recorded evidence matches the current changed-file set.
+6. Run an independent review for substantive implementation work before treating the branch as ready.
+   Prefer a second model or tool when available. If only one tool is available, use a fresh review-only context in that same tool and treat PR-stage AI review plus human review as the second layer.
+   Record the verification and review outcome in the PR body rather than in a separate local evidence command.
 7. Run `pnpm review:ready` when you want the full local proof and review gate before PR.
 8. Generate a validator-compliant PR body with `pnpm pr:body`, or if GitHub CLI is installed use `pnpm pr:create -- --title "<title>"`.
 9. Review the auto-generated summary, checkbox state, and evidence lines, then paste or submit the body.

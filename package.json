@@ -35,7 +35,6 @@
     "commit:check": "node ./scripts/pre-commit.mjs",
     "push:check": "node ./scripts/pre-push.mjs",
     "review:local": "node ./scripts/local-review.mjs",
-    "review:evidence": "node ./scripts/review-evidence.mjs",
     "review:ai": "node ./scripts/review-ai.mjs",
     "ai:check": "node ./scripts/check-ai-review-readiness.mjs",
     "pr:body": "node ./scripts/pr-body.mjs",
