@@ -34,6 +34,9 @@ If this is Gate B, Gate C, or Gate D, link the completed `docs/runbooks/security
 - [ ] end-to-end
 - [ ] visual verification if UI changed
 - [ ] security review if sensitive
+- Commands run: record the commands or proof items you actually ran
+- Verification summary: summarize what passed, what was skipped, and why
+- Residual risk: state any residual risk or write none
 
 ## Docs and Ops
 
@@ -49,6 +52,9 @@ If this is Gate B, Gate C, or Gate D, link the completed `docs/runbooks/security
 - [ ] Codex PR review requested or completed where configured
 - [ ] CodeRabbit review completed if installed
 - [ ] local review artifact checked if CodeRabbit is unavailable
+- Independent review method: state whether this used a second model/tool or a fresh-context same-tool fallback
+- Independent review outcome: summarize findings and whether they were resolved
+- Human review status: pending before merge
 
 ## Codex Review Prompt
 

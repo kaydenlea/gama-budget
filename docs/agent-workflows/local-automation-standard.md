@@ -37,6 +37,8 @@ The local review gate includes:
 
 The workflow-evidence layer is intentionally conservative, but `pre-push` and `review:ready` now require the expected workflow evidence before the change is treated as ready for publication. This keeps local review thorough even though Codex review itself has moved to pull-request stage.
 
+For substantive implementation changes, workflow evidence now includes explicit local review-evidence capture. Record verification commands, verification summary, independent-review method, and independent-review outcome with `pnpm review:evidence` before relying on `pnpm review:ready`.
+
 ## AI Review Boundary
 
 Do not pretend AI review replaces the rest of the workflow. In PocketCurb, Codex review belongs at pull-request stage rather than in the local push hook. Local gates stay deterministic and fail closed on verification or workflow-evidence gaps, while PR-stage AI review adds another review layer before merge. Claude and Codex still share the same workflow and mirrored skills.

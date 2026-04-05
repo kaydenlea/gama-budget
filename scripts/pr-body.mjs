@@ -65,6 +65,7 @@ function getBranchFromGitHead() {
 
 function readStoredReviewContext() {
   const localReview = readJsonArtifact("local-review.json");
+  const reviewEvidence = readJsonArtifact("review-evidence.json");
   const changedFilesArtifact = readTextArtifactLines("changed-files.txt");
 
   return {
@@ -72,7 +73,8 @@ function readStoredReviewContext() {
     baseRef: localReview?.baseRef ?? null,
     changedFiles: unique([...(changedFilesArtifact ?? []), ...(localReview?.changedFiles ?? [])]),
     tags: localReview?.tags ?? [],
-    recommendedGate: localReview?.recommendedGate ?? null
+    recommendedGate: localReview?.recommendedGate ?? null,
+    reviewEvidence
   };
 }
 
@@ -477,6 +479,48 @@ function releaseGateChecklistEvidenceLine(releaseGate) {
   return "Security release checklist evidence: [docs/runbooks/security-release-checklist.md](docs/runbooks/security-release-checklist.md)";
 }
 
+function formatEvidenceList(values, fallback) {
+  if (!Array.isArray(values)) {
+    return fallback;
+  }
+
+  const normalized = values
+    .filter((value) => typeof value === "string")
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  return normalized.length > 0 ? normalized.join(" | ") : fallback;
+}
+
+function readReviewEvidenceFields(reviewEvidence) {
+  return {
+    verificationCommands: formatEvidenceList(
+      reviewEvidence?.verification?.commands,
+      "record the commands or proof items you actually ran",
+    ),
+    verificationSummary:
+      typeof reviewEvidence?.verification?.summary === "string" && reviewEvidence.verification.summary.trim()
+        ? reviewEvidence.verification.summary.trim()
+        : "summarize what passed, what was skipped, and why",
+    residualRisk:
+      typeof reviewEvidence?.verification?.residualRisk === "string" && reviewEvidence.verification.residualRisk.trim()
+        ? reviewEvidence.verification.residualRisk.trim()
+        : "state any residual risk or write none",
+    independentReviewMethod:
+      typeof reviewEvidence?.independentReview?.method === "string" && reviewEvidence.independentReview.method.trim()
+        ? reviewEvidence.independentReview.method.trim()
+        : "state whether this used a second model/tool or a fresh-context same-tool fallback",
+    independentReviewOutcome:
+      typeof reviewEvidence?.independentReview?.summary === "string" && reviewEvidence.independentReview.summary.trim()
+        ? reviewEvidence.independentReview.summary.trim()
+        : "summarize findings and whether they were resolved",
+    humanReviewStatus:
+      typeof reviewEvidence?.humanReview?.status === "string" && reviewEvidence.humanReview.status.trim()
+        ? reviewEvidence.humanReview.status.trim()
+        : "pending before merge"
+  };
+}
+
 export function buildPrBody() {
   const storedReviewContext = readStoredReviewContext();
   const branchFromGit =
@@ -530,6 +574,8 @@ export function buildPrBody() {
       : inferReleaseGate(files, tags);
   const codexReviewPrompt = inferCodexReviewPrompt(tags, releaseGate);
   const releaseChecklistLine = releaseGateChecklistEvidenceLine(releaseGate);
+  const reviewEvidence = storedReviewContext.reviewEvidence?.branch === branch ? storedReviewContext.reviewEvidence : null;
+  const reviewEvidenceFields = readReviewEvidenceFields(reviewEvidence);
 
   return [
     "## Summary",
@@ -559,6 +605,9 @@ export function buildPrBody() {
     "- [ ] end-to-end",
     "- [ ] visual verification if UI changed",
     "- [ ] security review if sensitive",
+    "- Commands run: " + reviewEvidenceFields.verificationCommands,
+    "- Verification summary: " + reviewEvidenceFields.verificationSummary,
+    "- Residual risk: " + reviewEvidenceFields.residualRisk,
     "",
     "## Docs and Ops",
     "",
@@ -574,6 +623,9 @@ export function buildPrBody() {
     "- [ ] Codex PR review requested or completed where configured",
     "- [ ] CodeRabbit review completed if installed",
     "- [ ] local review artifact checked if CodeRabbit is unavailable",
+    "- Independent review method: " + reviewEvidenceFields.independentReviewMethod,
+    "- Independent review outcome: " + reviewEvidenceFields.independentReviewOutcome,
+    "- Human review status: " + reviewEvidenceFields.humanReviewStatus,
     "",
     "## Codex Review Prompt",
     "",

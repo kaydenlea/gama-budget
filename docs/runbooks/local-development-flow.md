@@ -15,14 +15,17 @@
 3. Let `pre-commit` run local verification before each commit.
 4. Push a feature branch, not `main`.
 5. Let `pre-push` run the local gate and block unsafe pushes.
-6. Run `pnpm review:ready` when you want the full local proof and review gate before PR.
-7. Generate a validator-compliant PR body with `pnpm pr:body`, or if GitHub CLI is installed use `pnpm pr:create -- --title "<title>"`.
-8. Review the auto-generated summary and checkbox state, then paste or submit the body.
+6. Record review evidence for substantive implementation work with `pnpm review:evidence -- --verification-command "<cmd>" --verification-summary "<summary>" --independent-review-method "<method>" --independent-review-summary "<summary>"`.
+   If only one model or tool was available, record the fresh-context same-tool fallback explicitly in the independent-review method.
+   Re-run `pnpm review:evidence` after additional edits so the recorded evidence matches the current changed-file set.
+7. Run `pnpm review:ready` when you want the full local proof and review gate before PR.
+8. Generate a validator-compliant PR body with `pnpm pr:body`, or if GitHub CLI is installed use `pnpm pr:create -- --title "<title>"`.
+9. Review the auto-generated summary, checkbox state, and evidence lines, then paste or submit the body.
    The generated body now includes a `Codex Review Prompt` section with a ready-to-paste PR comment.
-8. Open or update the pull request with that generated body.
-9. Request or confirm PR-stage Codex review, then let CodeRabbit review if installed.
-10. Let CI run, then complete human review.
-11. If the work maps to Gate B, Gate C, or Gate D, complete `docs/runbooks/security-release-checklist.md` before merge.
+10. Open or update the pull request with that generated body.
+11. Request or confirm PR-stage Codex review, then let CodeRabbit review if installed.
+12. Let CI run, then complete human review.
+13. If the work maps to Gate B, Gate C, or Gate D, complete `docs/runbooks/security-release-checklist.md` before merge.
 
 ## Codex PR Review Prompts
 

@@ -13,6 +13,8 @@ Human judgment remains mandatory for cold-start architecture, scale risks, subtl
 
 If only one agent tool is available locally, use a fresh-context review pass in that same tool as the independent-review fallback. That fallback does not remove the need for PR-stage AI review where configured or for human review.
 
+For substantive implementation changes, record the local independent-review method and outcome explicitly before treating the branch as review-ready. In this repo, use `pnpm review:evidence` so `review:ready`, local review artifacts, and PR metadata can carry the same evidence forward. Re-run `pnpm review:evidence` after material edits so the evidence matches the current changed-file set rather than an earlier branch state.
+
 ## Review Focus
 
 Reviewers must check:
