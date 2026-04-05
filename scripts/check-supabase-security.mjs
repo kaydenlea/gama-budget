@@ -60,3 +60,37 @@ runCheck("supabase-no-broad-anon-grants", () => {
     assert(!/grant\s+all(?:\s+privileges)?\s+on\s+table\s+public\.[a-z0-9_]+\s+to\s+anon/i.test(sql), `${file} grants ALL on a public table to anon`);
   }
 });
+
+runCheck("supabase-sensitive-functions-require-auth-gate", () => {
+  const file = "supabase/functions/safe-to-spend/index.ts";
+  const content = readFile(file);
+
+  assert(
+    /requireAuthenticatedUser\s*\(/.test(content),
+    `${file} must call requireAuthenticatedUser() before privileged scaffold logic`
+  );
+});
+
+runCheck("supabase-sensitive-functions-require-rate-limit", () => {
+  const file = "supabase/functions/safe-to-spend/index.ts";
+  const content = readFile(file);
+
+  assert(
+    /enforceFunctionRateLimit\s*\(\s*"safe-to-spend"\s*,\s*authenticatedUser\.userId\s*\)/.test(content),
+    `${file} must enforce the shared rate-limit helper with the authenticated user context`
+  );
+});
+
+runCheck("supabase-rate-limit-blocker-remains-explicit", () => {
+  const file = "supabase/functions/_shared/rate-limit.ts";
+  const content = readFile(file);
+
+  assert(
+    /SensitiveFunctionRateLimitNotImplementedError/.test(content),
+    `${file} must keep the explicit release-blocker error for sensitive functions until a real limiter is implemented`
+  );
+  assert(
+    /must not proceed until a real rate-limit backend is implemented/i.test(content),
+    `${file} must document the sensitive-function rate-limit blocker in code`
+  );
+});

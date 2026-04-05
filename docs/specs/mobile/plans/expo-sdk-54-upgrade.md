@@ -15,7 +15,7 @@ Lane: mobile
 
 ## Scope
 
-Execute a safe Expo SDK 52 -> 54 upgrade for the mobile lane and remove the wrapper bug that currently re-injects broken proxy and offline environment variables into repo-owned pnpm and Expo commands.
+Execute a safe Expo SDK 52 -> 54 upgrade for the mobile lane and preserve a supported repo-root mobile start path.
 
 ## Preconditions
 
@@ -26,7 +26,6 @@ Execute a safe Expo SDK 52 -> 54 upgrade for the mobile lane and remove the wrap
 
 ## File-Level Plan
 
-- `scripts/common.mjs`: make `runCommand()` and `spawnCommand()` honor sanitized child environments
 - `apps/mobile/package.json`: SDK and Expo-managed dependency updates
 - `packages/ui-mobile/package.json`: align shared mobile UI dependencies with the upgraded mobile app
 - `package.json`: adjust shared root testing/types only if required by the SDK upgrade
@@ -38,7 +37,6 @@ Execute a safe Expo SDK 52 -> 54 upgrade for the mobile lane and remove the wrap
 
 ## Interfaces and Data Structures
 
-- `runPnpm()` uses `runCommand()` with `options.env`; the env-merging logic must preserve removals instead of reintroducing bad process-level values
 - mobile dependency graph contracts across:
   - `apps/mobile`
   - `packages/ui-mobile`
@@ -57,32 +55,24 @@ Execute a safe Expo SDK 52 -> 54 upgrade for the mobile lane and remove the wrap
 - Expo CLI may refuse to proceed if a dependency mismatch exists during an intermediate step
 - the lockfile may change more broadly than the mobile app because workspace hoisting reflects the new dependency graph
 - React major-version changes could surface type or test breakage in shared tooling
-- network-sensitive Expo or pnpm commands may still fail if the wrapper fix is incomplete
 
 ## Slice Plan
 
-- Slice 1: wrapper reliability
-  - files: `scripts/common.mjs`
-  - interfaces: child-process env propagation for repo-owned pnpm/Expo commands
-  - design: pass the sanitized env through without layering the original `process.env` back on top
-  - edge cases: preserve `COREPACK_HOME` and any explicitly supplied child env while still removing broken proxy/offline values
-  - verification: run a repo-owned command path and confirm the stripped env no longer leaks back into child processes
-
-- Slice 2: Expo SDK 53 checkpoint
+- Slice 1: Expo SDK 53 checkpoint
   - files: `apps/mobile/package.json`, `packages/ui-mobile/package.json`, any config files required by Expo's SDK 53 guidance, plus lockfile updates
   - interfaces: mobile React / React Native / Expo package compatibility
   - design: use Expo's official upgrade path and package reconciliation for SDK 53 first
   - edge cases: intermediate package peer conflicts and testing stack alignment
   - verification: targeted mobile typecheck or doctor/start-path validation before moving to SDK 54
 
-- Slice 3: Expo SDK 54 completion
+- Slice 2: Expo SDK 54 completion
   - files: same areas as Slice 2 plus any baseline-check or doc reconciliations required by SDK 54
   - interfaces: final mobile dependency graph and framework-baseline assertions
   - design: repeat the official SDK upgrade process for the next step and then run the repo's mobile verification
   - edge cases: Expo Go compatibility restored but start path still broken for unrelated config reasons
   - verification: `node ./scripts/verify-mobile.mjs`, root start-path verification, and any necessary shared-package checks
 
-- Slice 4: review and reconciliation
+- Slice 3: review and reconciliation
   - files: spec/plan and any docs that materially changed
   - interfaces: none beyond documentation truthfulness
   - design: fresh-context same-tool review fallback if no second model is available
@@ -93,14 +83,12 @@ Execute a safe Expo SDK 52 -> 54 upgrade for the mobile lane and remove the wrap
 
 - independent review or cross-model review needed: fresh-context same-tool review fallback after implementation
 - review findings before implementation:
-  - the repo-owned env sanitization bug should be fixed before trusting any network-sensitive upgrade command
   - the upgrade should stay bounded to SDK 54 first to reduce risk and restore immediate Expo Go compatibility
 
 ## Failure and Rollback Considerations
 
 - if SDK 53 introduces broad incompatibility, stop there and reassess rather than forcing SDK 54
-- if the wrapper env fix causes unexpected command regressions, revert that file independently from the dependency upgrade
-- if the final dependency graph destabilizes shared tooling, roll back the package changes while preserving documentation and wrapper fixes only if they are independently valid
+- if the final dependency graph destabilizes shared tooling, roll back the package changes while preserving any independently valid documentation updates
 
 ## Re-Planning Triggers
 

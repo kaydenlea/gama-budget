@@ -37,4 +37,4 @@ Adopt an OWASP MASVS and MASTG-style baseline for mobile hardening, including se
 - mobile API wrappers translate backend failures into user-safe errors instead of leaking raw backend responses
 - mobile secure storage defaults to Expo SecureStore for sensitive values through a dedicated wrapper
 - mobile MMKV helpers reject obviously sensitive keys and are reserved for non-sensitive cache and preference state
-- Supabase Edge Functions use shared helpers for method guards, auth checks, rate-limit hooks, and user-safe error responses
+- Supabase Edge Functions use shared helpers for method guards, code-owned JWT verification on authenticated scaffolds, explicit rate-limit release blockers on sensitive scaffolds until a real backend exists, and user-safe error responses

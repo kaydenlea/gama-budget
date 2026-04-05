@@ -16,4 +16,4 @@
 
 ## Device Integrity Planning
 
-Document and later implement App Attest and Play Integrity style controls for sensitive flows where device trust materially affects risk.
+App Attest and Play Integrity style controls are launch-blocking requirements for sensitive mobile flows where device trust materially affects risk. Do not ship those flows without an explicit decision, implementation plan, and release evidence covering device-integrity posture.

@@ -31,4 +31,3 @@ Do not create random instruction fragments. If a lesson is worth keeping, put it
 - Prefer repo-owned package-manager entrypoints and wrapper scripts over ad hoc global Corepack commands when the machine or environment has shown flaky package-manager behavior.
 - Separate bootstrap failures from application failures. Fix CI package-manager setup first, then debug repo-level test or runtime issues independently.
 - Review relevant stable lessons at the start of substantive work instead of rediscovering them after the mistake recurs.
-- Before any networked package-manager or generator command, inspect machine-level proxy and offline settings first. Broken loopback proxies and forced offline flags are environment problems, not repo setup requirements.

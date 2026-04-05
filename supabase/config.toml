@@ -3,5 +3,8 @@ project_id = "pocketcurb-local"
 [functions]
 enabled = true
 
+[functions.safe-to-spend]
+verify_jwt = false
+
 [db]
 shadow_port = 54321

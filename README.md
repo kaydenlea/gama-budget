@@ -41,6 +41,7 @@ Web is a separate lane. It exists for landing pages, waitlist flows, trust/discl
 - Storage: Expo SecureStore for sensitive values, MMKV for non-sensitive persistence, SQLite only when explicitly justified later
 - Monitoring and monetization: RevenueCat, PostHog, Sentry
 - Tooling: pnpm, ESLint, Prettier, Jest, jest-expo, React Native Testing Library, CodeRabbit-ready review config
+- Supabase Edge Functions run on Deno and should be verified in the Deno runtime rather than treated as generic Node TypeScript
 
 Framework baselines should stay close to the official sources:
 
@@ -49,9 +50,6 @@ Framework baselines should stay close to the official sources:
 - Web scaffolds should follow `create-next-app` and Tailwind's official Next.js installation guidance.
 - If the environment blocks those generators, reconcile the existing app against the official documented baseline before treating the setup as finished.
 
-Before any networked generator or package-manager command, check for machine-level proxy or forced-offline settings such as `HTTP_PROXY`, `HTTPS_PROXY`, `ALL_PROXY`, `GIT_HTTP_PROXY`, `GIT_HTTPS_PROXY`, and `NPM_CONFIG_OFFLINE`. PocketCurb should not depend on broken loopback proxies or forced offline mode.
-Use `pnpm env:check-tooling` or `node ./scripts/networked-tooling-env.mjs install` before retrying a network-sensitive package-manager command on a flaky machine.
-
 ## First Run
 
 Run once per clone or machine:
@@ -59,6 +57,8 @@ Run once per clone or machine:
 ```bash
 pnpm bootstrap:local
 ```
+
+Install Deno from the official Deno instructions before running bootstrap or `pnpm verify`. Install the official VS Code Deno extension too if you edit `supabase/functions/**`, because those files use the Deno language server rather than generic TypeScript diagnostics. Supabase Edge Function checking is part of the standard repo proof path now.
 
 If global Corepack or pnpm is unstable on a machine, run the repo-owned bootstrap directly:
 
@@ -73,6 +73,7 @@ That command:
 - runs repository verification
 - checks whether Codex CLI is available and authenticated
 - warns instead of failing if Codex is not ready yet on the machine
+- requires Deno for the full Supabase Edge Function proof path
 
 Codex review belongs at PR stage. Claude contributors still use the same docs, skills, and workflow, while local hooks keep deterministic proof and workflow evidence strict before anything is pushed.
 
@@ -83,7 +84,7 @@ If a machine shows flaky global Corepack behavior, prefer the repo-owned entrypo
 - `pnpm mobile:start`
 - `pnpm mobile:dev`
 
-For the mobile app, prefer `pnpm mobile:start` or `pnpm mobile:dev` over raw `npx expo start`. The repo-owned entrypoint uses the pinned pnpm toolchain, strips broken proxy and forced-offline settings, and fails fast if the workspace links are incomplete.
+For the mobile app, prefer `pnpm mobile:start` or `pnpm mobile:dev` over raw `npx expo start`. The repo-owned entrypoint uses the pinned pnpm toolchain and fails fast if the workspace links are incomplete.
 
 ## Verification
 
@@ -92,6 +93,7 @@ Primary commands:
 - `pnpm lint`
 - `pnpm policy:check`
 - `pnpm supabase:check-security`
+- `pnpm supabase:functions:check`
 - `pnpm typecheck`
 - `pnpm test`
 - `pnpm verify`

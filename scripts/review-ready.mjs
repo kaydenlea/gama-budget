@@ -7,6 +7,7 @@ try {
   runCommand(process.execPath, ["./scripts/reconcile-docs.mjs"]);
   console.log("Still required before commit or merge:");
   console.log("- review every touched file against the active spec and plan");
+  console.log("- run an independent review using a second model/tool or a fresh review-only context when only one tool is available");
   console.log("- debug and iterate on accepted review findings");
   console.log("- rerun proof after those fixes");
   console.log("- complete human review and PR-stage AI review where configured");

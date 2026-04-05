@@ -12,6 +12,16 @@ Retain only what is needed for product function, legal obligations, fraud preven
 - preserve security-relevant audit evidence according to documented retention windows
 - ensure backups and restore plans document deletion lag expectations
 
+## Current Baseline Retention Windows
+
+- financial records and shared-spend operational records: retain until user-requested deletion or account closure workflow is completed, then follow the future product deletion policy and documented backup lag; do not hard-delete these records ad hoc outside an approved deletion flow
+- security-relevant function and auth event logs: retain at least 90 days in the primary observability path, and preserve incident-related evidence longer when an active investigation or legal obligation requires it
+- product analytics events: retain no longer than 30 days unless a later disclosure-reviewed product decision explicitly changes that window
+- waitlist and pre-launch lead data: retain no longer than 180 days after the latest user interaction unless the user converts into a product account sooner
+- support artifacts containing user financial context: retain no longer than 180 days after case closure unless legal, fraud, or incident obligations require longer preservation
+
+These windows are the current minimum baseline and must be re-reviewed before launch-grade deletion features or public disclosures are finalized.
+
 ## Deletion Expectations
 
 - deletion flows must be authorized and auditable

@@ -17,6 +17,8 @@ Use `docs/security/supabase-schema-security.md` plus `pnpm supabase:check-securi
 - `migrations/`: secure table templates and future timestamped migrations
 - `functions/_shared`: shared helpers for auth, secrets, and common responses
 - `functions/safe-to-spend`: starter Edge Function shape for privileged decision-layer logic
+- `functions/*/deno.json`: function-local Deno configuration for runtime-correct dependency resolution and checking
+- `functions/*/deno.lock`: pinned Deno dependency graph for reproducible function checks
 - `types/`: placeholders and notes for generated database types before they are promoted into `packages/supabase-types`
 
 ## Secret Handling

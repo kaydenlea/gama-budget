@@ -2,7 +2,6 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { spawnSync } from "node:child_process";
-import { getSanitizedNetworkEnv } from "./networked-tooling-env.mjs";
 
 export const repoRoot = process.cwd();
 export const corepackHome = path.join(repoRoot, ".corepack");
@@ -194,26 +193,16 @@ export function spawnCommand(command, args, options = {}) {
 }
 
 export function runPnpm(args, options = {}) {
-  const { sanitizedEnv, removed } = getSanitizedNetworkEnv({
-    ...process.env,
-    ...(options.env ?? {})
-  });
   const linkedStoreDir = getLinkedStoreDir();
-  const unsetEnv = removed.map((entry) => entry.split("=", 1)[0]).filter(Boolean);
   const mergedOptions = {
     ...options,
     env: linkedStoreDir
       ? {
-          ...sanitizedEnv,
+          ...(options.env ?? {}),
           npm_config_store_dir: linkedStoreDir
         }
-      : sanitizedEnv,
-    unsetEnv: [...new Set([...(options.unsetEnv ?? []), ...unsetEnv])]
+      : options.env
   };
-
-  if (removed.length > 0) {
-    console.warn(`Warning: stripping broken machine proxy/offline settings for pnpm: ${removed.join(", ")}`);
-  }
 
   if (fileExists(path.relative(repoRoot, vendoredPnpmBin))) {
     runCommand(process.execPath, [vendoredPnpmBin, ...args], mergedOptions);

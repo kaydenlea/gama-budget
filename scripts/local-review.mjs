@@ -1,15 +1,60 @@
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
+import { spawnSync } from "node:child_process";
 import { repoRoot } from "./common.mjs";
+import { quoteForCmd } from "./common.mjs";
 import {
   getComparisonBase,
   getCurrentBranch,
   getChangedFilesFromBase,
+  tryRunGit,
   writePocketcurbArtifact
 } from "./git-helpers.mjs";
 
 const args = new Set(process.argv.slice(2));
+
+function splitLines(value) {
+  return value?.split(/\r?\n/u).filter(Boolean) ?? [];
+}
+
+function tryRunGitViaShell(args) {
+  if (args.length === 0) {
+    return null;
+  }
+
+  const windowsCommands = [
+    {
+      command: "cmd.exe",
+      args: ["/d", "/s", "/c", `git ${args.map(quoteForCmd).join(" ")}`]
+    },
+    {
+      command: "powershell.exe",
+      args: ["-NoProfile", "-Command", `Set-Location '${repoRoot.replace(/'/g, "''")}'; git ${args.join(" ")}`]
+    }
+  ];
+
+  const attempts = process.platform === "win32"
+    ? windowsCommands
+    : [{
+        command: "git",
+        args
+      }];
+
+  for (const attempt of attempts) {
+    const result = spawnSync(attempt.command, attempt.args, {
+        cwd: repoRoot,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "pipe"]
+      });
+
+    if (!result.error && (result.status ?? 1) === 0) {
+      return result.stdout?.toString?.().trim() ?? "";
+    }
+  }
+
+  return null;
+}
 
 function classifyChanges(files) {
   const tags = new Set();
@@ -53,7 +98,10 @@ function assessWorkflowEvidence(files, tags) {
     return (
       file.startsWith("apps/") ||
       file.startsWith("packages/") ||
-      file.startsWith("supabase/")
+      file.startsWith("supabase/") ||
+      file.startsWith("scripts/") ||
+      file.startsWith(".github/") ||
+      file === "package.json"
     );
   });
 
@@ -174,7 +222,12 @@ function readChangedFiles() {
     const baseRef = getComparisonBase();
     return getChangedFilesFromBase(baseRef);
   } catch {
-    return [];
+    const tracked = splitLines(tryRunGit(["diff", "--name-only", "HEAD"]) || tryRunGitViaShell(["diff", "--name-only", "HEAD"]));
+    const untracked = splitLines(
+      tryRunGit(["ls-files", "--others", "--exclude-standard"]) || tryRunGitViaShell(["ls-files", "--others", "--exclude-standard"])
+    );
+    const headFiles = splitLines(tryRunGit(["show", "--pretty=", "--name-only", "HEAD"]) || tryRunGitViaShell(["show", "--pretty=", "--name-only", "HEAD"]));
+    return [...new Set([...tracked, ...untracked, ...headFiles])];
   }
 }
 
@@ -182,14 +235,14 @@ const branch = process.env.POCKETCURB_BRANCH || (() => {
   try {
     return getCurrentBranch();
   } catch {
-    return "unknown";
+    return tryRunGit(["rev-parse", "--abbrev-ref", "HEAD"]) || tryRunGitViaShell(["rev-parse", "--abbrev-ref", "HEAD"]) || "unknown";
   }
 })();
 const baseRef = process.env.POCKETCURB_BASE_REF || (() => {
   try {
     return getComparisonBase();
   } catch {
-    return "HEAD";
+    return tryRunGitViaShell(["merge-base", "HEAD", "origin/main"]) || "HEAD";
   }
 })();
 const changedFiles = readChangedFiles();

@@ -35,7 +35,7 @@ The local review gate includes:
 - lightweight policy scanning for high-risk patterns
 - workflow-evidence enforcement when implementation changes land without the expected spec, plan, security-doc, or runbook evidence
 
-The workflow-evidence layer is intentionally conservative, but `pre-push` and `review:ready` now require the expected workflow evidence before the change is treated as ready for publication. This keeps local review thorough even though Codex review itself has moved to pull-request stage.
+The workflow-evidence layer is intentionally conservative, but `pre-push` and `review:ready` still require the expected planning and docs evidence before the change is treated as ready for publication. Independent review remains required, but it is guided through workflow rules, PR metadata, PR-stage AI review, and human review rather than a separate local evidence command.
 
 ## AI Review Boundary
 

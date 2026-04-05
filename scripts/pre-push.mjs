@@ -80,17 +80,19 @@ const changedFiles = getChangedFilesFromBase(baseRef);
 const changedFilesPayload = changedFiles.join("\n");
 
 console.log("Running PocketCurb local review gate...");
+const reviewEnv = {
+  ...process.env,
+  POCKETCURB_BRANCH: branch,
+  POCKETCURB_BASE_REF: baseRef,
+  POCKETCURB_CHANGED_FILES: changedFilesPayload,
+  POCKETCURB_CODEX_REVIEW_STATUS: "deferred",
+  POCKETCURB_CODEX_REVIEW_MESSAGE: "Codex review is required at pull-request stage, not during local pre-push."
+};
+
 const reviewResult = spawnSync(process.execPath, ["./scripts/local-review.mjs", "--require-workflow-evidence"], {
   cwd: repoRoot,
   stdio: "inherit",
-  env: {
-    ...process.env,
-    POCKETCURB_BRANCH: branch,
-    POCKETCURB_BASE_REF: baseRef,
-    POCKETCURB_CHANGED_FILES: changedFilesPayload,
-    POCKETCURB_CODEX_REVIEW_STATUS: "deferred",
-    POCKETCURB_CODEX_REVIEW_MESSAGE: "Codex review is required at pull-request stage, not during local pre-push."
-  }
+  env: reviewEnv
 });
 
 process.exit(reviewResult.status ?? 1);

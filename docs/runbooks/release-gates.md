@@ -35,6 +35,8 @@ Required:
 - release checklist complete
 - dependency audit reviewed; critical findings resolved or blocked from release and any remaining high findings explicitly triaged
 - monitoring and alerting configured
+- documented retention windows confirmed for the affected data classes
+- any sensitive-function scaffold blockers replaced with real abuse controls before shipping
 - deployment checklist complete
 - rollback path confirmed
 - post-release validation plan defined
@@ -47,6 +49,7 @@ Required:
 
 - privacy and disclosure review
 - compliance-matrix review
+- device-integrity posture reviewed for sensitive mobile flows
 - store metadata and disclosure readiness
 - third-party SDK disclosures reviewed for accuracy
 - incident and support readiness

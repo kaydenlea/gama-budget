@@ -67,11 +67,22 @@ function ensureMeaningful(sectionName, content, placeholders = []) {
 const summary = extractSection("Summary");
 const planning = extractSection("Planning Artifacts");
 const releaseGate = extractSection("Release Gate");
+const verification = extractSection("Verification");
+const review = extractSection("Review");
 
 ensureMeaningful("Summary", summary, ["Describe the change and the user or operational outcome."]);
 ensureMeaningful("Planning Artifacts", planning, ["If any artifact was not required, explain why."]);
 ensureMeaningful("Release Gate", releaseGate, [
   "State whether this change is Gate A, Gate B, Gate C, or Gate D."
+]);
+ensureMeaningful("Verification", verification, [
+  "record the commands or proof items you actually ran",
+  "summarize what passed, what was skipped, and why",
+  "state any residual risk or write none"
+]);
+ensureMeaningful("Review", review, [
+  "state whether this used a second model/tool or a fresh-context same-tool fallback",
+  "summarize findings and whether they were resolved"
 ]);
 
 if (!/Gate [ABCD]\b/u.test(releaseGate)) {
@@ -105,6 +116,54 @@ if (missingPlanningLabels.length > 0) {
 
 if (/Gate [BCD]\b/u.test(releaseGate) && !releaseGate.includes("docs/runbooks/security-release-checklist.md")) {
   fail("Gate B, Gate C, and Gate D pull requests must link security-release-checklist evidence.");
+}
+
+const requiredVerificationLabels = [
+  "Commands run:",
+  "Verification summary:",
+  "Residual risk:"
+];
+
+const missingVerificationLabels = requiredVerificationLabels.filter((label) => !verification.includes(label));
+
+if (missingVerificationLabels.length > 0) {
+  fail(
+    [
+      'Pull request "Verification" section must record concrete proof details.',
+      `Missing verification label(s): ${missingVerificationLabels.join(", ")}`,
+      "Use pnpm pr:body after recording local review evidence with pnpm review:evidence."
+    ].join("\n"),
+  );
+}
+
+for (const label of requiredVerificationLabels) {
+  if (!verification.includes(label)) {
+    fail(`Pull request section "Verification" must include "${label}".`);
+  }
+}
+
+const requiredReviewLabels = [
+  "Independent review method:",
+  "Independent review outcome:",
+  "Human review status:"
+];
+
+const missingReviewLabels = requiredReviewLabels.filter((label) => !review.includes(label));
+
+if (missingReviewLabels.length > 0) {
+  fail(
+    [
+      'Pull request "Review" section must record concrete review evidence.',
+      `Missing review label(s): ${missingReviewLabels.join(", ")}`,
+      "Use pnpm pr:body after recording local review evidence with pnpm review:evidence."
+    ].join("\n"),
+  );
+}
+
+for (const label of requiredReviewLabels) {
+  if (!review.includes(label)) {
+    fail(`Pull request section "Review" must include "${label}".`);
+  }
 }
 
 console.log("PASS pr-metadata");
