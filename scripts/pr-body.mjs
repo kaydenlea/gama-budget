@@ -1,9 +1,108 @@
+import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
-import { getChangedFilesFromBase, getComparisonBase, tryRunGit, writePocketcurbArtifact } from "./git-helpers.mjs";
+import {
+  getChangedFilesFromBase,
+  getComparisonBase,
+  readPocketcurbArtifact,
+  tryRunGit,
+  writePocketcurbArtifact
+} from "./git-helpers.mjs";
 
 function unique(values) {
   return [...new Set(values.filter(Boolean))];
+}
+
+function splitLines(value) {
+  return value
+    ?.split(/\r?\n/u)
+    .map((line) => line.trim())
+    .filter(Boolean) ?? [];
+}
+
+function readJsonArtifact(filename) {
+  const content = readPocketcurbArtifact(filename);
+  if (!content) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(content);
+  } catch {
+    return null;
+  }
+}
+
+function readTextArtifactLines(filename) {
+  return splitLines(readPocketcurbArtifact(filename));
+}
+
+function getBranchFromGitHead() {
+  try {
+    const gitFile = path.join(process.cwd(), ".git");
+    let gitDir = gitFile;
+
+    if (fs.existsSync(gitFile) && fs.statSync(gitFile).isFile()) {
+      const pointer = fs.readFileSync(gitFile, "utf8");
+      const gitDirMatch = pointer.match(/^gitdir:\s*(.+)$/imu);
+      if (gitDirMatch?.[1]) {
+        gitDir = path.resolve(process.cwd(), gitDirMatch[1].trim());
+      }
+    }
+
+    const headPath = path.join(gitDir, "HEAD");
+    if (!fs.existsSync(headPath)) {
+      return null;
+    }
+
+    const head = fs.readFileSync(headPath, "utf8").trim();
+    const branchMatch = head.match(/^ref:\s+refs\/heads\/(.+)$/u);
+    return branchMatch?.[1] ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function readStoredReviewContext() {
+  const localReview = readJsonArtifact("local-review.json");
+  const changedFilesArtifact = readTextArtifactLines("changed-files.txt");
+
+  return {
+    branch: localReview?.branch ?? null,
+    baseRef: localReview?.baseRef ?? null,
+    changedFiles: unique([...(changedFilesArtifact ?? []), ...(localReview?.changedFiles ?? [])]),
+    tags: localReview?.tags ?? [],
+    recommendedGate: localReview?.recommendedGate ?? null
+  };
+}
+
+function collectLiveChangedFiles(baseRef) {
+  const collected = [];
+
+  try {
+    collected.push(...getChangedFilesFromBase(baseRef));
+  } catch {
+    // fall through to other local git views
+  }
+
+  collected.push(...getHeadCommitFiles());
+  collected.push(...getWorkingTreeFiles());
+
+  return unique(collected);
+}
+
+function getWorkingTreeFiles() {
+  const trackedOutput = tryRunGit(["diff", "--name-only", "HEAD"]);
+  const untrackedOutput = tryRunGit(["ls-files", "--others", "--exclude-standard"]);
+  const tracked = trackedOutput ? splitLines(trackedOutput) : null;
+  const untracked = untrackedOutput ? splitLines(untrackedOutput) : null;
+
+  return unique([...(tracked ?? []), ...(untracked ?? [])]);
+}
+
+function getHeadCommitFiles() {
+  const output = tryRunGit(["show", "--pretty=", "--name-only", "HEAD"]);
+  return splitLines(output);
 }
 
 function toMarkdownLinks(paths) {
@@ -44,6 +143,10 @@ function inferTags(files) {
       tags.add("docs");
     }
 
+    if (file.startsWith("docs/runbooks/")) {
+      tags.add("ops");
+    }
+
     if (
       file.startsWith("supabase/") ||
       file.startsWith("docs/security/") ||
@@ -60,13 +163,161 @@ function inferTags(files) {
   return [...tags];
 }
 
-function inferReleaseGate(files, tags) {
-  if (tags.includes("security-sensitive")) {
-    return "Gate B";
+function hasAnyFile(files, patterns) {
+  return files.some((file) => patterns.some((pattern) => pattern.test(file)));
+}
+
+function isDocsOnly(tags, files) {
+  return tags.length === 1 && tags[0] === "docs" && files.every((file) => file.startsWith("docs/"));
+}
+
+function inferPrimaryScope(tags, files) {
+  const hasWebCode = files.some((file) => file.startsWith("apps/web/") || file.startsWith("packages/ui-web/"));
+  const hasMobileCode = files.some((file) => file.startsWith("apps/mobile/") || file.startsWith("packages/ui-mobile/"));
+  const hasSupabase = files.some((file) => file.startsWith("supabase/"));
+  const hasSharedCode = files.some(
+    (file) => file.startsWith("packages/") || file.startsWith("scripts/") || file.startsWith(".github/workflows/"),
+  );
+
+  if (hasWebCode && hasMobileCode) {
+    return "Updates both the mobile and web lanes";
+  }
+
+  if (hasWebCode && hasSharedCode) {
+    return "Builds out the web lane foundation";
+  }
+
+  if (hasWebCode) {
+    return "Updates the web lane";
+  }
+
+  if (hasMobileCode && hasSharedCode) {
+    return "Strengthens the mobile lane and supporting workspace tooling";
+  }
+
+  if (hasMobileCode) {
+    return "Updates the mobile lane";
+  }
+
+  if (hasSupabase && tags.includes("security-sensitive")) {
+    return "Updates Supabase and security-sensitive backend boundaries";
+  }
+
+  if (hasSupabase) {
+    return "Updates Supabase backend infrastructure";
   }
 
   if (files.some((file) => file.startsWith(".github/workflows/"))) {
+    return "Updates CI and release infrastructure";
+  }
+
+  if (isDocsOnly(tags, files)) {
+    return "Reconciles repository docs and workflow guidance";
+  }
+
+  if (hasSharedCode) {
+    return "Updates shared tooling and workspace infrastructure";
+  }
+
+  return "Updates the repository foundation";
+}
+
+function inferWorkstreams(tags, files) {
+  const workstreams = [];
+
+  const hasWebFoundationUpgrade =
+    files.some((file) => file.startsWith("apps/web/package.json") || file.startsWith("apps/web/postcss.config")) ||
+    files.some((file) => file.startsWith("apps/web/next.config")) ||
+    files.some((file) => file.startsWith("apps/web/app/globals.css"));
+
+  if (hasWebFoundationUpgrade) {
+    workstreams.push("aligning the website scaffold with the current Next.js App Router and Tailwind baseline");
+  }
+
+  const hasWebRoutesAndMetadata = hasAnyFile(files, [
+    /^apps\/web\/app\/waitlist\/page\.tsx$/u,
+    /^apps\/web\/app\/privacy\/page\.tsx$/u,
+    /^apps\/web\/app\/robots\.ts$/u,
+    /^apps\/web\/app\/sitemap\.ts$/u,
+    /^apps\/web\/src\/lib\/site-metadata\.ts$/u,
+    /^apps\/web\/src\/content\/site-copy\.ts$/u
+  ]);
+
+  if (hasWebRoutesAndMetadata) {
+    workstreams.push("adding landing, waitlist, privacy, and SEO-ready metadata foundations");
+  }
+
+  const hasWebDocs = hasAnyFile(files, [
+    /^docs\/product\/web\//u,
+    /^docs\/architecture\/web\//u,
+    /^docs\/agent-workflows\/(seo-standard|ui-design-standard)\.md$/u,
+    /^docs\/specs\/web\//u
+  ]);
+
+  if (hasWebDocs) {
+    workstreams.push("reconciling the web roadmap, architecture, SEO guidance, and implementation docs");
+  }
+
+  const hasMobileFramework = hasAnyFile(files, [
+    /^apps\/mobile\/package\.json$/u,
+    /^apps\/mobile\/app\.config\.ts$/u,
+    /^apps\/mobile\/babel\.config\.js$/u,
+    /^apps\/mobile\/metro\.config\.js$/u,
+    /^apps\/mobile\/tsconfig\.json$/u
+  ]);
+
+  if (hasMobileFramework) {
+    workstreams.push("updating the mobile framework baseline and app tooling");
+  }
+
+  const hasMobileBehavior = hasAnyFile(files, [
+    /^apps\/mobile\/src\//u,
+    /^packages\/ui-mobile\/src\//u
+  ]);
+
+  if (hasMobileBehavior) {
+    workstreams.push("fixing or extending mobile product behavior");
+  }
+
+  const hasSharedTooling = hasAnyFile(files, [
+    /^scripts\//u,
+    /^package\.json$/u,
+    /^pnpm-lock\.yaml$/u,
+    /^packages\/config-/u
+  ]);
+
+  if (hasSharedTooling && !hasWebFoundationUpgrade) {
+    workstreams.push("tightening shared tooling, automation, and workspace verification");
+  }
+
+  const hasSharedPackages = hasAnyFile(files, [
+    /^packages\/(core-domain|schemas|api-client|supabase-types)\//u
+  ]);
+
+  if (hasSharedPackages) {
+    workstreams.push("updating shared domain or contract packages");
+  }
+
+  const hasSecurity = tags.includes("security-sensitive");
+
+  if (hasSecurity && !hasWebDocs) {
+    workstreams.push("hardening privacy, security, or release-sensitive boundaries");
+  }
+
+  if (isDocsOnly(tags, files) && workstreams.length === 0) {
+    workstreams.push("reconciling workflow, product, or architecture documentation");
+  }
+
+  return unique(workstreams).slice(0, 3);
+}
+
+function inferReleaseGate(files, tags) {
+  if (tags.includes("release-infra") || tags.includes("ops")) {
     return "Gate C";
+  }
+
+  if (tags.includes("security-sensitive")) {
+    return "Gate B";
   }
 
   return "Gate A";
@@ -87,23 +338,72 @@ function describeReleaseGate(gate) {
   }
 }
 
-function inferSummary(branch, tags) {
-  const described = [];
-
-  if (tags.includes("mobile")) described.push("mobile");
-  if (tags.includes("web")) described.push("web");
-  if (tags.includes("shared")) described.push("shared tooling/packages");
-  if (tags.includes("docs")) described.push("docs");
-
-  if (described.length === 0) {
-    return `Draft summary for branch \`${branch}\`: repository updates. Replace with a user-facing summary before merge.`;
+function joinClauses(clauses) {
+  if (clauses.length === 0) {
+    return "";
   }
 
-  if (described.length === 1) {
-    return `Draft summary for branch \`${branch}\`: ${described[0]} updates. Replace with a user-facing summary before merge.`;
+  if (clauses.length === 1) {
+    return clauses[0];
   }
 
-  return `Draft summary for branch \`${branch}\`: ${described.slice(0, -1).join(", ")} and ${described.at(-1)} updates. Replace with a user-facing summary before merge.`;
+  if (clauses.length === 2) {
+    return `${clauses[0]} and ${clauses[1]}`;
+  }
+
+  return `${clauses.slice(0, -1).join(", ")}, and ${clauses.at(-1)}`;
+}
+
+function humanizeBranchName(branch) {
+  const slug = branch
+    .replace(/^refs\/heads\//u, "")
+    .replace(/^(feat|feature|fix|bugfix|chore|docs|refactor|test|release)\//u, "")
+    .replace(/^[A-Z]+-\d+[-/]/u, "")
+    .replaceAll(/[-_/]+/gu, " ")
+    .trim();
+
+  if (!slug) {
+    return null;
+  }
+
+  return slug.replace(/\b\w/gu, (char) => char.toUpperCase());
+}
+
+function inferSummaryFromBranch(branch) {
+  const branchHint = humanizeBranchName(branch);
+  if (!branchHint) {
+    return null;
+  }
+
+  if (/^(Add|Align|Build|Create|Document|Fix|Harden|Improve|Implement|Introduce|Migrate|Reconcile|Refactor|Remove|Repair|Set Up|Setup|Stabilize|Strengthen|Update|Upgrade)\b/u.test(branchHint)) {
+    return `${branchHint}.`;
+  }
+
+  return `Implements ${branchHint.toLowerCase()}.`;
+}
+
+function inferSummary(branch, tags, files) {
+  const primaryScope = inferPrimaryScope(tags, files);
+  const workstreams = inferWorkstreams(tags, files);
+
+  if (workstreams.length === 0) {
+    if (files.length === 0) {
+      const branchSummary = inferSummaryFromBranch(branch);
+      if (branchSummary) {
+        return `${branchSummary} Review the generated summary before merge and tighten the wording if needed.`;
+      }
+    }
+
+    return `${primaryScope}.`;
+  }
+
+  const firstSentence = `${primaryScope} by ${joinClauses(workstreams)}.`;
+
+  if (files.length === 0) {
+    return `${firstSentence} Generated from branch \`${branch}\` without a diff artifact; review the summary before merge.`;
+  }
+
+  return firstSentence;
 }
 
 function collectArtifacts(files) {
@@ -178,16 +478,25 @@ function releaseGateChecklistEvidenceLine(releaseGate) {
 }
 
 export function buildPrBody() {
+  const storedReviewContext = readStoredReviewContext();
+  const branchFromGit =
+    getBranchFromGitHead() ||
+    tryRunGit(["branch", "--show-current"]) ||
+    tryRunGit(["rev-parse", "--abbrev-ref", "HEAD"]);
   const branch =
     process.env.POCKETCURB_BRANCH ||
-    tryRunGit(["branch", "--show-current"]) ||
-    tryRunGit(["rev-parse", "--abbrev-ref", "HEAD"]) ||
+    branchFromGit ||
+    storedReviewContext.branch ||
     "unknown-branch";
 
   const changedFilesFromEnv = process.env.POCKETCURB_CHANGED_FILES
-    ?.split(/\r?\n/u)
-    .map((file) => file.trim())
-    .filter(Boolean);
+    ? splitLines(process.env.POCKETCURB_CHANGED_FILES)
+    : null;
+
+  const canUseStoredReviewContext =
+    !process.env.POCKETCURB_BRANCH &&
+    Boolean(storedReviewContext.branch) &&
+    storedReviewContext.branch === branch;
 
   const baseRef =
     process.env.POCKETCURB_BASE_REF ||
@@ -195,29 +504,37 @@ export function buildPrBody() {
       try {
         return getComparisonBase();
       } catch {
-        return "HEAD";
+        return canUseStoredReviewContext ? storedReviewContext.baseRef || "HEAD" : "HEAD";
       }
     })();
 
-  const files = changedFilesFromEnv && changedFilesFromEnv.length > 0
+  const liveChangedFiles = changedFilesFromEnv && changedFilesFromEnv.length > 0
     ? changedFilesFromEnv
-    : (() => {
-        try {
-          return getChangedFilesFromBase(baseRef);
-        } catch {
-          return [];
-        }
-      })();
-  const tags = inferTags(files);
+    : collectLiveChangedFiles(baseRef);
+
+  const files = liveChangedFiles.length > 0
+    ? liveChangedFiles
+    : canUseStoredReviewContext
+      ? storedReviewContext.changedFiles
+      : [];
+  const tags = files.length > 0
+    ? inferTags(files)
+    : canUseStoredReviewContext
+      ? storedReviewContext.tags
+      : [];
   const artifacts = collectArtifacts(files);
-  const releaseGate = inferReleaseGate(files, tags);
+  const releaseGate = files.length > 0
+    ? inferReleaseGate(files, tags)
+    : canUseStoredReviewContext
+      ? storedReviewContext.recommendedGate || inferReleaseGate(files, tags)
+      : inferReleaseGate(files, tags);
   const codexReviewPrompt = inferCodexReviewPrompt(tags, releaseGate);
   const releaseChecklistLine = releaseGateChecklistEvidenceLine(releaseGate);
 
   return [
     "## Summary",
     "",
-    inferSummary(branch, tags),
+    inferSummary(branch, tags, files),
     "",
     "## Planning Artifacts",
     "",

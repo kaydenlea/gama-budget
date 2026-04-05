@@ -16,6 +16,6 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "react": "^18.3.1"
+    "react": "^19.1.0"
   }
 }

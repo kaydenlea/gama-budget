@@ -46,6 +46,9 @@ External tools such as Stitch, Gemini image generation, 21st.dev, and similar de
 
 - optimize for trust, clarity, and conversion without infecting product UX with SEO-first decisions
 - keep claims grounded in actual product differentiation: admin work elimination, forward-looking cash flow, Safe-to-Spend, shared spending correctness, and privacy-first resilience
+- prefer premium spacing, restrained typography, and calm surfaces over growth-hack visual noise
+- make landing, waitlist, privacy, and later content routes feel like one coherent lane rather than unrelated one-off pages
+- keep calls to action honest about product readiness and launch timing
 
 ## UI Verification Baseline
 

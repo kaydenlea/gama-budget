@@ -2,14 +2,14 @@
 
 ## Current Baseline
 
-The current web lane scaffold uses Next.js with the App Router, React, and TypeScript. This fits the repo's website responsibilities without leaking SEO or landing-page assumptions into the mobile product lane.
+The current web lane uses Next.js App Router, React, TypeScript, typed routes, and a Tailwind-based design system foundation. This fits the repo's website responsibilities without leaking SEO or landing-page assumptions into the mobile product lane.
 
 ## Responsibilities
 
 - landing and waitlist surfaces
 - trust and disclosure content
 - structured metadata and search visibility
-- web-specific analytics and experimentation under privacy rules
+- future web-specific analytics and experimentation under privacy rules
 
 ## Separation Rules
 
@@ -17,3 +17,10 @@ The current web lane scaffold uses Next.js with the App Router, React, and TypeS
 - keep marketing copy faithful to the product docs
 - share contracts and validation through packages, not UI components by default
 - treat external website or SEO-generation tools as ideation inputs, not the source of truth
+
+## Foundation Building Blocks
+
+- route-owned metadata and canonical path helpers
+- typed content modules for landing, waitlist, privacy, and later educational surfaces
+- sitemap and robots generation owned by the web lane
+- no live waitlist backend or analytics-vendor integration until privacy and disclosure ownership are explicit

@@ -23,3 +23,14 @@ Use SEO later to capture users who already feel the pain of budgeting homework, 
 ## Content Ladder
 
 Start with problem framing and category education, then move into comparison content, then later publish deeper guides once product truth and measurement are mature.
+
+## Implementation Phases
+
+1. Foundation
+   Route-level metadata ownership, sitemap, robots, canonical URL support, and typed landing or waitlist content structure.
+2. Launch Surfaces
+   Landing, waitlist, privacy, and trust pages that stay faithful to the MVP and avoid unsupported claims.
+3. Educational Content
+   Problem-framing and decision-first finance guides once the MVP message is stable.
+4. Comparison Content
+   Comparison and category pages only after product truth and attribution measurement are mature enough to support them.

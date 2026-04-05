@@ -2,7 +2,12 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { repoRoot } from "./common.mjs";
-import { getComparisonBase, getCurrentBranch, getChangedFilesFromBase, writePocketcurbArtifact } from "./git-helpers.mjs";
+import {
+  getComparisonBase,
+  getCurrentBranch,
+  getChangedFilesFromBase,
+  writePocketcurbArtifact
+} from "./git-helpers.mjs";
 
 const args = new Set(process.argv.slice(2));
 
@@ -211,6 +216,7 @@ const artifact = {
 };
 
 const artifactPath = writePocketcurbArtifact("local-review.json", `${JSON.stringify(artifact, null, 2)}\n`);
+writePocketcurbArtifact("changed-files.txt", changedFiles.length > 0 ? `${changedFiles.join("\n")}\n` : "");
 
 console.log(`Local review artifact: ${artifactPath}`);
 console.log(`Branch: ${branch}`);

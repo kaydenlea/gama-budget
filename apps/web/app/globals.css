@@ -1,39 +1,149 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  :root {
-    color-scheme: light;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  html {
-    font-family: "Segoe UI", sans-serif;
-    background: #f6f6ef;
-    color: #0f172a;
-  }
-
-  body {
-    margin: 0;
-    min-height: 100vh;
-    background:
-      radial-gradient(circle at top right, rgba(20, 184, 166, 0.12), transparent 30%),
-      linear-gradient(180deg, #f6f6ef 0%, #eef5f2 100%);
-    color: #0f172a;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
+:root {
+  color-scheme: light;
+  --color-canvas: #f7f3eb;
+  --color-surface: rgba(255, 252, 246, 0.9);
+  --color-surface-strong: #fffdf8;
+  --color-mist: #eef4ef;
+  --color-line: #d7ddd7;
+  --color-line-strong: #bcc7c0;
+  --color-ink: #112033;
+  --color-muted: #5f6d78;
+  --color-teal: #0e766d;
+  --color-gold: #b9853c;
+  --shadow-soft: 0 24px 60px rgba(17, 32, 51, 0.08);
+  --shadow-float: 0 32px 80px rgba(14, 118, 109, 0.14);
 }
 
-@layer components {
-  .web-shell {
-    @apply mx-auto grid max-w-7xl gap-6 px-5 py-12 md:px-8 md:py-16;
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top right, rgba(14, 118, 109, 0.16), transparent 24%),
+    radial-gradient(circle at bottom left, rgba(185, 133, 60, 0.09), transparent 22%),
+    linear-gradient(180deg, #faf7f0 0%, #f2f4ef 100%);
+  color: var(--color-ink);
+  font-family:
+    "Aptos",
+    "Segoe UI Variable Display",
+    "Segoe UI",
+    "Helvetica Neue",
+    sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family:
+    "Iowan Old Style",
+    "Palatino Linotype",
+    "Book Antiqua",
+    "Times New Roman",
+    serif;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(14, 118, 109, 0.16);
+}
+
+.site-shell {
+  margin: 0 auto;
+  width: min(1120px, calc(100vw - 2rem));
+}
+
+.site-panel {
+  border: 1px solid color-mix(in srgb, var(--color-line) 78%, white);
+  border-radius: 2rem;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(14px);
+}
+
+.site-link,
+.site-link-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.9rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.site-link:hover,
+.site-link-secondary:hover {
+  transform: translateY(-1px);
+}
+
+.site-link {
+  background: var(--color-ink);
+  color: white;
+  box-shadow: var(--shadow-float);
+}
+
+.site-link:hover {
+  background: #0b1727;
+}
+
+.site-link-secondary {
+  border: 1px solid var(--color-line-strong);
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--color-ink);
+}
+
+.site-link-secondary:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.site-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(17, 32, 51, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-teal);
+}
+
+.site-rule {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(17, 32, 51, 0.15) 18%, transparent 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-link,
+  .site-link-secondary {
+    transition: none;
   }
 }

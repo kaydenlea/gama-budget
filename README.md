@@ -191,7 +191,7 @@ GitHub's UI template and `gh pr create --fill` do not always leave you with a va
 - `pnpm pr:body` prints a compliant draft body based on the current branch's changed docs and lanes
 - `pnpm pr:create -- --title "<title>"` creates a PR with that generated body when GitHub CLI is installed
 
-If `gh` is not installed, run `pnpm pr:body`, paste the output into the PR body, and then edit the checkboxes and summary before requesting review.
+If `gh` is not installed, run `pnpm pr:body`, paste the output into the PR body, and then review the auto-generated summary plus the checkbox state before requesting review.
 
 ## Notes
 

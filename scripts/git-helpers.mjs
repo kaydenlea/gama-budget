@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { spawnSync } from "node:child_process";
-import { repoRoot } from "./common.mjs";
+import { quoteForCmd, repoRoot } from "./common.mjs";
 
 function resolveGitExecutable() {
   if (process.platform !== "win32") {
@@ -29,29 +29,26 @@ function resolveGitExecutable() {
 
 const gitExecutable = resolveGitExecutable();
 
-export function runGit(args, options = {}) {
-  if (process.platform === "win32") {
-    const result = spawnSync(gitExecutable, args, {
-      cwd: repoRoot,
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "pipe"],
-      ...options
-    });
-
-    if (result.error || (result.status ?? 1) !== 0) {
-      const stderr = result.stderr?.toString?.().trim();
-      throw new Error(stderr || `git ${args.join(" ")} failed`);
-    }
-
-    return result.stdout?.toString?.().trim() ?? "";
-  }
-
-  const result = spawnSync(gitExecutable, args, {
+function spawnGit(args, options = {}) {
+  const baseOptions = {
     cwd: repoRoot,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
     ...options
-  });
+  };
+
+  const directResult = spawnSync(gitExecutable, args, baseOptions);
+
+  if (process.platform === "win32" && directResult.error?.code === "EPERM") {
+    const commandLine = [gitExecutable, ...args].map(quoteForCmd).join(" ");
+    return spawnSync("cmd.exe", ["/d", "/s", "/c", commandLine], baseOptions);
+  }
+
+  return directResult;
+}
+
+export function runGit(args, options = {}) {
+  const result = spawnGit(args, options);
 
   if (result.error || (result.status ?? 1) !== 0) {
     const stderr = result.stderr?.toString?.().trim();
@@ -70,8 +67,7 @@ export function tryRunGit(args, options = {}) {
 }
 
 export function hasStagedChanges() {
-  const result = spawnSync(gitExecutable, ["diff", "--cached", "--quiet"], {
-    cwd: repoRoot,
+  const result = spawnGit(["diff", "--cached", "--quiet"], {
     stdio: "ignore"
   });
 
@@ -96,8 +92,7 @@ export function getCurrentBranch() {
 }
 
 export function refExists(ref) {
-  const result = spawnSync(gitExecutable, ["rev-parse", "--verify", "--quiet", ref], {
-    cwd: repoRoot,
+  const result = spawnGit(["rev-parse", "--verify", "--quiet", ref], {
     stdio: "ignore"
   });
 
@@ -106,7 +101,7 @@ export function refExists(ref) {
 
 export function getComparisonBase() {
   const requested = process.env.POCKETCURB_REVIEW_BASE;
-  const candidates = [requested, "main", "origin/main", "master", "origin/master"].filter(Boolean);
+  const candidates = [requested, "origin/main", "main", "origin/master", "master"].filter(Boolean);
 
   for (const candidate of candidates) {
     if (refExists(candidate)) {
@@ -141,21 +136,62 @@ export function getGitDir() {
 }
 
 export function ensurePocketcurbGitDir() {
-  let baseDir;
-  try {
-    baseDir = getGitDir();
-  } catch {
-    baseDir = path.join(repoRoot, ".pocketcurb-artifacts");
+  for (const dir of getPocketcurbArtifactDirectories()) {
+    try {
+      fs.mkdirSync(dir, { recursive: true });
+      fs.accessSync(dir, fs.constants.W_OK);
+      return dir;
+    } catch {
+      // try the next artifact directory candidate
+    }
   }
 
-  const dir = path.join(baseDir, "pocketcurb");
-  fs.mkdirSync(dir, { recursive: true });
-  return dir;
+  throw new Error("Unable to find a writable PocketCurb artifact directory.");
+}
+
+export function getPocketcurbArtifactPath(filename) {
+  return path.join(ensurePocketcurbGitDir(), filename);
+}
+
+export function getPocketcurbArtifactDirectories() {
+  const directories = [];
+
+  try {
+    directories.push(path.join(getGitDir(), "pocketcurb"));
+  } catch {
+    // fall through to local filesystem candidates
+  }
+
+  directories.push(path.join(repoRoot, ".git", "pocketcurb"));
+  directories.push(path.join(repoRoot, ".pocketcurb-artifacts", "pocketcurb"));
+
+  return [...new Set(directories)];
 }
 
 export function writePocketcurbArtifact(filename, content) {
-  const dir = ensurePocketcurbGitDir();
-  const target = path.join(dir, filename);
-  fs.writeFileSync(target, content, "utf8");
-  return target;
+  for (const directory of getPocketcurbArtifactDirectories()) {
+    try {
+      fs.mkdirSync(directory, { recursive: true });
+      const target = path.join(directory, filename);
+      fs.writeFileSync(target, content, "utf8");
+      return target;
+    } catch {
+      // try the next artifact directory candidate
+    }
+  }
+
+  throw new Error(`Unable to write PocketCurb artifact: ${filename}`);
+}
+
+export function readPocketcurbArtifact(filename) {
+  for (const directory of getPocketcurbArtifactDirectories()) {
+    const target = path.join(directory, filename);
+    if (!fs.existsSync(target)) {
+      continue;
+    }
+
+    return fs.readFileSync(target, "utf8");
+  }
+
+  return null;
 }

@@ -1,16 +1,21 @@
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
+import { SiteFooter } from "../src/components/SiteFooter";
+import { SiteHeader } from "../src/components/SiteHeader";
+import { rootMetadata } from "../src/lib/site-metadata";
 
-export const metadata: Metadata = {
-  title: "PocketCurb",
-  description: "Decision-first personal finance clarity with Safe-to-Spend, event intelligence, and forward-looking cash flow."
-};
+export const metadata = rootMetadata;
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-web-canvas text-slate-950 antialiased">{children}</body>
+      <body className="min-h-screen antialiased">
+        <div className="flex min-h-screen flex-col">
+          <SiteHeader />
+          <div className="flex-1">{children}</div>
+          <SiteFooter />
+        </div>
+      </body>
     </html>
   );
 }

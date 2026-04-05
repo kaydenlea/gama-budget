@@ -75,11 +75,11 @@ function checkWeb() {
   ensureFiles([
     "apps/web/app/layout.tsx",
     "apps/web/app/page.tsx",
+    "apps/web/app/waitlist/page.tsx",
     "apps/web/app/globals.css",
     "apps/web/next-env.d.ts",
     "apps/web/next.config.mjs",
-    "apps/web/postcss.config.js",
-    "apps/web/tailwind.config.js",
+    "apps/web/postcss.config.mjs",
     "apps/web/tsconfig.json"
   ]);
 
@@ -89,7 +89,7 @@ function checkWeb() {
   const reactDomPackage = readJsonAbsolute(path.join(repoRoot, "apps/web/node_modules/react-dom/package.json"));
   const tailwindPackage = readJsonAbsolute(path.join(repoRoot, "apps/web/node_modules/tailwindcss/package.json"));
   const postcssPackage = readJsonAbsolute(path.join(repoRoot, "apps/web/node_modules/postcss/package.json"));
-  const autoprefixerPackage = readJsonAbsolute(path.join(repoRoot, "apps/web/node_modules/autoprefixer/package.json"));
+  const tailwindPostcssPackage = readJsonAbsolute(path.join(repoRoot, "apps/web/node_modules/@tailwindcss/postcss/package.json"));
   const deps = webPackage.dependencies ?? {};
   const devDeps = webPackage.devDependencies ?? {};
 
@@ -98,12 +98,16 @@ function checkWeb() {
   assertDepVersion(deps, "react-dom", reactDomPackage.version, "web");
   assertDepVersion(devDeps, "tailwindcss", tailwindPackage.version, "web");
   assertDepVersion(devDeps, "postcss", postcssPackage.version, "web");
-  assertDepVersion(devDeps, "autoprefixer", autoprefixerPackage.version, "web");
+  assertDepVersion(devDeps, "@tailwindcss/postcss", `^${tailwindPostcssPackage.version}`, "web");
 
   const globalsCss = fs.readFileSync(path.join(repoRoot, "apps/web/app/globals.css"), "utf8");
-  assert(globalsCss.includes("@tailwind base;"), "apps/web/app/globals.css must include @tailwind base.");
-  assert(globalsCss.includes("@tailwind components;"), "apps/web/app/globals.css must include @tailwind components.");
-  assert(globalsCss.includes("@tailwind utilities;"), "apps/web/app/globals.css must include @tailwind utilities.");
+  assert(globalsCss.includes('@import "tailwindcss";'), 'apps/web/app/globals.css must import "tailwindcss".');
+
+  const postcssConfig = fs.readFileSync(path.join(repoRoot, "apps/web/postcss.config.mjs"), "utf8");
+  assert(postcssConfig.includes('"@tailwindcss/postcss"'), "apps/web/postcss.config.mjs must use @tailwindcss/postcss.");
+
+  const nextConfig = fs.readFileSync(path.join(repoRoot, "apps/web/next.config.mjs"), "utf8");
+  assert(nextConfig.includes("typedRoutes: true"), "apps/web/next.config.mjs must enable typedRoutes.");
 }
 
 const lane = process.argv[2];

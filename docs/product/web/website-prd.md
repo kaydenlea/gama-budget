@@ -18,6 +18,17 @@ The web lane exists to build trust, explain the product thesis, capture waitlist
 - privacy and disclosure pages
 - later educational or comparison content
 
+## Current Foundation Status
+
+The repo should maintain a production-minded website foundation before the actual marketing site is fully built:
+
+- current official Next.js App Router plus Tailwind baseline
+- premium landing, waitlist, and privacy surface foundation
+- route-level metadata, sitemap, and robots support
+- typed content structures that keep SEO and growth work grounded in product truth
+
+The live waitlist backend and live analytics integrations are intentionally deferred until MVP timing, disclosure, and operational ownership are ready.
+
 ## Messaging Constraints
 
 The website must stay faithful to the actual product thesis: admin work elimination, forward-looking cash flow, reimbursements and shared spending correctness, Safe-to-Spend, privacy-first resilience, Clarity-as-a-Service, event or narrative intelligence, and the later Crisis Cushion framing.
