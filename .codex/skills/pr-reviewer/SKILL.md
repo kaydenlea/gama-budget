@@ -10,5 +10,6 @@ description: Review a change against the spec, architecture, security model, ver
 3. Prefer findings-first review output ordered by severity.
 4. Call out missing verification and mismatches between the implementation and the spec.
 5. Treat CodeRabbit as an additional reviewer, not the final authority.
-6. Require human review before merge.
-
+6. Confirm that every touched file was reviewed against the active spec or plan, not only the diff summary.
+7. If only one local agent tool was available, confirm the fresh-context fallback review was still performed.
+8. Require human review before merge.

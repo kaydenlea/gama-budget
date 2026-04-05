@@ -1,14 +1,31 @@
 {
-  "extends": "../../packages/config-typescript/react-native.json",
+  "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "baseUrl": ".",
-    "types": ["jest"],
     "paths": {
-      "@pocketcurb/core-domain": ["../../packages/core-domain/src/index.ts"],
-      "@pocketcurb/schemas": ["../../packages/schemas/src/index.ts"],
-      "@pocketcurb/api-client": ["../../packages/api-client/src/index.ts"],
-      "@pocketcurb/supabase-types": ["../../packages/supabase-types/src/index.ts"],
-      "@pocketcurb/ui-mobile": ["../../packages/ui-mobile/src/index.tsx"]
+      "@pocketcurb/core-domain": [
+        "../../packages/core-domain/src/index.ts"
+      ],
+      "@pocketcurb/schemas": [
+        "../../packages/schemas/src/index.ts"
+      ],
+      "@pocketcurb/api-client": [
+        "../../packages/api-client/src/index.ts"
+      ],
+      "@pocketcurb/supabase-types": [
+        "../../packages/supabase-types/src/index.ts"
+      ],
+      "@pocketcurb/ui-mobile": [
+        "../../packages/ui-mobile/src/index.tsx"
+      ]
     }
   },
   "include": [
@@ -21,6 +38,12 @@
     "src/**/*.d.ts",
     "*.ts",
     "*.tsx",
-    "*.d.ts"
+    "*.d.ts",
+    "nativewind-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts",
+    "**/*.test.tsx"
   ]
 }

@@ -16,17 +16,21 @@ Use this runbook when the request is something like "add this feature", "build t
    [docs/templates/implementation-plan-template.md](../templates/implementation-plan-template.md)
 5. Ask clarifying questions before planning if the answer materially changes architecture, privacy, security, release risk, or user behavior.
 6. Make sure the implementation plan includes exact files, interfaces, design choices, edge cases, rollback considerations, verification steps, review checkpoints, and documentation reconciliation.
-7. Review the plan when the task is large, risky, or cross-cutting.
+7. Review the plan before coding.
+   Prefer a second tool or model when available.
+   If only one agent tool is available, use a fresh review-only context in that same tool and still require PR-stage AI review plus human review later.
 8. Implement in small slices.
 9. Run verification after each slice using [docs/agent-workflows/05-verification-loops.md](../agent-workflows/05-verification-loops.md).
+   If the feature includes UI work, record any external references used, keep sensitive data out of external tools, and verify accessibility, primary-state legibility, and responsive or device behavior.
 10. Update the spec and any affected docs during implementation.
 11. Run post-implementation review:
    [docs/agent-workflows/06-cross-model-review.md](../agent-workflows/06-cross-model-review.md),
    PR-stage Codex review where configured,
    CodeRabbit where installed,
    and human review.
-12. Reconcile docs with `pnpm docs:reconcile`.
-13. Apply the correct release gate from [docs/runbooks/release-gates.md](./release-gates.md) and merge only after the gate is satisfied.
+12. Debug and iterate on accepted review findings, rerun verification, and manually read every touched file before commit or merge.
+13. Reconcile docs with `pnpm docs:reconcile`.
+14. Apply the correct release gate from [docs/runbooks/release-gates.md](./release-gates.md) and merge only after the gate is satisfied.
 
 ## Useful Commands
 

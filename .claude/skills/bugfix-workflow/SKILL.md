@@ -11,4 +11,5 @@ description: Reproduce, debug, root-cause, fix, verify, and document meaningful 
 4. Write a focused bugfix spec when the issue is risky, cross-cutting, security-sensitive, or hard to reason about.
 5. Suggest `pnpm new:bugfix-spec -- <slug>` when a reusable bugfix doc should be created.
 6. Implement the smallest correct root-cause fix and verify before closing the bug.
-7. Promote stable repeated lessons into shared docs or rules and keep one-off detail inside the bugfix spec.
+7. Once the root cause and verification path are clear, do not require unnecessary user hand-holding to finish the fix.
+8. Promote stable repeated lessons into shared docs or rules and keep one-off detail inside the bugfix spec.

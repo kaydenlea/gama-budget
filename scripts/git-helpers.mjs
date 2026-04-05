@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { spawnSync } from "node:child_process";
-import { quoteForCmd, repoRoot } from "./common.mjs";
+import { repoRoot } from "./common.mjs";
 
 function resolveGitExecutable() {
   if (process.platform !== "win32") {
@@ -31,8 +31,7 @@ const gitExecutable = resolveGitExecutable();
 
 export function runGit(args, options = {}) {
   if (process.platform === "win32") {
-    const commandLine = ["git", ...args].map(quoteForCmd).join(" ");
-    const result = spawnSync("cmd.exe", ["/d", "/s", "/c", commandLine], {
+    const result = spawnSync(gitExecutable, args, {
       cwd: repoRoot,
       encoding: "utf8",
       stdio: ["ignore", "pipe", "pipe"],

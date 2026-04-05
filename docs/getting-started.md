@@ -16,6 +16,13 @@ If your machine has flaky global Corepack or pnpm behavior, run the repo-owned b
 node ./scripts/bootstrap-local.mjs
 ```
 
+To start the mobile app after bootstrap, prefer the repo-owned wrappers instead of raw `npx expo start`:
+
+```bash
+pnpm mobile:start
+pnpm mobile:dev
+```
+
 That command:
 
 - installs workspace dependencies
@@ -32,11 +39,22 @@ Codex review belongs at the pull-request stage. Claude users still get the same 
 - Prefer the repo-owned entrypoints first:
   - `node ./scripts/bootstrap-local.mjs`
   - `node ./scripts/pnpm.mjs <args>`
+  - `pnpm mobile:start`
+  - `pnpm mobile:dev`
+- Before any networked package or generator command, inspect machine-level environment settings such as `HTTP_PROXY`, `HTTPS_PROXY`, `ALL_PROXY`, `GIT_HTTP_PROXY`, `GIT_HTTPS_PROXY`, and `NPM_CONFIG_OFFLINE`.
+- If those variables are pointing to a dead local endpoint or forcing offline mode unexpectedly, treat that as a machine environment problem first instead of retrying installs.
+- Use `pnpm env:check-tooling` or `node ./scripts/networked-tooling-env.mjs install` to fail fast before retrying a network-sensitive package-manager command.
 - If install behavior is flaky, separate the problem:
   - CI package-manager bootstrap problem
   - local machine package-manager problem
   - repo test/runtime problem after dependencies already exist
 - Prefer static inspection and targeted verification before attempting another full workspace reinstall.
+
+## Framework Baselines
+
+- Mobile app scaffolds should follow the official Expo baseline first: `create-expo-app`, Expo Router installation guidance, and NativeWind's official Expo setup.
+- Web app scaffolds should follow the official Next.js and Tailwind baseline first: `create-next-app` and Tailwind's official Next.js setup.
+- If local environment policy blocks generator commands or network fetches, reconcile the existing app against the official documented baseline before considering the setup complete.
 
 ## Day-to-Day Flow
 

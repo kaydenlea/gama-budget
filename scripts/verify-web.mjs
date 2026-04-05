@@ -1,4 +1,9 @@
-import { ensureDependenciesInstalled, runCheck, runPnpm } from "./common.mjs";
+import { ensureDependenciesInstalled, runCheck, runCommand, runPnpm } from "./common.mjs";
+
+runCheck("web-framework-baseline", () => {
+  ensureDependenciesInstalled();
+  runCommand(process.execPath, ["./scripts/check-framework-baselines.mjs", "web"]);
+});
 
 runCheck("web-lint", () => {
   ensureDependenciesInstalled();

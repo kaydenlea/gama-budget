@@ -8,16 +8,17 @@ Planning and verification are the bottleneck, not typing. Agents can execute a w
 
 ## Default Sequence
 
-1. Start with the right product context and confirm the lane: mobile, web, shared package, or backend.
+1. Review the right product, workflow, architecture, security, and lessons context and confirm the lane: mobile, web, shared package, or backend.
 2. For ambiguous or net-new product work, write or refine the product brief and PRD first.
 3. For non-trivial delivery work, create a feature spec and implementation plan before coding.
 4. Ask clarifying questions before the plan when the answer materially changes architecture, data shape, privacy, security, or release risk.
-5. Implement in small slices.
-6. Verify after each slice.
-7. Re-plan immediately if the design drifts or the plan becomes wrong.
-8. Reconcile the spec, PRD, ADRs, runbooks, and other docs as reality changes.
-9. Run independent review, PR-stage AI review where configured, and mandatory human review.
-10. Apply the correct release gate before merge or deployment.
+5. Write the active checklist in checkable form inside the spec or implementation plan.
+6. Implement in small slices.
+7. Verify after each slice.
+8. Re-plan immediately if the design drifts or the plan becomes wrong.
+9. Reconcile the spec, PRD, ADRs, runbooks, and other docs as reality changes.
+10. Run independent review, PR-stage AI review where configured, and mandatory human review.
+11. Apply the correct release gate before merge or deployment.
 
 ## Interpreting Short Prompts
 
@@ -48,6 +49,12 @@ PocketCurb is not a generic CRUD app. It handles sensitive personal finance data
 - blindly trusting the agent too early is dangerous
 
 Use this file as the high-level model, then follow the more specific lifecycle docs in this folder.
+
+## Session Discipline
+
+- start substantive work by reviewing the relevant stable lessons and workflow rules
+- after user corrections, update the active task doc and decide whether a stable lesson belongs in shared docs or rules
+- never claim completion without proof that would satisfy a careful staff engineer
 
 ## Read Order
 

@@ -8,7 +8,6 @@ export function TodayTransactionsCard() {
     <SectionCard eyebrow="Today" title="Transactions and context">
       <FlashList
         data={mockTransactions}
-        estimatedItemSize={72}
         scrollEnabled={false}
         renderItem={({ item }) => (
           <View className="mb-3 rounded-2xl bg-white/5 p-4">

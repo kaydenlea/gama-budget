@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { spawnSync } from "node:child_process";
+import { getSanitizedNetworkEnv } from "./networked-tooling-env.mjs";
 
 export const repoRoot = process.cwd();
 export const corepackHome = path.join(repoRoot, ".corepack");
@@ -70,6 +71,17 @@ export function parseJson(relativePath) {
   return JSON.parse(readFile(relativePath));
 }
 
+function getLinkedStoreDir() {
+  const modulesYamlPath = resolveRepoPath("node_modules/.modules.yaml");
+  if (!fs.existsSync(modulesYamlPath)) {
+    return null;
+  }
+
+  const modulesYaml = fs.readFileSync(modulesYamlPath, "utf8");
+  const match = modulesYaml.match(/^storeDir:\s+(.+)$/mu);
+  return match?.[1]?.trim() || null;
+}
+
 export function commandExists(command) {
   const lookup = process.platform === "win32" ? "where.exe" : "which";
   const result = spawnSync(lookup, [command], {
@@ -116,13 +128,19 @@ export function ensureDependenciesInstalled() {
 }
 
 export function runCommand(command, args, options = {}) {
+  const env = {
+    ...process.env,
+    COREPACK_HOME: corepackHome,
+    ...(options.env ?? {})
+  };
+
+  for (const name of options.unsetEnv ?? []) {
+    delete env[name];
+  }
+
   const result = spawnSync(command, args, {
     cwd: options.cwd ? resolveRepoPath(options.cwd) : repoRoot,
-    env: {
-      ...process.env,
-      COREPACK_HOME: corepackHome,
-      ...(options.env ?? {})
-    },
+    env,
     stdio: options.stdio ?? "inherit",
     shell: options.shell ?? false
   });
@@ -148,13 +166,19 @@ export function quoteForCmd(argument) {
 
 export function spawnCommand(command, args, options = {}) {
   const resolvedCommand = resolveCommandPath(command) ?? command;
+  const env = {
+    ...process.env,
+    COREPACK_HOME: corepackHome,
+    ...(options.env ?? {})
+  };
+
+  for (const name of options.unsetEnv ?? []) {
+    delete env[name];
+  }
+
   const baseOptions = {
     cwd: options.cwd ? resolveRepoPath(options.cwd) : repoRoot,
-    env: {
-      ...process.env,
-      COREPACK_HOME: corepackHome,
-      ...(options.env ?? {})
-    },
+    env,
     encoding: options.encoding,
     timeout: options.timeout,
     stdio: options.stdio,
@@ -170,21 +194,42 @@ export function spawnCommand(command, args, options = {}) {
 }
 
 export function runPnpm(args, options = {}) {
+  const { sanitizedEnv, removed } = getSanitizedNetworkEnv({
+    ...process.env,
+    ...(options.env ?? {})
+  });
+  const linkedStoreDir = getLinkedStoreDir();
+  const unsetEnv = removed.map((entry) => entry.split("=", 1)[0]).filter(Boolean);
+  const mergedOptions = {
+    ...options,
+    env: linkedStoreDir
+      ? {
+          ...sanitizedEnv,
+          npm_config_store_dir: linkedStoreDir
+        }
+      : sanitizedEnv,
+    unsetEnv: [...new Set([...(options.unsetEnv ?? []), ...unsetEnv])]
+  };
+
+  if (removed.length > 0) {
+    console.warn(`Warning: stripping broken machine proxy/offline settings for pnpm: ${removed.join(", ")}`);
+  }
+
   if (fileExists(path.relative(repoRoot, vendoredPnpmBin))) {
-    runCommand(process.execPath, [vendoredPnpmBin, ...args], options);
+    runCommand(process.execPath, [vendoredPnpmBin, ...args], mergedOptions);
     return;
   }
 
   if (process.platform === "win32") {
     const command = `corepack pnpm ${args.map(quoteForCmd).join(" ")}`;
     runCommand("cmd.exe", ["/d", "/s", "/c", command], {
-      ...options,
+      ...mergedOptions,
       shell: false
     });
     return;
   }
 
-  runCommand("corepack", ["pnpm", ...args], options);
+  runCommand("corepack", ["pnpm", ...args], mergedOptions);
 }
 
 export function ensureHeadingsInOrder(relativePath, headings) {

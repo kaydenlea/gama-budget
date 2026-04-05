@@ -20,11 +20,18 @@
 
 - was the right proof set run?
 - are there missing negative-path or regression checks?
+- was the change debugged and re-verified after accepted review findings?
+- if UI changed, was the manual or visual verification method recorded?
 
 ## Docs and Operations
 
 - are specs, runbooks, ADRs, and release notes reconciled?
 - is rollback and monitoring readiness clear?
+
+## Touched Files
+
+- were all touched files actually read before approval?
+- do the touched files still match the active plan rather than just passing tests?
 
 ## Outcome
 
