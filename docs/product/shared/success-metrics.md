@@ -7,6 +7,7 @@ Success should measure reduced user effort, improved trust, and better decisions
 - percentage of new users who reach a first useful Safe-to-Spend or simulation answer in their first session
 - median time from onboarding start to first useful answer
 - median time to enter or simulate a transaction
+- percentage of users who receive useful inferred obligations or prefills before manual setup
 - percentage of transactions requiring manual category cleanup
 - percentage of transactions assigned automatically to a useful event or narrative context
 - share of users who view Safe-to-Spend or the Daily Spending Meter weekly
@@ -21,6 +22,7 @@ Success should measure reduced user effort, improved trust, and better decisions
 - split-transaction completion rate
 - privacy-toggle usage and satisfaction in shared contexts
 - support volume related to sync confusion, misclassification, or data distrust
+- percentage of review-needed items resolved in a lightweight flow rather than settings-heavy cleanup
 
 ## Outcome Metrics
 

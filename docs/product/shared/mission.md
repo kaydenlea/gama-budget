@@ -17,9 +17,11 @@ Give people short-term financial clarity without the shame, admin work, or cloud
 - short-term clarity first
 - trust before deeper insights
 - first useful answer fast, ideally in the first session
+- frictionless capture and low-friction correction from day one
 - context and guidance over raw data
 - proactive suggestions, warnings, and recommendations over passive observation
 - privacy-first from day one
+- core resilience from day one: safe degradation, manual fallback, and explicit freshness or confidence states
 - less user labor, less guilt, less cleanup
 - build a daily or weekly habit loop around check-ins and pre-purchase decisions
 - fast shipping with strong listening loops can beat larger incumbents

@@ -15,6 +15,12 @@ The MVP should also optimize hard for two product truths:
 - users need a fast first answer before they care about richer insights
 - the product needs a repeated daily or weekly habit loop, not a broad feature checklist
 
+And two implementation truths:
+
+- frictionless capture matters from the start, even if voice is deferred
+- core resilience matters from the start, even if full offline or local-first modes are deferred
+- the MVP should infer, prefill, or suggest before it asks the user to configure or categorize manually
+
 ## MVP Features
 
 1. Daily Spending Meter.
@@ -58,5 +64,7 @@ That means the MVP should lead with:
 
 - daily decision support that helps users know what is safe to spend now
 - onboarding that reaches a first useful answer quickly and explains why it is trustworthy
+- low-friction capture and correction paths that reduce user effort from the first release
+- inferred obligations, suggested event grouping, and prefills before any deep manual setup
 - shared-spend and reimbursement correctness that removes real-world admin pain
 - event-aware organization as a lower-admin, more narrative alternative to category cleanup

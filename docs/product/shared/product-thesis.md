@@ -27,6 +27,7 @@ The research-driven gaps to preserve are:
 - minimize work for users
 - avoid making the app feel like a chore
 - trust must be earned before the product asks users to believe deeper insights
+- reduce capture and correction friction from the first release
 - provide guidance, suggestions, recommendations, and warnings
 - prefer proactive behavioral modification that is actionable, not just observable
 - give users context, not just raw information
@@ -34,6 +35,7 @@ The research-driven gaps to preserve are:
 - event and narrative intelligence second
 - long-term goals and FIRE consequences third
 - privacy-first from day one
+- core resilience from day one; deeper offline or local-first variants can come later
 - optimize for repeated habit use, not feature sprawl
 - support local-first and manual-first variants later
 
