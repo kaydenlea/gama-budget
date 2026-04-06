@@ -26,6 +26,8 @@ The research-driven gaps to preserve are:
 
 - minimize work for users
 - avoid making the app feel like a chore
+- trust must be earned before the product asks users to believe deeper insights
+- reduce capture and correction friction from the first release
 - provide guidance, suggestions, recommendations, and warnings
 - prefer proactive behavioral modification that is actionable, not just observable
 - give users context, not just raw information
@@ -33,6 +35,8 @@ The research-driven gaps to preserve are:
 - event and narrative intelligence second
 - long-term goals and FIRE consequences third
 - privacy-first from day one
+- core resilience from day one; deeper offline or local-first variants can come later
+- optimize for repeated habit use, not feature sprawl
 - support local-first and manual-first variants later
 
 ## Core Differentiators
@@ -49,3 +53,5 @@ The research-driven gaps to preserve are:
 PocketCurb should feel like Clarity-as-a-Service. The decision layer is the product: Safe-to-Spend, Crisis Cushion, daily guidance, cash-flow visibility, and narrative intelligence that explains what happened and what it means next.
 
 That means recurring charges, reimbursement drag, shared-spending distortion, and near-term cash-flow pressure should turn into timely suggestions or warnings instead of leaving the user to perform retrospective cleanup manually.
+
+The product should not try to impress users with many insight surfaces before trust exists. The first bar is simple: deliver a fast, understandable, confidence-building answer and a clear next step. Richer intelligence should deepen only after the system has earned that trust.

@@ -3,7 +3,7 @@
 - Document title: PocketCurb Mobile MVP PRD
 - Owner(s): PocketCurb Product and Founding Team
 - Status: Finalized working PRD for MVP planning
-- Date/version: 2026-04-04 / v1.0
+- Date/version: 2026-04-05 / v1.1
 - Product area: Mobile app, short-term clarity and shared-spend decision layer
 - Linked docs:
   - [../shared/mission.md](../shared/mission.md)
@@ -18,6 +18,12 @@
 PocketCurb MVP is a mobile-first, decision-first personal finance product for people who want short-term spending clarity without category homework, spreadsheet glue, or shame-driven budgeting rituals. The MVP is designed for users who need to answer "Am I safe to spend right now?" and "What does this purchase change?" while also handling messy real-life cases such as reimbursements, event spending, and partially shared household finances.
 
 The strategic goal is not to beat incumbent budgeting tools on feature count. The goal is to remove the admin work those tools still leave behind and replace retrospective cleanup with forward-looking guidance. The MVP centers on a trusted Safe-to-Spend number, a Daily Spending Meter, lightweight running-balance awareness, a forward-looking week or month cash-flow view, and limited but elegant shared-spending support with privacy controls. Event-aware spending organization is part of the MVP because it makes this clarity layer easier to maintain and gives the product a more differentiated narrative-intelligence angle than category-heavy competitors.
+
+The MVP should optimize for trust before insight depth. Users should get one or two fast, clear, confidence-building answers before the product tries to impress them with richer automation or broader analytics.
+
+The MVP should also include frictionless capture and core resilience from the start. That means reducing effort through linked data, simulation, and low-friction manual correction, while keeping the product useful and trustworthy during stale, partial, or uncertain data states. This does not require voice capture or a full offline-first architecture in v1.
+
+Manual work elimination should be an explicit MVP bar. The product should infer, prefill, or suggest before it asks users to categorize, configure, or reconcile by hand, while still preserving reviewable trust boundaries.
 
 This matters now because users still face fragmentation tax across multiple apps and spreadsheets, sync distrust, category fatigue, reimbursement distortion, and guilt-heavy finance UX. The MVP should prove that short-term clarity, shared-spend correctness, and helpful guidance can create a calmer, more trusted personal finance experience than traditional trackers.
 
@@ -87,6 +93,9 @@ The opportunity is to reduce personal finance admin work by turning fragmented t
 - Make Safe-to-Spend and the Daily Spending Meter meaningful enough to become habitual decision tools.
 - Reduce distortion from shared spending, reimbursements, and event-related expenses.
 - Prove that forward-looking finance UX can feel calm, useful, and less shame-inducing than traditional budgeting.
+- Deliver first-session value quickly enough that users understand the wedge before onboarding fatigue or setup skepticism takes over.
+- Reduce capture friction and preserve usefulness during stale or partial data conditions from the first release.
+- Remove as much recurring manual setup, categorization, and correction work as is realistic without weakening trust.
 
 ## User Outcomes
 
@@ -94,6 +103,9 @@ The opportunity is to reduce personal finance admin work by turning fragmented t
 - Users can spot upcoming pressure before it becomes a surprise shortfall.
 - Users spend less time categorizing, reconciling, and mentally tracking reimbursements.
 - Users feel more confident and less avoidant about checking finances.
+- Users can form a lightweight daily or weekly habit around check-ins and pre-purchase decisions rather than only logging transactions.
+- Users can still act confidently when linked data is stale, incomplete, or temporarily unavailable.
+- Users do not need to perform a budgeting ritual of repeated setup, categorization, and cleanup just to keep guidance useful.
 
 ## Business Outcomes
 
@@ -107,10 +119,14 @@ The opportunity is to reduce personal finance admin work by turning fragmented t
 - Keep user-facing guidance explainable enough that users can understand the reason behind changes.
 - Keep privacy expectations explicit in shared contexts.
 - Minimize support issues tied to confusion, sync distrust, or unexplained calculation shifts.
+- Make first-session guidance legible and trustworthy before exposing richer insight surfaces.
+- Preserve usefulness through safe degradation, explicit freshness states, and manual fallback rather than letting sync issues collapse the experience.
+- Keep required manual review narrow, quick, and clearly worth the effort when automation cannot be trusted.
 
 ## Success Metrics
 
 - Weekly active users who view Safe-to-Spend or the Daily Spending Meter at least once per week.
+- Percentage of new users who reach a first useful answer in their first session.
 - Percentage of users who use Add or Simulate Transaction before a purchase decision.
 - Percentage of transactions requiring manual cleanup after initial import or entry.
 - Percentage of flagged ambiguous event assignments that users resolve successfully.
@@ -131,6 +147,9 @@ The opportunity is to reduce personal finance admin work by turning fragmented t
 
 - Safe-to-Spend as a short-term decision number grounded in upcoming obligations and recent activity.
 - Daily Spending Meter with daily guidance tied to the user's current short-term safety picture.
+- An onboarding flow that gets the user to a useful first answer quickly and explains what the answer is based on.
+- Frictionless capture and correction paths through linked data, simulation, and low-friction manual edits.
+- Inference-first setup using suggested obligations, prefills, and event candidates before deeper manual configuration.
 - Daily budget setting and rollover-aware daily budgeting.
 - Today's transaction list with fast correction and review flows.
 - Add Transaction and Simulate Transaction flows for planned and unplanned spending.
@@ -163,6 +182,10 @@ The opportunity is to reduce personal finance admin work by turning fragmented t
 - The app must remain valuable even when account sync is imperfect; manual entry and simulation are not backup hacks but core trust-preserving workflows.
 - Users will tolerate some review-needed states if those states are clear, bounded, and meaningfully reduce later cleanup.
 - Shared-finance support should be elegant but limited in MVP rather than trying to solve all household collaboration patterns immediately.
+- Users care about richer insights only after the product has already earned trust with a small number of clear, useful answers.
+- Frictionless capture is an MVP principle, but the specific modality remains open; voice is deferred unless later evidence shows it is core to the wedge.
+- Core resilience is MVP-critical, but full offline-first and local-first architecture remain deferred.
+- When the product does ask for manual input, it should be because the information materially improves guidance and could not be inferred safely enough.
 
 ## Dependencies
 
@@ -240,6 +263,9 @@ The opportunity is to reduce personal finance admin work by turning fragmented t
 - The system must support account creation, authentication, and secure session handling.
 - The system must support either linked financial data, manual entry, or both, while making the current data freshness state understandable.
 - The system must collect only the minimum setup information required to produce initial short-term guidance.
+- The system should aim to produce a first useful answer or simulation result before asking for deeper setup that is not yet needed.
+- The system must provide low-friction capture and correction paths so users can keep the product useful without a budgeting ritual.
+- The system should prefer inferred or prefilled obligations, defaults, and transaction context before asking the user to configure them from scratch.
 
 ## Short-Term Clarity Layer
 
@@ -257,6 +283,7 @@ The opportunity is to reduce personal finance admin work by turning fragmented t
 - The system must allow users to simulate a transaction and see projected impact before saving.
 - The system must support quick correction of transaction attributes that materially affect decision quality.
 - The system must support daily budget settings and rollover-aware behavior without requiring complex category management.
+- The system should minimize repeated manual categorization or configuration work when the same outcome can be reached through reliable inference or reusable user confirmation.
 
 ## Event Grouping and Event Budgets
 
@@ -290,6 +317,7 @@ The opportunity is to reduce personal finance admin work by turning fragmented t
 - Home and primary decision surfaces should feel fast enough for habitual use; last-known short-term guidance should render quickly on a typical mobile connection and device.
 - Core interactions such as opening the app, reviewing Safe-to-Spend, and simulating a transaction must feel responsive and lightweight.
 - The product must remain useful during partial sync failure, stale linked data, or temporary backend degradation.
+- The product must degrade safely by showing freshness, uncertainty, and fallback options rather than silently pretending the data is current.
 - User-facing explanations must be understandable without finance-specialist language.
 - The system must be maintainable enough to support iterative calibration of guidance logic without constant UI churn.
 - The product must support auditability for sensitive calculation changes, shared-data visibility changes, and reimbursement-related state transitions.
@@ -320,7 +348,10 @@ The experience should feel calm, competent, and helpful. It should feel more lik
 - The Daily Spending Meter should guide behavior without making the user feel judged. It should show tradeoffs and pressure, not moral failure.
 - Forward-looking cash-flow surfaces should reduce surprise and make upcoming obligations tangible.
 - Event grouping should feel like the app is reducing clutter for the user, not inventing more cleanup work.
+- The first session should emphasize one or two clear aha moments, not a tour of every possible feature.
+- Capture and correction flows should feel fast enough that users do not experience the product as manual bookkeeping.
 - Ambiguous states should be clear, bounded, and easy to resolve.
+- Review-needed flows should be narrow and high-signal rather than turning into an inbox of finance chores.
 - Shared-private controls should feel respectful and explicit; users should understand what remains private, what becomes visible, and why.
 - Warning states should say what changed and what the user can do next.
 - Empty states should teach the decision-first model, not just prompt users to add more data.
@@ -389,6 +420,9 @@ Important UX states:
 - Event grouping can create more cleanup instead of less if ambiguity handling is weak.
 - Linked-account sync issues can undermine trust if manual fallback flows are not good enough.
 - Expanding into too many adjacent finance jobs too early can dilute the MVP wedge.
+- Exposing too many insights before first-session trust is established can make the product feel clever but untrustworthy.
+- If capture and correction remain too effortful, the product can still feel like finance homework even with strong guidance surfaces.
+- Over-ambitious automation can also backfire if it creates too many review chores or incorrect prefills that users must constantly fix.
 
 ## Open Questions
 
@@ -402,6 +436,9 @@ Important UX states:
 - The primary MVP differentiation is trusted short-term clarity plus shared-spend correctness; event-aware auto-grouping is a signature supporting differentiator rather than the sole headline wedge.
 - Shared-household support is included, but only to the degree needed for privacy-aware shared spending and reimbursement handling.
 - Manual entry and simulation are first-class trust-preserving workflows, not fallback afterthoughts.
+- Onboarding and early product surfaces should optimize for fast trust and first-session value rather than broad feature exposure.
+- Frictionless capture and core resilience are required from the first release, while voice capture and full offline-first modes remain later wedges rather than MVP commitments.
+- The MVP should infer, prefill, and suggest wherever realistic, while keeping manual review deliberately narrow and trust-preserving.
 - FIRE and long-term planning are deferred as later consequence layers, not core MVP surfaces.
 - Lightweight running-balance awareness is in MVP because it materially affects short-term trust; deeper balance analytics are deferred.
 
