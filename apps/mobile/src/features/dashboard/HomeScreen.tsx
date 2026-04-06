@@ -67,6 +67,17 @@ export function HomeScreen() {
           </Link>
         </View>
 
+        <View className="rounded-3xl border border-white/10 bg-pocket-panel px-5 py-4">
+          <Text className="text-base font-semibold text-white">Event budgets and manual assignment</Text>
+          <Text className="mt-2 text-sm text-white/65">
+            Create trip budgets, review recent transactions, and manually attach spend before
+            auto-suggestions exist.
+          </Text>
+          <Link href={"/events" as never} asChild>
+            <Text className="mt-4 text-sm font-semibold text-pocket-mint">Open event budget workspace</Text>
+          </Link>
+        </View>
+
         <View className="rounded-3xl border border-white/10 bg-white/5 px-5 py-4">
           <Text className="text-sm font-semibold text-white">Observability wiring</Text>
           <Text className="mt-2 text-sm text-white/60">

@@ -20,6 +20,30 @@ The data model must support short-term clarity, reimbursement correctness, share
 - `privacy_preference`: personal pots, shared visibility toggles, and disclosure settings.
 - `audit_log`: security-relevant and user-sensitive actions.
 
+## Current MVP Slice 1 Tables
+
+The first real Supabase schema slice currently implements these concrete tables:
+
+- `budget_settings`: per-user budget defaults for protected buffer, default daily budget, rollover, and currency
+- `financial_accounts`: user-owned account registry for manual accounts and linked providers such as Plaid
+- `ledger_transactions`: normalized user ledger rows for imported and manual transactions
+- `budget_events`: user-created event or trip budgets with target amount and date range
+- `event_transaction_assignments`: explainable mapping records between transactions and events, including review state and confidence
+- `transaction_splits`: partial amount allocation rows for transactions that need exact event or shared attribution
+- `plaid_items`: provider item state and secret-backed token storage for Plaid-linked institutions
+
+## Current Relationship Notes
+
+- `financial_accounts.user_id` owns each account row
+- `ledger_transactions` optionally belongs to a `financial_accounts` row for the same `user_id`
+- `budget_events.user_id` owns each event row
+- `event_transaction_assignments` joins one event to one transaction for the same `user_id`
+- `transaction_splits` belongs to one ledger transaction and can optionally point to one event for the same `user_id`
+
+Current implementation uses composite ownership foreign keys on `(id, user_id)` where cross-table references matter so rows cannot be linked across users by accident.
+
+For Plaid-specific ingestion flow, item state, and normalization boundaries, see `docs/architecture/shared/plaid-ingestion.md`.
+
 ## Key Relationships
 
 - users may belong to zero or one shared household in v1, with room for later expansion

@@ -79,12 +79,26 @@ runCheck("no-client-service-role-exposure", () => {
 });
 
 runCheck("no-env-files-committed", () => {
+  const allowedLocalEnvFiles = new Set([
+    "apps/mobile/.env",
+    "apps/web/.env.local",
+    "supabase/functions/.env.local"
+  ]);
+
   const envFiles = listFiles(".", (file) => {
     const basename = path.basename(file.replaceAll("\\", "/"));
+    const normalizedFile = file.replaceAll("\\", "/");
+    if (allowedLocalEnvFiles.has(normalizedFile)) {
+      return false;
+    }
+
     return basename === ".env" || (/^\.env\./.test(basename) && basename !== ".env.example");
   });
 
-  assert(envFiles.length === 0, `Committed env file(s) detected: ${envFiles.join(", ")}`);
+  assert(
+    envFiles.length === 0,
+    `Disallowed env file(s) detected outside approved local paths: ${envFiles.join(", ")}`
+  );
 });
 
 runCheck("no-raw-backend-errors-leaked-from-mobile-client", () => {

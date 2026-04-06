@@ -29,6 +29,7 @@ Before launching a lane that depends on public environment variables, copy the l
 
 - `apps/mobile/.env.example`
 - `apps/web/.env.example`
+- `supabase/functions/.env.example`
 
 That command:
 
@@ -128,9 +129,40 @@ In practice, this means the agent should usually know to:
 ## Environment Examples
 
 - keep mobile public variables in `apps/mobile/.env`
-- keep web public variables in `apps/web/.env.local` or another Next.js-supported env file
+- keep web public variables in `apps/web/.env.local`
+- keep server-side function secrets in `supabase/functions/.env.local`
 - start from the committed `.env.example` files instead of inventing variable names ad hoc
 - do not place privileged secrets, service-role material, or private integration credentials in public client env files
+- local env files are allowed only in the approved paths above; other `.env*` files in the repo still fail verification
+
+## Supabase Quick Start
+
+Use this when you need to connect local work to the hosted Supabase project.
+
+1. Fill the approved local env files:
+   - `apps/mobile/.env`
+   - `apps/web/.env.local`
+   - `supabase/functions/.env.local`
+2. Keep only public Supabase values in client env files.
+3. Keep privileged Supabase and provider secrets in `supabase/functions/.env.local`.
+4. If you want Codex to inspect or migrate the hosted project directly, configure Supabase MCP in your local Codex config:
+
+```powershell
+codex mcp add supabase --url https://mcp.supabase.com/mcp?project_ref=<your-project-ref>
+codex mcp login supabase
+```
+
+5. Start a new Codex session after MCP setup changes so the new server is visible.
+6. Make schema changes through timestamped SQL migrations in `supabase/migrations/`.
+7. Re-run `node .\scripts\verify.mjs` after Supabase changes.
+
+For the current backend boundary and table reference, use:
+
+- `supabase/README.md`
+- `docs/architecture/shared/supabase-boundaries.md`
+- `docs/architecture/shared/data-model.md`
+- `docs/architecture/shared/plaid-ingestion.md`
+- `docs/security/supabase-schema-security.md`
 
 ## Important Limits
 

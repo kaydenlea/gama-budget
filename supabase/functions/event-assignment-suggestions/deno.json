@@ -1,0 +1,15 @@
+{
+  "imports": {
+    "jose": "jsr:@panva/jose@6"
+  },
+  "compilerOptions": {
+    "strict": true
+  },
+  "lock": {
+    "path": "../safe-to-spend/deno.lock",
+    "frozen": true
+  },
+  "tasks": {
+    "check": "deno check index.ts"
+  }
+}
