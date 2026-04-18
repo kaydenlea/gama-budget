@@ -158,11 +158,14 @@ For a product that depends on trust and truthful discovery, this is a structural
 - same-tool fresh-context fallback was used for the planning and verification pass because no second model was requested explicitly in this session
 - production build surfaced an OG-image rendering issue in `next/og`; the unsupported `inline-flex` value was removed and the build was rerun successfully
 - follow-up review corrected a misleading assumption in non-production examples: `gama.money` is the only intended public domain, and synthetic hosts should be used for non-production tests and docs until the domain is provisioned
+- post-implementation review found that missing `NEXT_PUBLIC_SITE_URL` still promoted production builds into indexable mode; the environment contract was tightened so indexing requires an explicit canonical public origin and otherwise fails closed
 
 ## Final Reconciliation
 
 The web lane now has a centralized SEO platform layer instead of scattered per-page metadata. Canonical URLs, indexability posture, sitemap entries, breadcrumbs, schema output, manifest/icon handling, and social-image defaults all derive from shared web-lane utilities.
 
 The implementation also hardened the public surface with skip navigation, clearer semantic landmarks, a custom 404 page, stronger browser security headers, non-production `noindex` defaults, and explicit AI crawler rules that keep search discovery available while blocking training crawlers.
+
+After review, the deployment-origin contract was corrected to require an explicitly configured canonical public origin before any production deployment becomes indexable. Missing or invalid `NEXT_PUBLIC_SITE_URL` values now keep metadata, robots behavior, and response headers in fail-closed non-indexable mode even when `NODE_ENV=production`.
 
 Verification completed with `node ./scripts/pnpm.mjs verify:web`, `node ./scripts/pnpm.mjs --dir apps/web build`, and `node ./scripts/pnpm.mjs verify`.

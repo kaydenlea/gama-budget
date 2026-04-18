@@ -87,6 +87,35 @@ describe("site-config", () => {
       });
     });
 
+    it("fails closed for production builds when the public origin is missing", () => {
+      expect(
+        resolveSiteEnvironment({
+          nodeEnv: "production"
+        })
+      ).toEqual({
+        canonicalOrigin: "https://gama.money",
+        deploymentOrigin: "https://gama.money",
+        environment: "production",
+        isProduction: false,
+        allowIndexing: false
+      });
+    });
+
+    it("fails closed for production builds when the public origin is invalid", () => {
+      expect(
+        resolveSiteEnvironment({
+          rawOrigin: "nota url with spaces",
+          nodeEnv: "production"
+        })
+      ).toEqual({
+        canonicalOrigin: "https://gama.money",
+        deploymentOrigin: "https://gama.money",
+        environment: "production",
+        isProduction: false,
+        allowIndexing: false
+      });
+    });
+
     it("supports explicit indexing disablement", () => {
       expect(
         resolveSiteEnvironment({

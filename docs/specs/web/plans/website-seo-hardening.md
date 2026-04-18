@@ -101,6 +101,7 @@ Implement a durable SEO and platform-safety baseline for the current Next.js web
 - Slice 2 complete: schema factories, breadcrumb UI, manifest/icon routes, OG image routes, and page integration shipped
 - Slice 3 complete: robots, sitemap, custom 404, redirect, and security-header hardening shipped
 - Slice 4 complete: automated tests, verifier update, and architecture/doc reconciliation shipped
+- Post-review bugfix complete: missing or invalid `NEXT_PUBLIC_SITE_URL` no longer upgrades `NODE_ENV=production` into an indexable deployment
 
 ## Plan Review
 
@@ -125,6 +126,7 @@ Implement a durable SEO and platform-safety baseline for the current Next.js web
 - `pnpm --dir apps/web build` passes
 - `pnpm verify` passes
 - metadata, robots, sitemap, and schema tests pass
+- regression tests cover missing-origin production behavior for both shared site-environment logic and Next header decisions
 - spec and plan checklists reflect the final shipped scope
 - architecture and SEO docs describe the new centralized defaults accurately
 - non-production examples use localhost or reserved synthetic hosts instead of implying a real `preview.gama.money` deployment
