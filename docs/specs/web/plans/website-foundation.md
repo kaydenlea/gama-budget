@@ -8,7 +8,7 @@
 
 ## Scope
 
-Create a minimal but production-minded website foundation for PocketCurb by modernizing the `apps/web` scaffold, adding the first real landing and waitlist routes, preparing metadata and content structure for future SEO surfaces, and reconciling the supporting docs.
+Create a minimal but production-minded website foundation for Gama by modernizing the `apps/web` scaffold, adding the first real landing and waitlist routes, preparing metadata and content structure for future SEO surfaces, and reconciling the supporting docs.
 
 ## Preconditions
 

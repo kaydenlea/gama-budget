@@ -52,7 +52,7 @@ Refresh the task spec only, without reopening higher-level docs, when:
 
 The product docs must preserve these truths:
 
-- PocketCurb is a decision-first personal finance operating system, not another categorization-heavy tracker
+- Gama is a decision-first personal finance operating system, not another categorization-heavy tracker
 - short-term clarity beats retrospective cleanup
 - Safe-to-Spend, Daily Spending Meter, Crisis Cushion, running balances, and forward-looking cash flow are trust-critical concepts
 - shared spending, reimbursements, privacy toggles, and personal pots are core differentiators

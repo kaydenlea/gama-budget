@@ -11,7 +11,7 @@ Claude and Codex must maintain the same skill inventory and the same workflow re
 - `verification-runner`: choose and run the right proof set for the current slice, including visual checks for UI work.
 - `security-reviewer`: inspect auth, authorization, secret handling, storage, logging, privacy, rate limiting, and release-risk boundaries.
 - `supabase-workflow`: apply the Supabase-first v1 model, RLS posture, Edge Function boundary, migration discipline, and schema-security baseline.
-- `mobile-ui-builder`: implement mobile UI aligned with PocketCurb's calm, premium, useful, decision-first UX rules.
+- `mobile-ui-builder`: implement mobile UI aligned with Gama's calm, premium, useful, decision-first UX rules.
 - `web-ui-builder`: implement web lane UI without leaking mobile product assumptions into SEO or conversion surfaces.
 - `seo-site-builder`: create web content and SEO structures grounded in real product truth and disclosure-safe claims.
 - `docs-updater`: reconcile specs, ADRs, runbooks, and docs after each meaningful change.

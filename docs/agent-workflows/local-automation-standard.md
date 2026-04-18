@@ -1,6 +1,6 @@
 # Local Automation Standard
 
-PocketCurb uses local automation to reduce the chance that weak changes are committed or pushed. The local gates are protection mechanisms, not a substitute for human judgment.
+Gama uses local automation to reduce the chance that weak changes are committed or pushed. The local gates are protection mechanisms, not a substitute for human judgment.
 
 ## Local Gates
 
@@ -39,7 +39,7 @@ The workflow-evidence layer is intentionally conservative, but `pre-push` and `r
 
 ## AI Review Boundary
 
-Do not pretend AI review replaces the rest of the workflow. In PocketCurb, Codex review belongs at pull-request stage rather than in the local push hook. Local gates stay deterministic and fail closed on verification or workflow-evidence gaps, while PR-stage AI review adds another review layer before merge. Claude and Codex still share the same workflow and mirrored skills.
+Do not pretend AI review replaces the rest of the workflow. In Gama, Codex review belongs at pull-request stage rather than in the local push hook. Local gates stay deterministic and fail closed on verification or workflow-evidence gaps, while PR-stage AI review adds another review layer before merge. Claude and Codex still share the same workflow and mirrored skills.
 
 ## Deliberately Manual
 
@@ -52,5 +52,5 @@ The automation layer does not replace:
 
 ## Emergency Overrides
 
-- `POCKETCURB_BYPASS_LOCAL_GATES=1`: bypass local hooks entirely. Use only for emergencies.
-- `POCKETCURB_ALLOW_PROTECTED_PUSH=1`: allow a direct push to a protected branch. Use only for emergencies.
+- `GAMA_BYPASS_LOCAL_GATES=1`: bypass local hooks entirely. Use only for emergencies.
+- `GAMA_ALLOW_PROTECTED_PUSH=1`: allow a direct push to a protected branch. Use only for emergencies.

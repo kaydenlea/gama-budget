@@ -1,6 +1,6 @@
 # Purpose of this Repository
 
-PocketCurb is a security-first pnpm monorepo for a personal finance product that prioritizes decisions over bookkeeping. The product goal is to eliminate admin work, reduce shame-driven budgeting behavior, and give users short-term clarity first through a trusted Safe-to-Spend number, a Daily Spending Meter, running balances, event and narrative intelligence, and forward-looking cash-flow guidance. Mobile is the primary product lane. Web is a separate growth and SEO lane.
+Gama is a security-first pnpm monorepo for a personal finance product that prioritizes decisions over bookkeeping. The product goal is to eliminate admin work, reduce shame-driven budgeting behavior, and give users short-term clarity first through a trusted Safe-to-Spend number, a Daily Spending Meter, running balances, event and narrative intelligence, and forward-looking cash-flow guidance. Mobile is the primary product lane. Web is a separate growth and SEO lane.
 
 # Repo Map
 

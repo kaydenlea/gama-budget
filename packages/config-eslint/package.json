@@ -1,9 +1,9 @@
 {
-  "name": "@pocketcurb/config-eslint",
+  "name": "@gama/config-eslint",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Shared ESLint configuration for PocketCurb workspaces.",
+  "description": "Shared ESLint configuration for Gama workspaces.",
   "exports": {
     ".": "./base.mjs"
   },

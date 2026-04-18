@@ -1,6 +1,6 @@
 # Getting Started
 
-This document is the fastest way to understand how to use the PocketCurb repo day to day.
+This document is the fastest way to understand how to use the Gama repo day to day.
 
 ## First Run
 
@@ -74,7 +74,7 @@ Codex review belongs at the pull-request stage. Claude users still get the same 
    - blocks direct pushes to protected branches
    - reruns verification
    - runs the local review gate with workflow-evidence enforcement
-   - writes review artifacts under `.git/pocketcurb/`
+   - writes review artifacts under `.git/gama/`
 7. Open a pull request.
 8. Request or confirm PR-stage AI review.
    Use Codex review on the PR where configured. Let CodeRabbit review too if installed.
@@ -146,8 +146,8 @@ The setup is robust, but not absolute.
 
 Use these only deliberately:
 
-- `POCKETCURB_BYPASS_LOCAL_GATES=1`
-- `POCKETCURB_ALLOW_PROTECTED_PUSH=1`
+- `GAMA_BYPASS_LOCAL_GATES=1`
+- `GAMA_ALLOW_PROTECTED_PUSH=1`
 
 ## Recommended Mental Model
 

@@ -22,7 +22,7 @@ Observed behavior:
 
 - `.github/dependabot.yml` schedules weekly updates but does not use a documented minimum-age delay for normal dependency releases.
 - `scripts/pr-body.mjs` generates a generic draft that omits or under-specifies some required PR metadata details.
-- editing `.pocketcurb-artifacts/pocketcurb/pr-body.md` does not show up in `git status` because `.pocketcurb-artifacts/` is ignored.
+- editing `.gama-artifacts/gama/pr-body.md` does not show up in `git status` because `.gama-artifacts/` is ignored.
 
 Expected behavior:
 
@@ -43,9 +43,9 @@ Impact:
 3. Open `scripts/pr-body.mjs`.
 4. Observe that the generated Release Gate section only includes the checklist link but does not help contributors satisfy all current template expectations, especially around security baseline obligation review.
 5. Generate a PR body and compare it against `.github/pull_request_template.md` and `scripts/check-pr-metadata.mjs`.
-6. Edit `.pocketcurb-artifacts/pocketcurb/pr-body.md`.
+6. Edit `.gama-artifacts/gama/pr-body.md`.
 7. Run `git status --short`.
-8. Observe that no branch change appears because `.pocketcurb-artifacts/` is ignored.
+8. Observe that no branch change appears because `.gama-artifacts/` is ignored.
 
 ## Evidence
 
@@ -110,7 +110,7 @@ Actual root cause:
 
 - Dependabot had a safe weekly schedule but no deliberate cooldown policy for routine version updates.
 - the PR-body generator had drifted behind the current PR template and validator expectations, so manual artifact edits were needed to produce a compliant PR body.
-- the generated PR body lives under `.pocketcurb-artifacts/`, which is intentionally gitignored, so editing it does not create tracked branch changes.
+- the generated PR body lives under `.gama-artifacts/`, which is intentionally gitignored, so editing it does not create tracked branch changes.
 
 Repo fix:
 
@@ -127,4 +127,4 @@ Verification:
 Stable lessons:
 
 - if repo policy depends on a PR-body shape, the generator and validator need to evolve together
-- local generated artifacts are useful outputs, but contributors should not expect git to track files under `.pocketcurb-artifacts/`
+- local generated artifacts are useful outputs, but contributors should not expect git to track files under `.gama-artifacts/`

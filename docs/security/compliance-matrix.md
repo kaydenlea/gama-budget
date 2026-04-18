@@ -20,7 +20,7 @@ Compliance scope depends on the business model, jurisdictions, and data actually
 ## PCI-Only-If-Relevant Nuance
 
 - PCI scope is driven by whether cardholder data enters the environment, not by the general presence of payments or subscriptions
-- if cardholder data is delegated entirely to a compliant third party and never touches PocketCurb systems, keep the boundary explicit in design and disclosures
+- if cardholder data is delegated entirely to a compliant third party and never touches Gama systems, keep the boundary explicit in design and disclosures
 - if any future feature changes that boundary, reopen the compliance plan before implementation rather than after launch
 
 ## Control Mapping Expectations

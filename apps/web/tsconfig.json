@@ -1,19 +1,20 @@
 {
   "extends": "../../packages/config-typescript/web.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "types": [
       "react",
       "node",
       "jest"
     ],
     "paths": {
-      "@pocketcurb/core-domain": [
+      "@gama/core-domain": [
         "../../packages/core-domain/src/index.ts"
       ],
-      "@pocketcurb/schemas": [
+      "@gama/schemas": [
         "../../packages/schemas/src/index.ts"
       ],
-      "@pocketcurb/ui-web": [
+      "@gama/ui-web": [
         "../../packages/ui-web/src/index.tsx"
       ]
     },

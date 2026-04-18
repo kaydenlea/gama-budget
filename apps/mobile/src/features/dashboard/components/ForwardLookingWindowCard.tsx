@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
-import type { TimelineEvent } from "@pocketcurb/core-domain";
-import { SectionCard } from "@pocketcurb/ui-mobile";
+import type { TimelineEvent } from "@gama/core-domain";
+import { SectionCard } from "@gama/ui-mobile";
 
 export function ForwardLookingWindowCard({ events }: { events: TimelineEvent[] }) {
   return (

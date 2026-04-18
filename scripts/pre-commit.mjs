@@ -29,7 +29,7 @@ function isAutomationSafeFile(file) {
 }
 
 function readStagedFiles() {
-  const stagedFilesEnv = process.env.POCKETCURB_STAGED_FILES;
+  const stagedFilesEnv = process.env.GAMA_STAGED_FILES;
   if (stagedFilesEnv) {
     return stagedFilesEnv.split(/\r?\n/).filter(Boolean);
   }
@@ -70,7 +70,7 @@ function runSyntaxChecks(files) {
   }
 }
 
-console.log("Running PocketCurb pre-commit verification...");
+console.log("Running Gama pre-commit verification...");
 
 if (toolchainLinksAvailable()) {
   const result = spawnSync(process.execPath, ["./scripts/verify.mjs"], {

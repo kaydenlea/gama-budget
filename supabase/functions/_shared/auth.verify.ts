@@ -54,7 +54,7 @@ async function verifyAcceptedUserJwt(): Promise<void> {
   const accessToken = await signJwt({ sub: "user-123", role: "authenticated" });
 
   const authenticatedUser = await requireAuthenticatedUserWithVerifier(
-    new Request("https://pocketcurb.test/function", {
+    new Request("https://gama.test/function", {
       headers: { authorization: `Bearer ${accessToken}` },
     }),
     verifyJwt,
@@ -72,7 +72,7 @@ async function verifyMalformedJwtRejected(): Promise<void> {
   await expectRejects(
     () =>
       requireAuthenticatedUserWithVerifier(
-        new Request("https://pocketcurb.test/function", {
+        new Request("https://gama.test/function", {
           headers: { authorization: "Bearer not-a-jwt" },
         }),
         verifyJwt,
@@ -90,7 +90,7 @@ async function verifyNonUserJwtRejected(): Promise<void> {
   await expectRejects(
     () =>
       requireAuthenticatedUserWithVerifier(
-        new Request("https://pocketcurb.test/function", {
+        new Request("https://gama.test/function", {
           headers: { authorization: `Bearer ${accessToken}` },
         }),
         verifyJwt,
@@ -106,7 +106,7 @@ async function verifyMalformedBearerHeaderRejected(): Promise<void> {
   await expectRejects(
     () =>
       requireAuthenticatedUserWithVerifier(
-        new Request("https://pocketcurb.test/function", {
+        new Request("https://gama.test/function", {
           headers: { authorization: "Token abc123" },
         }),
         verifyJwt,

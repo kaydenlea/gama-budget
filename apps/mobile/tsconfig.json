@@ -11,19 +11,19 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@pocketcurb/core-domain": [
+      "@gama/core-domain": [
         "../../packages/core-domain/src/index.ts"
       ],
-      "@pocketcurb/schemas": [
+      "@gama/schemas": [
         "../../packages/schemas/src/index.ts"
       ],
-      "@pocketcurb/api-client": [
+      "@gama/api-client": [
         "../../packages/api-client/src/index.ts"
       ],
-      "@pocketcurb/supabase-types": [
+      "@gama/supabase-types": [
         "../../packages/supabase-types/src/index.ts"
       ],
-      "@pocketcurb/ui-mobile": [
+      "@gama/ui-mobile": [
         "../../packages/ui-mobile/src/index.tsx"
       ]
     }

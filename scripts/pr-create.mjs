@@ -1,7 +1,7 @@
 import process from "node:process";
 import { commandExists, runCommand } from "./common.mjs";
 import { buildPrBody } from "./pr-body.mjs";
-import { writePocketcurbArtifact } from "./git-helpers.mjs";
+import { writeGamaArtifact } from "./git-helpers.mjs";
 
 if (!commandExists("gh")) {
   console.error("GitHub CLI (gh) is not installed on this machine.");
@@ -10,7 +10,7 @@ if (!commandExists("gh")) {
 }
 
 const body = buildPrBody();
-const artifactPath = writePocketcurbArtifact("pr-body.md", `${body}\n`);
+const artifactPath = writeGamaArtifact("pr-body.md", `${body}\n`);
 
 try {
   runCommand("gh", ["pr", "create", "--body-file", artifactPath, ...process.argv.slice(2)]);

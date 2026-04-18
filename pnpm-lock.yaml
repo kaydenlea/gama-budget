@@ -68,19 +68,19 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.10.0
         version: 3.10.0(react-hook-form@7.72.1(react@19.1.0))
-      '@pocketcurb/api-client':
+      '@gama/api-client':
         specifier: workspace:*
         version: link:../../packages/api-client
-      '@pocketcurb/core-domain':
+      '@gama/core-domain':
         specifier: workspace:*
         version: link:../../packages/core-domain
-      '@pocketcurb/schemas':
+      '@gama/schemas':
         specifier: workspace:*
         version: link:../../packages/schemas
-      '@pocketcurb/supabase-types':
+      '@gama/supabase-types':
         specifier: workspace:*
         version: link:../../packages/supabase-types
-      '@pocketcurb/ui-mobile':
+      '@gama/ui-mobile':
         specifier: workspace:*
         version: link:../../packages/ui-mobile
       '@shopify/flash-list':
@@ -189,13 +189,13 @@ importers:
 
   apps/web:
     dependencies:
-      '@pocketcurb/core-domain':
+      '@gama/core-domain':
         specifier: workspace:*
         version: link:../../packages/core-domain
-      '@pocketcurb/schemas':
+      '@gama/schemas':
         specifier: workspace:*
         version: link:../../packages/schemas
-      '@pocketcurb/ui-web':
+      '@gama/ui-web':
         specifier: workspace:*
         version: link:../../packages/ui-web
       next:
@@ -220,13 +220,13 @@ importers:
 
   packages/api-client:
     dependencies:
-      '@pocketcurb/core-domain':
+      '@gama/core-domain':
         specifier: workspace:*
         version: link:../core-domain
-      '@pocketcurb/schemas':
+      '@gama/schemas':
         specifier: workspace:*
         version: link:../schemas
-      '@pocketcurb/supabase-types':
+      '@gama/supabase-types':
         specifier: workspace:*
         version: link:../supabase-types
 
@@ -240,7 +240,7 @@ importers:
 
   packages/schemas:
     dependencies:
-      '@pocketcurb/core-domain':
+      '@gama/core-domain':
         specifier: workspace:*
         version: link:../core-domain
       zod:

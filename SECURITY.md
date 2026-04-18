@@ -1,6 +1,6 @@
 # Security Policy
 
-PocketCurb is a pre-launch finance product repository. Security issues should be reported privately, not in public issues or discussions.
+Gama is a pre-launch finance product repository. Security issues should be reported privately, not in public issues or discussions.
 
 ## Supported Versions
 

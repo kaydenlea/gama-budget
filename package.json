@@ -1,8 +1,8 @@
 {
-  "name": "pocketcurb",
+  "name": "gama",
   "private": true,
   "version": "0.1.0",
-  "description": "Security-first, agent-optimized pnpm monorepo for the PocketCurb decision-first personal finance operating system.",
+  "description": "Security-first, agent-optimized pnpm monorepo for the Gama decision-first personal finance operating system.",
   "type": "module",
   "packageManager": "pnpm@10.6.2",
   "engines": {

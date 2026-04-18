@@ -4,9 +4,9 @@ import process from "node:process";
 import {
   getChangedFilesFromBase,
   getComparisonBase,
-  readPocketcurbArtifact,
+  readGamaArtifact,
   tryRunGit,
-  writePocketcurbArtifact
+  writeGamaArtifact
 } from "./git-helpers.mjs";
 
 function unique(values) {
@@ -21,7 +21,7 @@ function splitLines(value) {
 }
 
 function readJsonArtifact(filename) {
-  const content = readPocketcurbArtifact(filename);
+  const content = readGamaArtifact(filename);
   if (!content) {
     return null;
   }
@@ -34,7 +34,7 @@ function readJsonArtifact(filename) {
 }
 
 function readTextArtifactLines(filename) {
-  return splitLines(readPocketcurbArtifact(filename));
+  return splitLines(readGamaArtifact(filename));
 }
 
 function getBranchFromGitHead() {
@@ -484,22 +484,22 @@ export function buildPrBody() {
     tryRunGit(["branch", "--show-current"]) ||
     tryRunGit(["rev-parse", "--abbrev-ref", "HEAD"]);
   const branch =
-    process.env.POCKETCURB_BRANCH ||
+    process.env.GAMA_BRANCH ||
     branchFromGit ||
     storedReviewContext.branch ||
     "unknown-branch";
 
-  const changedFilesFromEnv = process.env.POCKETCURB_CHANGED_FILES
-    ? splitLines(process.env.POCKETCURB_CHANGED_FILES)
+  const changedFilesFromEnv = process.env.GAMA_CHANGED_FILES
+    ? splitLines(process.env.GAMA_CHANGED_FILES)
     : null;
 
   const canUseStoredReviewContext =
-    !process.env.POCKETCURB_BRANCH &&
+    !process.env.GAMA_BRANCH &&
     Boolean(storedReviewContext.branch) &&
     storedReviewContext.branch === branch;
 
   const baseRef =
-    process.env.POCKETCURB_BASE_REF ||
+    process.env.GAMA_BASE_REF ||
     (() => {
       try {
         return getComparisonBase();
@@ -594,7 +594,7 @@ const body = buildPrBody();
 const writeFlag = process.argv.includes("--write");
 
 if (writeFlag) {
-  const artifactPath = writePocketcurbArtifact("pr-body.md", `${body}\n`);
+  const artifactPath = writeGamaArtifact("pr-body.md", `${body}\n`);
   console.log(artifactPath);
 } else {
   process.stdout.write(`${body}\n`);

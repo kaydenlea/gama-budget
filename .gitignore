@@ -34,4 +34,4 @@ temp/
 supabase/.temp/
 sentry-debug.log
 artifacts/
-.pocketcurb-artifacts/
+.gama-artifacts/

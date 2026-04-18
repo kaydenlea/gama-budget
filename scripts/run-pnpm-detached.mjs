@@ -11,7 +11,7 @@ if (args.length === 0) {
   process.exit(1);
 }
 
-const artifactsDir = path.join(repoRoot, ".pocketcurb-artifacts");
+const artifactsDir = path.join(repoRoot, ".gama-artifacts");
 fs.mkdirSync(artifactsDir, { recursive: true });
 
 const stdoutPath = path.join(artifactsDir, "pnpm-detached.log");

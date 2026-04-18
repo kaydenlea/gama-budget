@@ -29,7 +29,7 @@ try {
     throw new Error(
       [
         "Deno was not found on this machine.",
-        "Install Deno before running PocketCurb bootstrap or relying on the full repo verifier.",
+        "Install Deno before running Gama bootstrap or relying on the full repo verifier.",
         "Supabase Edge Function typechecking is now part of the standard proof path."
       ].join("\n"),
     );
@@ -48,7 +48,7 @@ try {
     }
   }
 
-  console.log("\nPocketCurb local bootstrap completed successfully.");
+  console.log("\nGama local bootstrap completed successfully.");
   console.log("Local commits and pushes will now use the repo hooks.");
 } catch (error) {
   console.error(`\nBootstrap failed: ${error instanceof Error ? error.message : String(error)}`);

@@ -21,6 +21,8 @@ The current web lane uses Next.js App Router, React, TypeScript, typed routes, a
 ## Foundation Building Blocks
 
 - route-owned metadata and canonical path helpers
+- shared page registry for canonical paths, breadcrumbs, sitemap freshness, and robots posture
 - typed content modules for landing, waitlist, privacy, and later educational surfaces
-- sitemap and robots generation owned by the web lane
+- sitemap, robots, manifest, favicon, and social-image generation owned by the web lane
+- JSON-LD factories for Organization, WebSite, WebPage, and BreadcrumbList schema
 - no live waitlist backend or analytics-vendor integration until privacy and disclosure ownership are explicit

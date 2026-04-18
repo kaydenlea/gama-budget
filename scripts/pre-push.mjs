@@ -30,8 +30,8 @@ function isDeletionPush(ref) {
   return ref.localRef === "(delete)" || ref.localOid === ZERO_OID;
 }
 
-if (process.env.POCKETCURB_BYPASS_LOCAL_GATES === "1") {
-  console.warn("PocketCurb local gates bypassed via POCKETCURB_BYPASS_LOCAL_GATES=1");
+if (process.env.GAMA_BYPASS_LOCAL_GATES === "1") {
+  console.warn("Gama local gates bypassed via GAMA_BYPASS_LOCAL_GATES=1");
   process.exit(0);
 }
 
@@ -41,7 +41,7 @@ const protectedBranchUpdate = pushRefs.find((ref) => {
   return remoteBranch && isProtectedBranch(remoteBranch) && !isDeletionPush(ref);
 });
 
-if (protectedBranchUpdate && process.env.POCKETCURB_ALLOW_PROTECTED_PUSH !== "1") {
+if (protectedBranchUpdate && process.env.GAMA_ALLOW_PROTECTED_PUSH !== "1") {
   const targetBranch = remoteBranchName(protectedBranchUpdate.remoteRef);
   console.error(`Direct pushes to protected branch '${targetBranch}' are blocked. Push a feature branch and open a PR.`);
   process.exit(1);
@@ -53,7 +53,7 @@ if (pushRefs.length > 0 && pushRefs.every(isDeletionPush)) {
     return remoteBranch && isProtectedBranch(remoteBranch);
   });
 
-  if (protectedDeletion && process.env.POCKETCURB_ALLOW_PROTECTED_PUSH !== "1") {
+  if (protectedDeletion && process.env.GAMA_ALLOW_PROTECTED_PUSH !== "1") {
     const targetBranch = remoteBranchName(protectedDeletion.remoteRef);
     console.error(`Deletion of protected branch '${targetBranch}' is blocked without override.`);
     process.exit(1);
@@ -63,9 +63,33 @@ if (pushRefs.length > 0 && pushRefs.every(isDeletionPush)) {
   process.exit(0);
 }
 
-const branch = getCurrentBranch();
+function getBranchForReviewContext() {
+  try {
+    return getCurrentBranch();
+  } catch {
+    return "unknown";
+  }
+}
 
-console.log("Running PocketCurb pre-push verification...");
+function getReviewBaseContext() {
+  try {
+    return getComparisonBase();
+  } catch {
+    return "HEAD";
+  }
+}
+
+function getChangedFilesForReviewContext(baseRef) {
+  try {
+    return getChangedFilesFromBase(baseRef);
+  } catch {
+    return [];
+  }
+}
+
+const branch = getBranchForReviewContext();
+
+console.log("Running Gama pre-push verification...");
 const verifyResult = spawnSync(process.execPath, ["./scripts/verify.mjs"], {
   cwd: repoRoot,
   stdio: "inherit"
@@ -75,18 +99,18 @@ if ((verifyResult.status ?? 1) !== 0) {
   process.exit(verifyResult.status ?? 1);
 }
 
-const baseRef = getComparisonBase();
-const changedFiles = getChangedFilesFromBase(baseRef);
+const baseRef = getReviewBaseContext();
+const changedFiles = getChangedFilesForReviewContext(baseRef);
 const changedFilesPayload = changedFiles.join("\n");
 
-console.log("Running PocketCurb local review gate...");
+console.log("Running Gama local review gate...");
 const reviewEnv = {
   ...process.env,
-  POCKETCURB_BRANCH: branch,
-  POCKETCURB_BASE_REF: baseRef,
-  POCKETCURB_CHANGED_FILES: changedFilesPayload,
-  POCKETCURB_CODEX_REVIEW_STATUS: "deferred",
-  POCKETCURB_CODEX_REVIEW_MESSAGE: "Codex review is required at pull-request stage, not during local pre-push."
+  GAMA_BRANCH: branch,
+  GAMA_BASE_REF: baseRef,
+  GAMA_CHANGED_FILES: changedFilesPayload,
+  GAMA_CODEX_REVIEW_STATUS: "deferred",
+  GAMA_CODEX_REVIEW_MESSAGE: "Codex review is required at pull-request stage, not during local pre-push."
 };
 
 const reviewResult = spawnSync(process.execPath, ["./scripts/local-review.mjs", "--require-workflow-evidence"], {

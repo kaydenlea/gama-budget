@@ -1,8 +1,8 @@
 {
-  "name": "@pocketcurb/config-jest",
+  "name": "@gama/config-jest",
   "private": true,
   "version": "0.1.0",
-  "description": "Shared Jest configuration for PocketCurb workspaces.",
+  "description": "Shared Jest configuration for Gama workspaces.",
   "exports": {
     ".": "./base.cjs"
   },

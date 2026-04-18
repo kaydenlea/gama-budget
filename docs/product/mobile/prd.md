@@ -1,478 +1,394 @@
 # 1. Header
 
-- Document title: PocketCurb Mobile MVP PRD
-- Owner(s): PocketCurb Product and Founding Team
-- Status: Finalized working PRD for MVP planning
-- Date/version: 2026-04-05 / v1.1
-- Product area: Mobile app, short-term clarity and shared-spend decision layer
+- Document title: Gama Mobile MVP PRD
+- Owner(s): Gama Product and Founding Team
+- Status: Updated working PRD for rebrand and product-direction reset
+- Date/version: 2026-04-18 / v2.0
+- Product area: Mobile app, short-term clarity, event intelligence, and privacy-bounded sharing
 - Linked docs:
+  - [../shared/gama-product-brief.md](../shared/gama-product-brief.md)
   - [../shared/mission.md](../shared/mission.md)
   - [../shared/product-thesis.md](../shared/product-thesis.md)
   - [../shared/personas-and-use-cases.md](../shared/personas-and-use-cases.md)
   - [../shared/success-metrics.md](../shared/success-metrics.md)
   - [mvp-scope.md](./mvp-scope.md)
+  - [screen-map.md](./screen-map.md)
   - [roadmap.md](./roadmap.md)
 
 # 2. Executive Summary
 
-PocketCurb MVP is a mobile-first, decision-first personal finance product for people who want short-term spending clarity without category homework, spreadsheet glue, or shame-driven budgeting rituals. The MVP is designed for users who need to answer "Am I safe to spend right now?" and "What does this purchase change?" while also handling messy real-life cases such as reimbursements, event spending, and partially shared household finances.
+Gama MVP is a mobile-first, decision-first money product for people who want short-term spending clarity without category homework, spreadsheet glue, or shame-driven rituals. The MVP is designed to answer "Am I safe to spend right now?" and "What changed?" while also helping users organize real-life trips, dinners, weekends, and shared events into useful event budgets, digital receipts, and map-aware summaries.
 
-The strategic goal is not to beat incumbent budgeting tools on feature count. The goal is to remove the admin work those tools still leave behind and replace retrospective cleanup with forward-looking guidance. The MVP centers on a trusted Safe-to-Spend number, a Daily Spending Meter, lightweight running-balance awareness, a forward-looking week or month cash-flow view, and limited but elegant shared-spending support with privacy controls. Event-aware spending organization is part of the MVP because it makes this clarity layer easier to maintain and gives the product a more differentiated narrative-intelligence angle than category-heavy competitors.
+The strategic goal is not to win on feature count. The goal is to remove the admin work left behind by existing budgeting apps, then extend that trust into a shareable artifact layer that makes events and places easier to understand, revisit, and share. Gama should sit in the white space between finance clarity apps, trip-splitting apps, and social place-memory apps.
 
-The MVP should optimize for trust before insight depth. Users should get one or two fast, clear, confidence-building answers before the product tries to impress them with richer automation or broader analytics.
+The MVP should optimize for trust before depth and for private value before public sharing. Users should get one or two fast, clear, confidence-building answers before the product asks them to care about richer automation, stories, or event receipts.
 
-The MVP should also include frictionless capture and core resilience from the start. That means reducing effort through linked data, simulation, and low-friction manual correction, while keeping the product useful and trustworthy during stale, partial, or uncertain data states. This does not require voice capture or a full offline-first architecture in v1.
+The MVP should also include frictionless capture and core resilience from the start. That means linked data, simulation, low-friction manual correction, event inference, and safe degradation during stale or partial data conditions. This does not require voice capture, public feeds, or a full offline-first architecture in v1.
 
-Manual work elimination should be an explicit MVP bar. The product should infer, prefill, or suggest before it asks users to categorize, configure, or reconcile by hand, while still preserving reviewable trust boundaries.
+Manual work elimination remains the explicit bar. The product should infer, prefill, or suggest before it asks users to categorize, configure, or curate by hand, while still preserving reviewable trust boundaries.
 
-This matters now because users still face fragmentation tax across multiple apps and spreadsheets, sync distrust, category fatigue, reimbursement distortion, and guilt-heavy finance UX. The MVP should prove that short-term clarity, shared-spend correctness, and helpful guidance can create a calmer, more trusted personal finance experience than traditional trackers.
+# 3. Product Context and Opportunity
 
-# 3. Problem Statement
+Users do not primarily need another mirror that shows where money went. They need a decision layer that tells them what is safe to do next, what needs review, and how real-life spending fits into actual events and places.
 
-Users do not primarily need another mirror that shows where money went. They need a decision layer that tells them what is safe to do next.
+Current products still fail in predictable ways:
 
-Current finance tools still fail in several predictable ways:
+- budgeting apps optimize for retrospective categorization instead of near-term decisions
+- group-expense tools solve settlement but not full money clarity
+- map and recommendation tools help users save places but are disconnected from real budgets and transactions
+- social products capture memory and aesthetics but not the financial truth underneath those memories
 
-- They optimize for retrospective categorization and reporting instead of near-term decisions.
-- They impose admin residue through category cleanup, rule tuning, reconciliation, and spreadsheet backstops.
-- They handle shared spending and reimbursements as awkward side cases, which distorts both budget truth and household trust.
-- They often fail to give reliable forward-looking cash-flow visibility, running-balance awareness, or actionable daily guidance.
-- They often create guilt and avoidance instead of confidence and clarity.
-
-The market gap is strongest where three pains overlap:
+The strongest gap is where five pains overlap:
 
 - short-term uncertainty about what is safe to spend
 - shared or reimbursed spending that breaks simple budgeting logic
-- distrust of cloud-heavy, sync-fragile, manually intensive workflows
+- fragmented event planning across finance, maps, and group chat
+- lack of useful place memory from actual spending
+- desire for socially legible outputs without public oversharing of finances
 
-The opportunity is to reduce personal finance admin work by turning fragmented transaction history into clear, near-term guidance. PocketCurb should win by answering the user's decision question with enough trust, flexibility, and privacy to replace spreadsheet-plus-app workarounds.
+Gama should win by turning fragmented transaction history into clear near-term guidance, then turning that guidance into curated event objects, digital receipts, and place-aware context that users can keep private or selectively share.
 
-# 4. Target Users and Use Cases
+# 4. Target Users and Core Jobs
 
 ## Primary Users
 
-- Clarity Seekers: individuals who are financially responsible but avoid traditional budgeting because it feels like homework, guilt, or maintenance.
-- Shared-Spend Operators: users who routinely mix personal, shared, and reimbursable spending with a partner, roommate, or household and need clarity without surrendering autonomy.
+- Socially Native Clarity Seekers: people who want fast money clarity in a mobile-native experience that feels current, not spreadsheet-like
+- Trip and Event Organizers: users who want to understand and summarize what a trip, dinner, or weekend actually cost
+- Shared-Spend Operators: users who front, split, reimburse, or partially share spending with others and need correct math plus clear boundaries
 
 ## Secondary Users
 
-- FIRE-Minded Planners who want daily decisions and short-term cash flow to connect to longer-term goals later, but who should not force the MVP into a long-horizon planning product.
-- Spreadsheet fallback users who want more control and trust than typical budget apps provide, but who still want less manual effort than a full spreadsheet ritual.
+- couples or shared-household users who want shared visibility with private autonomy
+- city and dining enthusiasts who want a better record of where they have spent money
+- later: FIRE-lite users who care about longer-term consequences after the short-term loop is trusted
 
 ## Core Jobs To Be Done
 
-- Tell me whether I am safe to spend today or this week.
-- Show me what upcoming obligations and recent choices changed about that answer.
-- Let me simulate a purchase before I make it.
-- Keep shared expenses and reimbursements from breaking my budget picture.
-- Organize irregular spending into meaningful events without creating maintenance work.
-- Preserve personal privacy inside a shared-money context.
+- tell me whether I am safe to spend today or this week
+- show me what upcoming obligations and recent choices changed about that answer
+- let me review or correct recent transactions quickly
+- let me simulate a purchase before I make it
+- organize irregular spending into meaningful events without creating maintenance work
+- generate a polished summary or receipt from an event or trip
+- show me where money was spent so I can revisit or recommend places
+- keep shared expenses and reimbursements from breaking my budget picture
+- preserve personal privacy inside shared or social contexts
 
-## Contexts and Trust Needs
-
-- Users may have linked accounts, manual entries, or both. The product must remain useful even when external sync is late, partial, or unavailable.
-- Users need short-term confidence, not just historical reports.
-- Users want helpful friction: enough interaction to preserve awareness, but not enough to turn the app into homework.
-- Shared-finance users need transparency and autonomy at the same time.
-- Finance advice-adjacent product behavior must feel cautious, explainable, and non-judgmental.
-
-## Key MVP Use Cases
-
-- Morning check-in: "What is safe to spend today?"
-- Pre-purchase check: "If I spend this now, what changes this week?"
-- Upcoming-obligation review: "Can I still cover bills, subscriptions, or planned event spending?"
-- Shared-expense correction: "I paid first, but part of this is shared or reimbursable."
-- Event planning: "What is this trip or event actually costing me?"
-- Privacy-sensitive household view: "Show the right shared picture without exposing every personal detail."
-
-# 5. Product Objectives and Success Metrics
+# 5. Product Goals and Guardrails
 
 ## Product Goals
 
-- Deliver trusted short-term spending clarity with minimal manual cleanup.
-- Make Safe-to-Spend and the Daily Spending Meter meaningful enough to become habitual decision tools.
-- Reduce distortion from shared spending, reimbursements, and event-related expenses.
-- Prove that forward-looking finance UX can feel calm, useful, and less shame-inducing than traditional budgeting.
-- Deliver first-session value quickly enough that users understand the wedge before onboarding fatigue or setup skepticism takes over.
-- Reduce capture friction and preserve usefulness during stale or partial data conditions from the first release.
-- Remove as much recurring manual setup, categorization, and correction work as is realistic without weakening trust.
+- deliver trusted short-term spending clarity with minimal manual cleanup
+- make Overview and Cash Flow meaningful enough to become habitual check-in surfaces
+- reduce distortion from shared spending, reimbursements, bills, and event-related expenses
+- prove that event-aware finance UX can feel calm, useful, and memorable
+- create shareable outputs that drive retention and word-of-mouth without weakening privacy
+- deliver first-session value quickly enough that users understand the wedge before setup fatigue takes over
+- remove recurring manual setup, categorization, and correction work wherever realistic without weakening trust
 
 ## User Outcomes
 
-- Users understand what is safe to spend today and why.
-- Users can spot upcoming pressure before it becomes a surprise shortfall.
-- Users spend less time categorizing, reconciling, and mentally tracking reimbursements.
-- Users feel more confident and less avoidant about checking finances.
-- Users can form a lightweight daily or weekly habit around check-ins and pre-purchase decisions rather than only logging transactions.
-- Users can still act confidently when linked data is stale, incomplete, or temporarily unavailable.
-- Users do not need to perform a budgeting ritual of repeated setup, categorization, and cleanup just to keep guidance useful.
+- users understand what is safe to spend and why
+- users can spot upcoming pressure before it becomes a surprise shortfall
+- users spend less time categorizing, reconciling, and mentally tracking reimbursements
+- users can see what a trip or event is costing them without spreadsheet cleanup
+- users can revisit or share meaningful event summaries and favorite spots
+- users feel more confident and less avoidant about checking finances
 
 ## Business Outcomes
 
-- Establish a clear wedge in a crowded PFM market around short-term clarity and shared-spend correctness.
-- Create an MVP strong enough to support early retention, trust, and referral loops.
-- Validate that users will return for decision support, not just transaction logging.
-
-## Trust and Quality Goals
-
-- Avoid obvious budget distortion from shared spending and reimbursements.
-- Keep user-facing guidance explainable enough that users can understand the reason behind changes.
-- Keep privacy expectations explicit in shared contexts.
-- Minimize support issues tied to confusion, sync distrust, or unexplained calculation shifts.
-- Make first-session guidance legible and trustworthy before exposing richer insight surfaces.
-- Preserve usefulness through safe degradation, explicit freshness states, and manual fallback rather than letting sync issues collapse the experience.
-- Keep required manual review narrow, quick, and clearly worth the effort when automation cannot be trusted.
-
-## Success Metrics
-
-- Weekly active users who view Safe-to-Spend or the Daily Spending Meter at least once per week.
-- Percentage of new users who reach a first useful answer in their first session.
-- Percentage of users who use Add or Simulate Transaction before a purchase decision.
-- Percentage of transactions requiring manual cleanup after initial import or entry.
-- Percentage of flagged ambiguous event assignments that users resolve successfully.
-- Percentage of shared transactions that users complete with a split or reimbursement flow.
-- Reduction in support volume tied to reimbursement confusion, shared-spend distortion, or unexplained guidance changes.
-- User-reported confidence that the app helps answer "Am I safe to spend right now?"
-- User-reported reduction in budgeting-as-homework and shame or avoidance behaviors.
+- establish a wedge in a crowded PFM market around clarity plus event and place intelligence
+- create an MVP strong enough to support early retention, trust, and referral loops
+- validate that users will return for overview, event, and story value, not just raw transaction logging
 
 ## Guardrails
 
-- Do not drive engagement by increasing anxiety or nagging frequency.
-- Do not optimize recommendation surfaces for clicks at the expense of trust.
-- Do not widen MVP scope in ways that weaken correctness on Safe-to-Spend, shared spending, or forward cash flow.
+- do not drive engagement by increasing anxiety or nagging frequency
+- do not optimize social or recommendation surfaces for clicks at the expense of trust
+- do not widen MVP scope in ways that weaken correctness on Safe-to-Spend, shared spending, bills, or forward cash flow
+- do not default users into public sharing of money or location data
 
-# 6. Scope
+# 6. MVP Scope and Page Model
 
 ## In Scope
 
-- Safe-to-Spend as a short-term decision number grounded in upcoming obligations and recent activity.
-- Daily Spending Meter with daily guidance tied to the user's current short-term safety picture.
-- An onboarding flow that gets the user to a useful first answer quickly and explains what the answer is based on.
-- Frictionless capture and correction paths through linked data, simulation, and low-friction manual edits.
-- Inference-first setup using suggested obligations, prefills, and event candidates before deeper manual configuration.
-- Daily budget setting and rollover-aware daily budgeting.
-- Today's transaction list with fast correction and review flows.
-- Add Transaction and Simulate Transaction flows for planned and unplanned spending.
-- Forward-looking week or month cash-flow view showing upcoming obligations, paydays, event pressure, and short-term risk.
-- Lightweight running-balance awareness on primary decision surfaces so users can see near-term cash pressure and avoid avoidable shortfalls.
-- Event or trip budgeting with automatic event grouping, editable assignment, and ambiguity flagging.
-- Split and reimbursement-aware shared transaction handling.
-- Privacy toggle or personal-pot style controls for partially shared contexts.
-- Manual fallback and correction workflows when automated grouping or external data quality is insufficient.
-- Calm, actionable warnings and suggestions that explain what changed and what needs review.
+- Overview page
+- Cash Flow page
+- Bills and Recurring page
+- Accounts page
+- Transactions page with optional map mode
+- Quick Add surface
+- Event list and Event Details page
+- Safe-to-Spend
+- category budgets and lightweight daily guidance
+- recent transactions inbox for review, confirm, edit, or split
+- upcoming transactions and bill pressure
+- event or trip budgeting with automatic grouping and editable assignment
+- digital receipt generation from event transactions
+- opt-in sharing of event summaries and receipts
+- favorite spots by category and event-level place context
+- private weekly money story with quick actions
+- split and reimbursement-aware shared transaction handling
+- privacy controls for shared contexts and share artifacts
 
 ## Out of Scope / Non-Goals
 
-- Full investment or asset tracking.
-- Full FIRE planning, Monte Carlo planning, or retirement projection experiences.
-- Full local-first default operation as the primary MVP architecture.
-- Full family or multi-member collaboration beyond limited shared-spend and privacy controls.
-- Business-accounting depth, freelancer profit and loss, or tax-estimate workflows.
-- Multi-currency support.
-- Voice capture.
-- Spreadsheet import and export.
-- Advanced customizable reports.
-- HYSA optimization or cash-moving recommendations.
-- Full long-term goal consequence views beyond lightweight future hooks.
-- Building a generic AI chat layer as a primary interaction surface.
+- public profiles or broad follow graphs
+- a public raw-spending feed
+- leaderboards or shame-based social comparison
+- exact public location sharing by default
+- full investment tracking and asset-planning depth
+- full FIRE planning, Monte Carlo planning, or retirement projection
+- business-accounting depth, freelancer profit and loss, or tax workflows
+- multi-currency support
+- voice capture
+- spreadsheet import and export
+- merchant monetization or affiliate recommendation layers
 
-## Assumptions
+## Recommended Navigation Model
 
-- The sharpest MVP wedge is short-term clarity plus shared-spend correctness, not broad financial account coverage.
-- The app must remain valuable even when account sync is imperfect; manual entry and simulation are not backup hacks but core trust-preserving workflows.
-- Users will tolerate some review-needed states if those states are clear, bounded, and meaningfully reduce later cleanup.
-- Shared-finance support should be elegant but limited in MVP rather than trying to solve all household collaboration patterns immediately.
-- Users care about richer insights only after the product has already earned trust with a small number of clear, useful answers.
-- Frictionless capture is an MVP principle, but the specific modality remains open; voice is deferred unless later evidence shows it is core to the wedge.
-- Core resilience is MVP-critical, but full offline-first and local-first architecture remain deferred.
-- When the product does ask for manual input, it should be because the information materially improves guidance and could not be inferred safely enough.
+Recommended primary navigation:
 
-## Dependencies
+- Overview
+- Cash Flow
+- Events
+- Transactions
+- Accounts
 
-- Reliable identity and authorization boundaries.
-- Secure linked-account integration and transaction ingestion where enabled.
-- A canonical transaction and event model capable of supporting splits, reimbursements, and ambiguity states.
-- Explainable Safe-to-Spend logic and forward-cash-flow logic.
-- Notification and alerting posture that supports useful guidance without spam.
-- Clear product disclosures and privacy controls for linked financial data and shared contexts.
+Recommended secondary surfaces:
 
-# 7. Product Principles
+- Bills and Recurring
+- Quick Add
+- Event Details
+- Weekly Story
+- Settings, Notifications, and Widgets
 
-- Decision-first over retrospective tracking.
-- Minimize admin work, category homework, and cleanup residue.
-- Short-term clarity before long-term sophistication.
-- Calm, non-guilt-driven UX over fear- or shame-based finance design.
-- Privacy-first and trust-first behavior from day one.
-- Helpful friction, not zero friction and not oppressive friction.
-- Useful guidance over decorative analytics.
-- Shared visibility should not require total privacy loss.
-- Automation should reduce work, not reduce understanding.
-- Explain what changed, not just what the current number is.
+Rationale: this keeps the app anchored around decision support while still giving Events first-class status. Bills and Quick Add are important pages, but they do not need to consume scarce primary-tab real estate in the first pass.
 
-# 8. User Journeys / Scenarios
-
-## Scenario 1: Daily clarity check
-
-- User opens the app and sees Safe-to-Spend, Daily Spending Meter status, upcoming obligations, and any meaningful warnings.
-- User understands whether the week is stable, tight, or review-needed without needing to inspect every transaction.
-- If the answer changed materially since the last check, the app explains why in plain language.
-
-## Scenario 2: Pre-purchase simulation
-
-- User is considering a purchase.
-- User opens Add or Simulate Transaction, enters an amount, optionally marks it as shared or event-related, and sees the projected short-term impact before saving.
-- If the simulated spend pushes the week into caution territory, the app shows the change and reason without scolding.
-
-## Scenario 3: Event grouping happy path
-
-- User spends across a trip or event over several days.
-- The app auto-groups likely related transactions into an event budget.
-- User can review and edit assignments quickly.
-- Event-level spending context improves the short-term picture without requiring full recategorization.
-
-## Scenario 4: Event grouping ambiguous path
-
-- A transaction may belong to an event but confidence is low.
-- The app flags it as review-needed instead of silently deciding.
-- The user can assign, ignore, or split the transaction without hunting through settings or rules.
-
-## Scenario 5: Shared transaction with reimbursement
-
-- User pays for a shared expense.
-- The app allows a split and reimbursement expectation to be recorded.
-- The user's budget and guidance should reflect that part of the amount is not a true personal spend burden.
-- Until reimbursement is received, the app should still acknowledge short-term cash pressure without overstating long-term overspending.
-
-## Scenario 6: Shared context with privacy
-
-- User shares some household visibility but keeps selected transactions or categories private.
-- Household-level views show the right shared burden without leaking private line-item detail.
-- Privacy controls feel intentional and understandable, not like hidden accounting tricks.
-
-## Scenario 7: Sync delay or incomplete data
-
-- Linked data is delayed, duplicated, or incomplete.
-- The app surfaces stale-data or review-needed context where it materially affects trust.
-- Manual entry or simulation remains available so the product continues to provide value.
-
-# 9. Functional Requirements
+# 7. Functional Requirements
 
 ## Onboarding and Setup
 
-- The system must onboard a user into a short-term clarity workflow, not a category-configuration workflow.
-- The system must support account creation, authentication, and secure session handling.
-- The system must support either linked financial data, manual entry, or both, while making the current data freshness state understandable.
-- The system must collect only the minimum setup information required to produce initial short-term guidance.
-- The system should aim to produce a first useful answer or simulation result before asking for deeper setup that is not yet needed.
-- The system must provide low-friction capture and correction paths so users can keep the product useful without a budgeting ritual.
-- The system should prefer inferred or prefilled obligations, defaults, and transaction context before asking the user to configure them from scratch.
+- the system must onboard users into a short-term clarity workflow, not a category-configuration workflow
+- the system must support account creation, authentication, and secure session handling
+- the system must support linked financial data, manual entry, or both, while making freshness understandable
+- the system must collect only the minimum setup information required to produce useful guidance
+- the system should aim to produce a first useful answer or simulation before deeper setup
+- the system should prefer inferred obligations, defaults, and event candidates before blank-slate configuration
 
-## Short-Term Clarity Layer
+## Overview Page
 
-- The system must compute and display a Safe-to-Spend value for the user.
-- The system must compute and display a Daily Spending Meter and allow daily budget setting.
-- The system must show near-term obligations, paydays, and short-term spending pressure in a forward-looking view.
-- The system must provide lightweight running-balance awareness where it affects short-term confidence and overdraft avoidance.
-- The system must explain meaningful changes to Safe-to-Spend or daily guidance in plain language.
-- The system must present caution, warning, and review-needed states without shaming language.
+- the system must compute and display a Safe-to-Spend value
+- the system must show category budget posture in a lightweight, understandable way
+- the system must show recent transactions that need confirmation, correction, edit, or split handling
+- the system must show an event timeline or event strip that makes active or recent events easy to access
+- the system must show upcoming transactions or obligations that materially affect near-term safety
+- the system must explain meaningful changes in plain language
 
-## Transaction and Budget Interaction
+## Cash Flow Page
 
-- The system must show today's transactions in a fast-review list.
-- The system must allow users to add a real transaction manually.
-- The system must allow users to simulate a transaction and see projected impact before saving.
-- The system must support quick correction of transaction attributes that materially affect decision quality.
-- The system must support daily budget settings and rollover-aware behavior without requiring complex category management.
-- The system should minimize repeated manual categorization or configuration work when the same outcome can be reached through reliable inference or reusable user confirmation.
+- the system must show net flow for the current period and near-term forecast
+- the system must compare income versus expenses clearly
+- the system must break inflow and outflow into useful categories without forcing full manual bookkeeping
+- the system must connect into bills, recurring items, and event pressure
 
-## Event Grouping and Event Budgets
+## Bills and Recurring Page
 
-- The system must support event or trip budgets as a first-class context.
-- The system must attempt automatic event grouping for relevant transactions.
-- The system must flag ambiguous event assignments instead of silently forcing low-confidence grouping.
-- The system must allow fast manual reassignment or removal from an event.
-- The system must let users understand what a given event is costing them in a way that improves near-term clarity.
+- the system must identify recurring, subscription, and bill-like obligations where data quality allows
+- the system must show settled, due soon, overdue, and unresolved states
+- the system must help users understand what has already been handled versus what still needs attention
+- the system must preserve review-needed states when a recurring detection is uncertain
 
-## Shared Household, Reimbursements, and Privacy Toggles
+## Accounts Page
 
-- The system must support marking a transaction as shared, split, reimbursable, or some combination of those states.
-- The system must distinguish true personal spending from temporary fronted spending where reimbursement is expected.
-- The system must avoid making reimbursable or shared spending appear as simple overspending without context.
-- The system must support privacy-toggle or personal-pot style controls so a user can keep selected spending private while still contributing the right shared impact to joint views.
-- The system must ensure that shared views only expose data the current user is authorized to see.
+- the system must show accounts, balances, debt, and high-level account value
+- the system must keep this surface useful without turning MVP into a full wealth dashboard
+- the system must expose stale-data or sync issues clearly when they affect trust
 
-## Budget Mechanics
+## Transactions Page
 
-- The system must support daily budgeting with rollover behavior.
-- The system must make rollover effects understandable rather than silently changing daily guidance.
-- The system must ensure that rollover logic does not hide meaningful short-term risk.
+- the system must list transactions chronologically
+- the system must allow filtering or organization by category and by event
+- the system must support quick correction of transaction attributes that materially affect decision quality
+- the system should support map visualization when merchant and location confidence are strong enough
+- the system must allow users to drill into a place from a transaction where supported
 
-## Roadmap-Aware Extension Points
+## Quick Add
 
-- The product model must preserve future hooks for longer-term goal or FIRE consequence views without requiring those experiences in MVP.
-- The product model must preserve future hooks for deeper running-balance analytics, multi-member household workflows, and local-first variants.
+- the system must allow manual transaction entry
+- the system must allow purchase simulation before saving
+- the system must allow a user to create or attach an event
+- the system must support split, reimbursement, and note entry where relevant
 
-# 10. Non-Functional Requirements
+## Event Model and Event Details
 
-- Home and primary decision surfaces should feel fast enough for habitual use; last-known short-term guidance should render quickly on a typical mobile connection and device.
-- Core interactions such as opening the app, reviewing Safe-to-Spend, and simulating a transaction must feel responsive and lightweight.
-- The product must remain useful during partial sync failure, stale linked data, or temporary backend degradation.
-- The product must degrade safely by showing freshness, uncertainty, and fallback options rather than silently pretending the data is current.
-- User-facing explanations must be understandable without finance-specialist language.
-- The system must be maintainable enough to support iterative calibration of guidance logic without constant UI churn.
-- The product must support auditability for sensitive calculation changes, shared-data visibility changes, and reimbursement-related state transitions.
-- Mobile UX must be accessible enough for routine daily use, including readable text, clear state changes, and touch-safe interaction targets.
-- Release posture must be conservative around trust-sensitive logic changes, shared-finance behavior changes, and disclosure-affecting changes.
+- the system must support event or trip budgets as first-class contexts
+- the system must attempt automatic event grouping for relevant transactions
+- the system must flag ambiguous event assignments instead of forcing low-confidence grouping
+- the system must allow fast manual reassignment, splitting, or removal from an event
+- Event Details must show total budget, actual spend, category breakdown, collaborator state, favorite spots, and map view
+- Event Details must support editing collaborators, event metadata, and event assignment state
 
-# 11. Privacy, Security, and Compliance Requirements
+## Digital Receipts and Sharing
 
-- User data must be private by default.
-- Shared views must reveal only explicitly shared information and only to authorized members of that shared context.
-- Personal transactions or private notes must not leak into shared surfaces unless the user deliberately shares them.
-- The product must clearly distinguish private, shared, and reimbursable spending states where those differences materially affect visibility or guidance.
-- Identity, household membership, permissions, linked-account authorization, and canonical persisted financial records must be server-authoritative.
-- Trust-critical persisted calculations, including the canonical Safe-to-Spend result and shared-view effects, must be derived from authoritative server-backed data even if the client can show provisional UI previews.
-- Client-side calculation is acceptable for drafts, simulations, cached presentation, and local responsiveness, but those views must not silently override canonical persisted results.
-- The product must validate and authorize all user actions affecting shared data, reimbursement state, privacy controls, and account connections.
-- The product must minimize collected and retained data to what is needed for short-term clarity, event grouping, and shared-spend correctness.
-- The product must provide clear deletion and account-disconnect behavior at the product level, including consequences for shared contexts and linked data.
-- The product must avoid storing privileged secrets or high-risk credentials on the client.
-- The product must support disclosures around linked financial data, analytics, monitoring, and shared-data visibility behavior.
-- Security-sensitive failures must fail safely and visibly. The product should prefer a review-needed state over silent corruption or overconfident guidance.
+- the system must be able to generate a curated digital receipt from an event
+- the receipt should include at minimum total spend, category breakdown, time window, collaborators where authorized, and place context
+- the system must allow opt-in sharing of the receipt or summary
+- the system must show a share preview before publishing or sending
+- the system must support redaction or omission of private detail when a share leaves the app
 
-# 12. UX / Behavior Expectations
+## Weekly Money Stories
 
-The experience should feel calm, competent, and helpful. It should feel more like a trusted financial co-pilot than a nagging compliance tool.
+- the system should generate a private-by-default weekly recap when the user has sufficient data
+- the story should highlight useful patterns, event outcomes, or budget drift in plain language
+- the story should include quick actions such as adjust a budget, review a transaction, or revisit an event
+- the system must avoid turning the story into a guilt-heavy scorecard
 
-- Safe-to-Spend should feel trustworthy, conservative enough to avoid obvious false confidence, and always paired with enough explanation to preserve user understanding.
-- The Daily Spending Meter should guide behavior without making the user feel judged. It should show tradeoffs and pressure, not moral failure.
-- Forward-looking cash-flow surfaces should reduce surprise and make upcoming obligations tangible.
-- Event grouping should feel like the app is reducing clutter for the user, not inventing more cleanup work.
-- The first session should emphasize one or two clear aha moments, not a tour of every possible feature.
-- Capture and correction flows should feel fast enough that users do not experience the product as manual bookkeeping.
-- Ambiguous states should be clear, bounded, and easy to resolve.
-- Review-needed flows should be narrow and high-signal rather than turning into an inbox of finance chores.
-- Shared-private controls should feel respectful and explicit; users should understand what remains private, what becomes visible, and why.
-- Warning states should say what changed and what the user can do next.
-- Empty states should teach the decision-first model, not just prompt users to add more data.
-- Failure states should preserve trust by explaining what is missing, stale, or uncertain.
+## Shared Spending, Reimbursements, and Privacy Controls
+
+- the system must support marking a transaction as shared, split, reimbursable, or some combination
+- the system must distinguish true personal spending from fronted spending where reimbursement is expected
+- the system must avoid making reimbursable or shared spending appear as simple overspending without context
+- the system must support privacy controls so a user can keep selected spending private while still contributing the right shared impact to joint views
+- the system must ensure that shared views and share artifacts only expose data the current user is authorized to reveal
+
+# 8. Non-Functional Requirements
+
+- primary decision surfaces should feel fast enough for habitual use
+- core interactions such as opening the app, reviewing the inbox, and simulating a transaction must feel responsive
+- the product must remain useful during partial sync failure, stale linked data, or temporary backend degradation
+- the product must degrade safely by showing freshness, uncertainty, and fallback options
+- user-facing explanations must be understandable without finance-specialist language
+- the system must remain maintainable enough to calibrate guidance logic and share artifacts without constant UI churn
+- the product must support auditability for sensitive calculation changes, share-state changes, and reimbursement transitions
+- mobile UX must be accessible enough for routine daily use, including readable text and touch-safe targets
+
+# 9. Privacy, Security, and Trust Constraints
+
+- user data must be private by default
+- financial and location sharing must always be explicit, previewable, and revocable where possible
+- shared views must reveal only explicitly shared information and only to authorized viewers
+- personal transactions, private notes, or sensitive places must not leak into shared surfaces unless the user deliberately shares them
+- the product must distinguish private, shared, reimbursable, and shareable states clearly
+- identity, household membership, permissions, linked-account authorization, and canonical persisted financial records must be server-authoritative
+- trust-critical persisted calculations must be derived from authoritative server-backed data even if the client can show provisional previews
+- client-side calculation is acceptable for drafts, simulations, cached presentation, and local responsiveness, but must not silently override canonical results
+- the product must validate and authorize all actions affecting shared data, event collaborators, privacy controls, location-sharing state, and account connections
+- the product must minimize collected and retained data to what is needed for short-term clarity, event grouping, and place-aware value
+- security-sensitive failures must fail safely and visibly; review-needed is preferable to silent corruption or overconfident guidance
+
+# 10. UX and Behavior Expectations
+
+The experience should feel calm, competent, current, and socially fluent. It should feel more like a trusted money companion than a nagging compliance tool or a performative feed.
+
+- Safe-to-Spend should feel trustworthy, conservative enough to avoid false confidence, and paired with enough explanation to preserve understanding
+- Overview should feel like the user's money home base, not an overwhelming dashboard
+- Cash Flow and Bills should reduce surprise and make upcoming obligations tangible
+- Event grouping should feel like the app is reducing clutter, not inventing more cleanup work
+- digital receipts should feel polished and worth saving or sending
+- map surfaces should feel useful and memory-rich, not creepy or overexposed
+- the first session should emphasize one or two clear aha moments, not a tour of every feature
+- capture and correction flows should feel fast enough that users do not experience the product as bookkeeping
+- review-needed flows should stay narrow and high-signal
+- shared and private controls should feel respectful and explicit
+- weekly stories should be actionable, not judgmental
 
 Important UX states:
 
-- Normal: guidance is stable and trustworthy.
-- Caution: spending room exists but upcoming obligations or recent actions reduced flexibility.
-- Warning: the short-term picture is materially tight and needs attention.
-- Review-needed: ambiguity, stale data, or unresolved shared-spend state affects confidence.
-- Failure: the product cannot currently compute a trustworthy answer.
-- Empty: not enough data yet, but the next step is clear and small.
+- Normal: guidance is stable and trustworthy
+- Caution: spending room exists but flexibility is lower
+- Warning: the short-term picture is materially tight and needs attention
+- Review-needed: ambiguity, stale data, or unresolved shared-spend state affects confidence
+- Failure: the product cannot compute a trustworthy answer
+- Empty: not enough data yet, but the next step is small and clear
 
-# 13. Acceptance Criteria
+# 11. Acceptance Criteria
 
-## Safe-to-Spend
+## Overview and Clarity
 
-- Given a user with sufficient recent transaction and upcoming-obligation data, when they open the home screen, then the app shows a Safe-to-Spend value and a short explanation of what most influenced it.
-- Given a material change in upcoming obligations, expected inflows, or confirmed spending, when Safe-to-Spend changes meaningfully, then the app shows that the value changed and why.
-- Given the system cannot produce a trustworthy Safe-to-Spend result, when confidence is materially impaired by stale, missing, or unresolved data, then the app shows a review-needed or unavailable state rather than a falsely precise number.
+- given a user with sufficient recent transaction and upcoming-obligation data, when they open Overview, then the app shows Safe-to-Spend, budget posture, a recent transaction inbox, and upcoming pressure with a short explanation
+- given a material change in upcoming obligations or confirmed spending, when Safe-to-Spend changes meaningfully, then the app explains that change in plain language
+- given confidence is materially impaired by stale, missing, or unresolved data, when the user opens Overview, then the app shows a review-needed or unavailable state rather than a falsely precise number
 
-## Daily Spending Meter
+## Bills and Cash Flow
 
-- Given a user has set or accepted a daily budget, when they check the app, then the Daily Spending Meter reflects current day progress in the context of rollover-aware short-term guidance.
-- Given daily guidance tightens due to upcoming obligations or recent spending, when the user reopens the app, then the meter state updates and the reason is understandable.
+- given the user has upcoming bills, subscriptions, or paydays, when they open Cash Flow or Bills, then the app shows timing and status in a way that helps avoid surprise shortfalls
+- given linked data is stale or incomplete, when that materially affects the view, then the app shows a stale-data or review-needed state
 
-## Forward-Looking Cash Flow
+## Transactions and Quick Add
 
-- Given the user has upcoming bills, subscriptions, paydays, or planned event spending, when they open the week or month view, then the app shows forward-looking pressure and timing in a way that helps avoid surprise shortfalls.
-- Given linked account data is stale or incomplete, when that materially affects the forward-looking view, then the app shows a review-needed or stale-data state.
+- given a user is considering a purchase, when they simulate a transaction, then the app shows projected short-term impact before saving
+- given a user edits a transaction, split, or reimbursement state, when they save the change, then the relevant clarity and event surfaces update accordingly
 
-## Add or Simulate Transaction
+## Event Details and Digital Receipts
 
-- Given a user is considering a purchase, when they simulate a transaction, then the app shows projected short-term impact before the transaction is saved.
-- Given the user saves a simulated transaction as real, when it is persisted, then the relevant decision surfaces update accordingly.
+- given transactions likely belong to the same trip or event, when confidence is sufficient, then the app groups them automatically into an event context
+- given confidence is insufficient, when the app cannot decide safely, then it flags the transaction as ambiguous instead of forcing the grouping
+- given an event has enough data, when the user opens Event Details, then the app shows total spend, category breakdown, collaborators where authorized, and place context
+- given the user generates a digital receipt, when the preview appears, then the user can review what will be shared and remove or redact sensitive detail before sharing
 
-## Event Grouping
+## Map and Place Context
 
-- Given transactions likely belong to the same trip or event, when the confidence is sufficient, then the app groups them automatically into an event context.
-- Given confidence is insufficient, when the app cannot decide safely, then it flags the transaction as ambiguous instead of forcing the grouping.
-- Given the user edits an event assignment, when they confirm the new assignment, then event totals and related guidance update accordingly.
+- given a transaction has trustworthy merchant or location data, when the user opens a transaction or event map view, then the app shows associated places in a useful and understandable way
+- given a place is sensitive or low-confidence, when the user prepares a share, then the product omits, coarsens, or flags that location instead of exposing it silently
 
-## Shared Spend and Reimbursements
+## Weekly Money Story
 
-- Given a user records a shared transaction, when they define a split or reimbursement expectation, then the product reflects both immediate cash impact and reduced true personal-spend burden appropriately.
-- Given reimbursement is expected but not yet received, when the user views short-term guidance, then the app acknowledges short-term cash pressure without permanently treating the full amount as true personal spend.
-- Given reimbursement is received or resolved, when the shared transaction state changes, then the product updates the user's picture without double counting spend or recovery.
+- given the user has sufficient weekly activity, when the story is generated, then it summarizes useful patterns and includes at least one clear next action
+- given the user does not want to share the story, when they dismiss or keep it private, then the product does not pressure them into publication
 
-## Privacy Toggles
-
-- Given a user marks spending as private within a shared context, when another household member views the shared surface, then only the authorized shared impact is visible and private detail remains hidden.
-- Given a user changes a privacy or sharing setting, when the change is saved, then the resulting visibility is explicit and consistent across shared views.
-
-## Rollover Behavior
-
-- Given a user underspends or overspends their daily target, when the next day or relevant window begins, then rollover behavior is reflected in guidance in a way the user can understand.
-- Given rollover would mask a real near-term shortfall, when the system detects that risk, then the app surfaces the shortfall instead of presenting rollover as reassurance.
-
-# 14. Risks, Open Questions, and Decisions
+# 12. Risks, Open Questions, and Decisions
 
 ## Risks
 
-- Safe-to-Spend can lose trust quickly if it is either too optimistic or too opaque.
-- Shared-spend and reimbursement modeling can become confusing if the product tries to compress too many edge cases into one simple flow.
-- Event grouping can create more cleanup instead of less if ambiguity handling is weak.
-- Linked-account sync issues can undermine trust if manual fallback flows are not good enough.
-- Expanding into too many adjacent finance jobs too early can dilute the MVP wedge.
-- Exposing too many insights before first-session trust is established can make the product feel clever but untrustworthy.
-- If capture and correction remain too effortful, the product can still feel like finance homework even with strong guidance surfaces.
-- Over-ambitious automation can also backfire if it creates too many review chores or incorrect prefills that users must constantly fix.
+- Safe-to-Spend can lose trust quickly if it is too optimistic or too opaque
+- social framing can backfire if the product looks like public financial performance instead of private utility
+- event grouping can create more cleanup instead of less if ambiguity handling is weak
+- map features can create privacy regret if precision rules are weak
+- linked-account sync issues can undermine trust if manual fallback flows are not good enough
+- expanding into too many adjacent jobs too early can dilute the wedge
 
 ## Open Questions
 
-- How conservative should the first Safe-to-Spend calibration be relative to expected reimbursements, pending transactions, and uncertain subscriptions?
-- How much running-balance detail should appear in MVP before the experience starts to feel like a ledger instead of a decision tool?
-- What is the smallest shared-household permission model that still feels elegant and trustworthy at MVP?
+- how conservative should the first Safe-to-Spend calibration be relative to expected reimbursements, pending transactions, and uncertain subscriptions?
+- how much running-balance detail should appear in MVP before the experience starts to feel like a ledger instead of a decision tool?
+- should weekly money stories be part of the first public MVP or a limited rollout after event receipts are validated?
 
 ## Decisions Made Now
 
-- The MVP is intentionally narrower than a full budgeting suite and focuses on short-term clarity, event-aware organization, and shared-spend correctness.
-- The primary MVP differentiation is trusted short-term clarity plus shared-spend correctness; event-aware auto-grouping is a signature supporting differentiator rather than the sole headline wedge.
-- Shared-household support is included, but only to the degree needed for privacy-aware shared spending and reimbursement handling.
-- Manual entry and simulation are first-class trust-preserving workflows, not fallback afterthoughts.
-- Onboarding and early product surfaces should optimize for fast trust and first-session value rather than broad feature exposure.
-- Frictionless capture and core resilience are required from the first release, while voice capture and full offline-first modes remain later wedges rather than MVP commitments.
-- The MVP should infer, prefill, and suggest wherever realistic, while keeping manual review deliberately narrow and trust-preserving.
-- FIRE and long-term planning are deferred as later consequence layers, not core MVP surfaces.
-- Lightweight running-balance awareness is in MVP because it materially affects short-term trust; deeper balance analytics are deferred.
+- the product brand is now Gama and the planned public website domain is `gama.money`
+- the MVP focuses on short-term clarity, event-aware organization, place-aware context, and privacy-bounded sharing
+- the primary MVP differentiation is trusted clarity plus event and place intelligence, not a public budgeting community
+- the social layer is artifact-first; public raw-spending feeds are out of scope
+- Event Details and digital receipts are first-class MVP surfaces
+- shared-household support is included only to the degree needed for privacy-aware shared spending and reimbursement handling
+- manual entry and simulation are first-class trust-preserving workflows, not fallback afterthoughts
+- onboarding should optimize for fast trust and first-session value rather than broad feature exposure
 
 ## Decisions Intentionally Deferred
 
-- Full family collaboration models and advanced permission granularity.
-- Full long-term goal consequence modeling and FIRE-date movement.
-- Multi-currency and business or tax workflows.
-- Import and export heavy workflows, including spreadsheets.
+- public follow graph or community feed
+- full family collaboration models and advanced permission granularity
+- exact public map-sharing defaults
+- full long-term goal consequence modeling and FIRE-date movement
+- multi-currency and business or tax workflows
+- heavy import and export workflows
 
-# 15. Suggested Follow-Up Implementation Spec Outline
+# 13. Suggested Follow-Up Implementation Spec Outline
 
-The implementation spec should not restate this PRD. It should turn this PRD into precise product and engineering slices.
+The implementation spec should turn this PRD into precise product and engineering slices. It should cover:
 
-It should cover:
-
-- domain model definitions for transactions, events, obligations, shared state, splits, reimbursements, privacy scopes, and guidance states
-- authoritative calculation boundaries for Safe-to-Spend, Daily Spending Meter, forward cash flow, and shared-spend effects
+- domain model definitions for transactions, events, obligations, shared state, splits, reimbursements, privacy scopes, share artifacts, and place metadata
+- authoritative calculation boundaries for Safe-to-Spend, budget posture, bills, cash flow, and shared-spend effects
 - data freshness, confidence, ambiguity, and review-needed state logic
 - onboarding and setup slices, including minimum viable data collection and linked-account versus manual workflows
-- home and primary decision-surface behavior
-- Add or Simulate Transaction flow behavior, including provisional versus canonical calculation updates
+- Overview, Cash Flow, Bills, Accounts, Transactions, and Event Details behavior
+- Quick Add and simulation behavior, including provisional versus canonical calculation updates
 - event grouping heuristics, confidence thresholds, and edit flows
+- digital receipt generation, preview, redaction, and sharing rules
+- map confidence, precision, and sensitive-place handling
 - reimbursement and split modeling, including lifecycle states and user-facing effects
-- privacy-toggle behavior and shared-surface visibility rules
-- rollover rules and failure-mode handling
-- notification and guidance trigger rules
+- privacy-control behavior and shared-surface visibility rules
+- story generation rules and action types
 - analytics and trust instrumentation
-- security, authorization, and disclosure-sensitive requirements that must be verified before release
-
-The implementation plan derived from that spec should define:
-
-- exact files and modules to add or change
-- server-authoritative versus client-calculated logic per area
-- slice-by-slice verification criteria
-- edge-case matrices for ambiguity, stale data, sync delay, privacy-state changes, and reimbursement resolution
-- rollout and rollback considerations for trust-sensitive calculation changes
+- security, authorization, location-sharing, and disclosure-sensitive requirements that must be verified before release

@@ -1,11 +1,11 @@
 function createWorkspaceModuleNameMapper(rootDirPrefix) {
   return {
-    "^@pocketcurb/core-domain$": `${rootDirPrefix}/packages/core-domain/src/index.ts`,
-    "^@pocketcurb/schemas$": `${rootDirPrefix}/packages/schemas/src/index.ts`,
-    "^@pocketcurb/api-client$": `${rootDirPrefix}/packages/api-client/src/index.ts`,
-    "^@pocketcurb/supabase-types$": `${rootDirPrefix}/packages/supabase-types/src/index.ts`,
-    "^@pocketcurb/ui-mobile$": `${rootDirPrefix}/packages/ui-mobile/src/index.tsx`,
-    "^@pocketcurb/ui-web$": `${rootDirPrefix}/packages/ui-web/src/index.tsx`
+    "^@gama/core-domain$": `${rootDirPrefix}/packages/core-domain/src/index.ts`,
+    "^@gama/schemas$": `${rootDirPrefix}/packages/schemas/src/index.ts`,
+    "^@gama/api-client$": `${rootDirPrefix}/packages/api-client/src/index.ts`,
+    "^@gama/supabase-types$": `${rootDirPrefix}/packages/supabase-types/src/index.ts`,
+    "^@gama/ui-mobile$": `${rootDirPrefix}/packages/ui-mobile/src/index.tsx`,
+    "^@gama/ui-web$": `${rootDirPrefix}/packages/ui-web/src/index.tsx`
   };
 }
 

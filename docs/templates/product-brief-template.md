@@ -14,7 +14,7 @@ State what remains intentionally unresolved at the requirements level so this br
 
 ## Why Now
 
-Explain why this matters now for PocketCurb's product direction, market timing, or user trust.
+Explain why this matters now for Gama's product direction, market timing, or user trust.
 
 ## Target Users
 

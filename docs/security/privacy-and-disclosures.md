@@ -1,6 +1,6 @@
 # Privacy and Disclosures
 
-PocketCurb should use data minimization and plain-language transparency. The product narrative is privacy-first resilience, not aggressive surveillance.
+Gama should use data minimization and plain-language transparency. The product narrative is privacy-first resilience, not aggressive surveillance.
 
 ## Privacy Rules
 

@@ -1,4 +1,4 @@
-# PocketCurb Repository Review - Follow-Up Pass
+# Gama Repository Review - Follow-Up Pass
 
 Second-pass review on 2026-04-05 after adjustments from commits `2940754` and `d4b7b1b`, then finalized with a bounded closure pass on 2026-04-05.
 

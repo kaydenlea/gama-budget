@@ -7,11 +7,11 @@
     "verbatimModuleSyntax": false,
     "baseUrl": ".",
     "paths": {
-      "@pocketcurb/core-domain": ["./packages/core-domain/src/index.ts"],
-      "@pocketcurb/schemas": ["./packages/schemas/src/index.ts"],
-      "@pocketcurb/api-client": ["./packages/api-client/src/index.ts"],
-      "@pocketcurb/supabase-types": ["./packages/supabase-types/src/index.ts"],
-      "@pocketcurb/ui-web": ["./packages/ui-web/src/index.tsx"]
+      "@gama/core-domain": ["./packages/core-domain/src/index.ts"],
+      "@gama/schemas": ["./packages/schemas/src/index.ts"],
+      "@gama/api-client": ["./packages/api-client/src/index.ts"],
+      "@gama/supabase-types": ["./packages/supabase-types/src/index.ts"],
+      "@gama/ui-web": ["./packages/ui-web/src/index.tsx"]
     }
   },
   "include": ["packages/**/*.ts", "packages/**/*.tsx", "apps/web/**/*.ts", "apps/web/**/*.tsx"]

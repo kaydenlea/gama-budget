@@ -1,9 +1,9 @@
 import type { ExpoConfig } from "expo/config";
 
 const config: ExpoConfig = {
-  name: "PocketCurb",
-  slug: "pocketcurb-mobile",
-  scheme: "pocketcurb",
+  name: "Gama",
+  slug: "gama-mobile",
+  scheme: "gama",
   version: "0.1.0",
   orientation: "portrait",
   userInterfaceStyle: "automatic",
@@ -18,10 +18,10 @@ const config: ExpoConfig = {
   },
   ios: {
     supportsTablet: false,
-    bundleIdentifier: "com.pocketcurb.mobile"
+    bundleIdentifier: "com.gama.mobile"
   },
   android: {
-    package: "com.pocketcurb.mobile"
+    package: "com.gama.mobile"
   },
   web: {
     bundler: "metro"

@@ -1,6 +1,6 @@
 import * as SecureStore from "expo-secure-store";
 
-const secureStoreNamespace = "pocketcurb.secure";
+const secureStoreNamespace = "gama.secure";
 
 function toSecureKey(key: string) {
   return `${secureStoreNamespace}.${key}`;

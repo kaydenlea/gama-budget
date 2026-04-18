@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
-import type { SafeToSpendSnapshot, SpendingMeter } from "@pocketcurb/core-domain";
-import { MetricPill, SectionCard } from "@pocketcurb/ui-mobile";
+import type { SafeToSpendSnapshot, SpendingMeter } from "@gama/core-domain";
+import { MetricPill, SectionCard } from "@gama/ui-mobile";
 
 export function DailySpendingMeterCard({
   snapshot,

@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import type { Database } from "@pocketcurb/supabase-types";
+import type { Database } from "@gama/supabase-types";
 import { readConfiguredSupabaseEnv } from "../../config/env";
 import { secureStoreSessionAdapter } from "../storage/secure-store";
 
@@ -14,7 +14,7 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
   },
   global: {
     headers: {
-      "x-pocketcurb-client": "mobile"
+      "x-gama-client": "mobile"
     }
   }
 });

@@ -1,6 +1,6 @@
 # UI Design Rule
 
-PocketCurb design must feel calm, premium, minimal, useful, and consistency-first.
+Gama design must feel calm, premium, minimal, useful, and consistency-first.
 
 ## Required Reads
 

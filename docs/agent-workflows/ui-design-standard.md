@@ -1,6 +1,6 @@
 # UI Design Standard
 
-PocketCurb design should feel calm, premium, minimal, useful, and consistency-first. The product should reduce shame and admin work rather than amplifying them.
+Gama design should feel calm, premium, minimal, useful, and consistency-first. The product should reduce shame and admin work rather than amplifying them.
 
 ## Source of Truth
 
@@ -9,12 +9,12 @@ External tools such as Stitch, Gemini image generation, 21st.dev, and similar de
 ## External Reference Intake
 
 - use external tools for inspiration, exploration, rough composition, placeholder copy direction, or non-canonical image ideation
-- do not let external tools define PocketCurb's component standards, interaction rules, trust model, or product language
+- do not let external tools define Gama's component standards, interaction rules, trust model, or product language
 - when a UI task materially borrows from an external reference, record:
   - which reference or tool was used
   - what principle or pattern was borrowed
   - what was intentionally rejected
-  - how the final result was reconciled with PocketCurb's internal rules
+  - how the final result was reconciled with Gama's internal rules
 - prefer adapting principles rather than copying literal layouts blindly
 
 ## Privacy and Provenance Rules

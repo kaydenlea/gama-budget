@@ -1,5 +1,5 @@
 {
-  "name": "@pocketcurb/supabase-types",
+  "name": "@gama/supabase-types",
   "private": true,
   "version": "0.1.0",
   "type": "module",

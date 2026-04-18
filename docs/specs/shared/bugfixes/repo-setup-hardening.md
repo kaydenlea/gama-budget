@@ -56,7 +56,7 @@ Impact:
 
 ## Evidence
 
-- [repo-review-2025-04-05.md](C:/Users/roybs/repos/pocketcurb/docs/reviews/repo-review-2025-04-05.md) classifies these items as the highest-value immediate repo-setup work
+- [repo-review-2025-04-05.md](../../reviews/repo-review-2025-04-05.md) classifies these items as the highest-value immediate repo-setup work
 - `node ./scripts/verify.mjs` passed before implementation, confirming the current repo is stable enough for bounded setup hardening
 - `apps/mobile/src/config/env.ts` and `apps/web/src/lib/site-config.ts` prove the env-example gap is real
 - `.github/workflows/ci.yml` proves the missing CI `permissions` and `concurrency`

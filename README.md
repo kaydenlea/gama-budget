@@ -1,6 +1,6 @@
-# PocketCurb Monorepo
+# Gama Monorepo
 
-PocketCurb is a security-first, decision-first personal finance operating system. The product is not trying to be another cleanup-heavy budget tracker. The goal is to reduce admin work, minimize categorization burden, handle reimbursements and shared spending correctly, and give users short-term actionable clarity through Safe-to-Spend guidance, a Daily Spending Meter, running-balance awareness, and forward-looking cash-flow context.
+Gama is a security-first, decision-first personal finance operating system. The product is not trying to be another cleanup-heavy budget tracker. The goal is to reduce admin work, minimize categorization burden, handle reimbursements and shared spending correctly, and give users short-term actionable clarity through Safe-to-Spend guidance, a Daily Spending Meter, running-balance awareness, and forward-looking cash-flow context.
 
 This repository now contains both the operating manual and the working monorepo foundation:
 
@@ -165,12 +165,12 @@ The repo uses `.githooks` as the shared hooks path.
 - `pnpm review:ready` runs the full local proof set before work is considered ready to publish
 - `pnpm ai:check` verifies the local Codex CLI installation and authentication state before you rely on PR-stage Codex review
 
-Review artifacts are written to `.git/pocketcurb/`.
+Review artifacts are written to `.git/gama/`.
 
 Emergency overrides exist, but they are deliberate escape hatches:
 
-- `POCKETCURB_BYPASS_LOCAL_GATES=1`
-- `POCKETCURB_ALLOW_PROTECTED_PUSH=1`
+- `GAMA_BYPASS_LOCAL_GATES=1`
+- `GAMA_ALLOW_PROTECTED_PUSH=1`
 
 ## CI and Review Discipline
 

@@ -11,8 +11,8 @@ function assert(condition: unknown, message: string): asserts condition {
 }
 
 function verifyDefaultAllowedOrigin(): void {
-  assert(isAllowedCorsOrigin("https://pocketcurb.com"), "Expected production origin to be allowed");
-  assert(isAllowedCorsOrigin("https://www.pocketcurb.com"), "Expected www production origin to be allowed");
+  assert(isAllowedCorsOrigin("https://gama.money"), "Expected production origin to be allowed");
+  assert(!isAllowedCorsOrigin("https://www.gama.money"), "Expected non-canonical www origin to be rejected");
 }
 
 function verifyLoopbackAllowedForLocalRuntime(): void {
@@ -37,20 +37,20 @@ function verifyDisallowedOriginRejected(): void {
 
 function verifyResponseHeadersReflectAllowedOrigin(): void {
   const headers = buildCorsHeaders(
-    new Request("https://pocketcurb.test/function", {
-      headers: { origin: "https://pocketcurb.com" },
+    new Request("https://gama.test/function", {
+      headers: { origin: "https://gama.money" },
     }),
   );
 
   assert(
-    headers["access-control-allow-origin"] === "https://pocketcurb.com",
+    headers["access-control-allow-origin"] === "https://gama.money",
     "Expected allowed origin to be reflected in response headers",
   );
 }
 
 async function verifyPreflightRejectsDisallowedOrigin(): Promise<void> {
   const response = handleCorsPreflight(
-    new Request("https://pocketcurb.test/function", {
+    new Request("https://gama.test/function", {
       method: "OPTIONS",
       headers: { origin: "https://malicious.example" },
     }),

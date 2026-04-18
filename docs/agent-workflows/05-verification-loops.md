@@ -44,7 +44,7 @@ For each slice:
 - backend and system work should lean on scripts, tests, and integration checks
 - UI work should include visual verification where available, not only automated tests
 - if visual tooling is unavailable, document the fallback manual verification method explicitly
-- when external references or generated UI ideas materially influence the work, verify that the shipped result still matches PocketCurb's internal design rules rather than the external tool's defaults
+- when external references or generated UI ideas materially influence the work, verify that the shipped result still matches Gama's internal design rules rather than the external tool's defaults
 - verification that fails must be resolved or explicitly re-planned before the next slice
 - final verification is not a substitute for slice-level verification
 - no task is done without proof

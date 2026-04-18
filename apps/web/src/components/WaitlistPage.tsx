@@ -1,10 +1,14 @@
 import Link from "next/link";
-import { MetricChip, SiteSection, SurfaceCard } from "@pocketcurb/ui-web";
+import { MetricChip, SiteSection, SurfaceCard } from "@gama/ui-web";
 import { siteCopy } from "../content/site-copy";
+import { sitePages } from "../lib/site-config";
+import { Breadcrumbs } from "./Breadcrumbs";
 
 export function WaitlistPage() {
   return (
-    <main className="site-shell flex flex-col gap-6 py-8 md:py-12">
+    <main id="main-content" className="site-shell flex flex-col gap-6 py-8 md:py-12">
+      <Breadcrumbs page={sitePages.waitlist} />
+
       <SiteSection eyebrow="Waitlist plan" title={siteCopy.waitlist.title} lede={siteCopy.waitlist.body}>
         <div className="mt-6 flex flex-wrap gap-3">
           {siteCopy.waitlist.badges.map((badge) => (

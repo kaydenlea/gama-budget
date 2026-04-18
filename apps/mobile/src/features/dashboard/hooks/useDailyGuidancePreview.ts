@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { calculateSafeToSpend, deriveDailySpendingMeter, sortTimeline } from "@pocketcurb/core-domain";
+import { calculateSafeToSpend, deriveDailySpendingMeter, sortTimeline } from "@gama/core-domain";
 
 const previewEvents = sortTimeline([
   {

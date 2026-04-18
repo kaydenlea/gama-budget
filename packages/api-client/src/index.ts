@@ -5,23 +5,23 @@ import {
   dailyGuidanceResponseSchema,
   type TransactionSimulationInput,
   transactionSimulationSchema
-} from "@pocketcurb/schemas";
-import type { Database } from "@pocketcurb/supabase-types";
+} from "@gama/schemas";
+import type { Database } from "@gama/supabase-types";
 
-export type PocketCurbFunctionName = "daily-guidance" | "simulate-transaction";
+export type GamaFunctionName = "daily-guidance" | "simulate-transaction";
 
 export type EdgePayload = Record<string, unknown>;
 
-export type EdgeInvoker = <TResponse>(name: PocketCurbFunctionName, payload: EdgePayload) => Promise<TResponse>;
+export type EdgeInvoker = <TResponse>(name: GamaFunctionName, payload: EdgePayload) => Promise<TResponse>;
 
-export type PocketCurbApiClient = {
+export type GamaApiClient = {
   getDailyGuidance(input: DailyGuidanceRequest): Promise<DailyGuidanceResponse>;
   simulateTransaction(input: TransactionSimulationInput): Promise<{ accepted: true }>;
 };
 
 export type SupabaseSchemaName = keyof Database;
 
-export function createPocketCurbApiClient(invoke: EdgeInvoker): PocketCurbApiClient {
+export function createGamaApiClient(invoke: EdgeInvoker): GamaApiClient {
   return {
     async getDailyGuidance(input) {
       const payload = dailyGuidanceRequestSchema.parse(input);

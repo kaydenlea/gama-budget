@@ -86,7 +86,7 @@ Tighten Dependabot update timing and fix PR-body generation so the repo's own au
 
 - `.github/dependabot.yml` includes a deliberate cooldown policy
 - `scripts/pr-body.mjs` generates a PR body that passes `scripts/check-pr-metadata.mjs` when evaluated as a PR event payload
-- the final response explains why editing `.pocketcurb-artifacts/pocketcurb/pr-body.md` does not show up in git
+- the final response explains why editing `.gama-artifacts/gama/pr-body.md` does not show up in git
 
 ## Documentation Reconciliation
 

@@ -1,4 +1,4 @@
-project_id = "pocketcurb-local"
+project_id = "gama-local"
 
 [functions]
 enabled = true

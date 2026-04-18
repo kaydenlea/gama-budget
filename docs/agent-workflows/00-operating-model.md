@@ -39,7 +39,7 @@ the agent should infer the correct lane and then choose the right built-in path:
 
 ## Why This Matters Here
 
-PocketCurb is not a generic CRUD app. It handles sensitive personal finance data, shared and private visibility rules, reimbursement logic, trusted guidance such as Safe-to-Spend, and forward-looking cash-flow support. Loose execution would create product drift, security drift, and trust failures quickly.
+Gama is not a generic CRUD app. It handles sensitive personal finance data, shared and private visibility rules, reimbursement logic, trusted guidance such as Safe-to-Spend, and forward-looking cash-flow support. Loose execution would create product drift, security drift, and trust failures quickly.
 
 ## Built-In Limits
 

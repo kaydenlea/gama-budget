@@ -3,8 +3,8 @@ import { useMemo, type ComponentProps, type ReactNode } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { ScrollView, Switch, Text, TextInput, View } from "react-native";
 import { Link } from "expo-router";
-import { AppScreen, SectionCard } from "@pocketcurb/ui-mobile";
-import { transactionSimulationSchema, type TransactionSimulationInput } from "@pocketcurb/schemas";
+import { AppScreen, SectionCard } from "@gama/ui-mobile";
+import { transactionSimulationSchema, type TransactionSimulationInput } from "@gama/schemas";
 
 export function SimulationScreen() {
   const form = useForm<TransactionSimulationInput>({

@@ -1,8 +1,8 @@
-import { createPocketCurbApiClient } from "./index";
+import { createGamaApiClient } from "./index";
 
-describe("createPocketCurbApiClient", () => {
+describe("createGamaApiClient", () => {
   it("validates request and response boundaries", async () => {
-    const client = createPocketCurbApiClient(async <TResponse>() =>
+    const client = createGamaApiClient(async <TResponse>() =>
       ({
         safeToSpendToday: 35,
         recommendedDailyBudget: 35,

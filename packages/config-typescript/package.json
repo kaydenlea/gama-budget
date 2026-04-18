@@ -1,8 +1,8 @@
 {
-  "name": "@pocketcurb/config-typescript",
+  "name": "@gama/config-typescript",
   "private": true,
   "version": "0.1.0",
-  "description": "Shared TypeScript configuration presets for PocketCurb workspaces.",
+  "description": "Shared TypeScript configuration presets for Gama workspaces.",
   "exports": {
     "./base": "./base.json",
     "./react-native": "./react-native.json",

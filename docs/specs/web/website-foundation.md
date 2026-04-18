@@ -13,7 +13,7 @@
 
 Turn the web lane from a placeholder into a production-minded foundation that matches current official Next.js App Router plus Tailwind guidance closely enough to avoid framework drift later, while still keeping the actual website intentionally small until the MVP is ready.
 
-The desired outcome is not a full marketing site. It is a clean, extensible website baseline for PocketCurb's landing, waitlist, trust, and future SEO surfaces, with clear lane separation from mobile, strong metadata and content structure, and a premium design system that reflects the product thesis without overclaiming features.
+The desired outcome is not a full marketing site. It is a clean, extensible website baseline for Gama's landing, waitlist, trust, and future SEO surfaces, with clear lane separation from mobile, strong metadata and content structure, and a premium design system that reflects the product thesis without overclaiming features.
 
 ## User or Problem Context
 

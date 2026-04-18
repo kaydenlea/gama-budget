@@ -1,6 +1,6 @@
 # Edge Functions
 
-Supabase Edge Functions are the privileged server-side boundary for PocketCurb v1.
+Supabase Edge Functions are the privileged server-side boundary for Gama v1.
 
 They run on Deno, not the repo's Node.js runtime. Each function should keep a local `deno.json` so dependency resolution and checking match the actual runtime instead of generic editor TypeScript behavior.
 

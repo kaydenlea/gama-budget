@@ -23,6 +23,7 @@
 html {
   background: var(--color-canvas);
   color: var(--color-ink);
+  scroll-behavior: smooth;
 }
 
 body {
@@ -61,8 +62,30 @@ a {
   text-decoration: none;
 }
 
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-teal) 78%, white);
+  outline-offset: 3px;
+}
+
 ::selection {
   background: rgba(14, 118, 109, 0.16);
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 50;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: white;
+  padding: 0.8rem 1rem;
+  font-weight: 600;
+  transition: top 180ms ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
 }
 
 .site-shell {
@@ -135,6 +158,15 @@ a {
   color: var(--color-teal);
 }
 
+.site-crumb {
+  color: var(--color-teal);
+  font-weight: 600;
+}
+
+.site-crumb:hover {
+  color: var(--color-ink);
+}
+
 .site-rule {
   height: 1px;
   width: 100%;
@@ -142,6 +174,11 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .skip-link,
   .site-link,
   .site-link-secondary {
     transition: none;

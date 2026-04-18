@@ -1,6 +1,6 @@
 # Security Model
 
-PocketCurb is privacy-first and security-first from the start. The default posture is least privilege, data minimization, and explicit boundary ownership.
+Gama is privacy-first and security-first from the start. The default posture is least privilege, data minimization, and explicit boundary ownership.
 
 ## Core Principles
 

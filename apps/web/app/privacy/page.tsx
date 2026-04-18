@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { MetricChip, SiteSection, SurfaceCard } from "@pocketcurb/ui-web";
+import { MetricChip, SiteSection, SurfaceCard } from "@gama/ui-web";
+import { Breadcrumbs } from "../../src/components/Breadcrumbs";
+import { StructuredData } from "../../src/components/StructuredData";
 import { siteCopy } from "../../src/content/site-copy";
+import { sitePages } from "../../src/lib/site-config";
 import { createPageMetadata } from "../../src/lib/site-metadata";
+import { buildPageSchemas } from "../../src/lib/site-schema";
 
-export const metadata: Metadata = createPageMetadata({
-  title: "Privacy and Trust",
-  description:
-    "PocketCurb's web lane is built to explain the product honestly, prepare for privacy-safe growth, and keep trust ahead of conversion pressure.",
-  path: "/privacy",
-  keywords: ["PocketCurb privacy", "finance privacy", "privacy-first budgeting"]
-});
+export const metadata: Metadata = createPageMetadata(sitePages.privacy);
 
 export default function PrivacyPage() {
   return (
-    <main className="site-shell flex flex-col gap-6 py-8 md:py-12">
+    <>
+      <StructuredData data={buildPageSchemas(sitePages.privacy)} id="privacy-schema" />
+      <main id="main-content" className="site-shell flex flex-col gap-6 py-8 md:py-12">
+        <Breadcrumbs page={sitePages.privacy} />
+
       <SiteSection
         eyebrow="Privacy-first trust"
         title={siteCopy.privacy.title}
@@ -59,6 +61,7 @@ export default function PrivacyPage() {
           </div>
         </SurfaceCard>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

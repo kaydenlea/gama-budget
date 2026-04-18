@@ -1,8 +1,8 @@
 {
-  "name": "@pocketcurb/web",
+  "name": "@gama/web",
   "private": true,
   "version": "0.1.0",
-  "description": "PocketCurb web lane for landing, waitlist, and future SEO or content surfaces.",
+  "description": "Gama web lane for landing, waitlist, and future SEO or content surfaces.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,9 +13,9 @@
     "verify": "pnpm lint && pnpm typecheck && pnpm test"
   },
   "dependencies": {
-    "@pocketcurb/core-domain": "workspace:*",
-    "@pocketcurb/schemas": "workspace:*",
-    "@pocketcurb/ui-web": "workspace:*",
+    "@gama/core-domain": "workspace:*",
+    "@gama/schemas": "workspace:*",
+    "@gama/ui-web": "workspace:*",
     "next": "16.2.2",
     "react": "19.1.0",
     "react-dom": "19.1.0"

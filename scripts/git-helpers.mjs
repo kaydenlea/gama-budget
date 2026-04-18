@@ -100,7 +100,7 @@ export function refExists(ref) {
 }
 
 export function getComparisonBase() {
-  const requested = process.env.POCKETCURB_REVIEW_BASE;
+  const requested = process.env.GAMA_REVIEW_BASE;
   const candidates = [requested, "origin/main", "main", "origin/master", "master"].filter(Boolean);
 
   for (const candidate of candidates) {
@@ -135,8 +135,8 @@ export function getGitDir() {
   return path.resolve(repoRoot, runGit(["rev-parse", "--git-dir"]));
 }
 
-export function ensurePocketcurbGitDir() {
-  for (const dir of getPocketcurbArtifactDirectories()) {
+export function ensureGamaGitDir() {
+  for (const dir of getGamaArtifactDirectories()) {
     try {
       fs.mkdirSync(dir, { recursive: true });
       fs.accessSync(dir, fs.constants.W_OK);
@@ -146,30 +146,30 @@ export function ensurePocketcurbGitDir() {
     }
   }
 
-  throw new Error("Unable to find a writable PocketCurb artifact directory.");
+  throw new Error("Unable to find a writable Gama artifact directory.");
 }
 
-export function getPocketcurbArtifactPath(filename) {
-  return path.join(ensurePocketcurbGitDir(), filename);
+export function getGamaArtifactPath(filename) {
+  return path.join(ensureGamaGitDir(), filename);
 }
 
-export function getPocketcurbArtifactDirectories() {
+export function getGamaArtifactDirectories() {
   const directories = [];
 
   try {
-    directories.push(path.join(getGitDir(), "pocketcurb"));
+    directories.push(path.join(getGitDir(), "gama"));
   } catch {
     // fall through to local filesystem candidates
   }
 
-  directories.push(path.join(repoRoot, ".git", "pocketcurb"));
-  directories.push(path.join(repoRoot, ".pocketcurb-artifacts", "pocketcurb"));
+  directories.push(path.join(repoRoot, ".git", "gama"));
+  directories.push(path.join(repoRoot, ".gama-artifacts", "gama"));
 
   return [...new Set(directories)];
 }
 
-export function writePocketcurbArtifact(filename, content) {
-  for (const directory of getPocketcurbArtifactDirectories()) {
+export function writeGamaArtifact(filename, content) {
+  for (const directory of getGamaArtifactDirectories()) {
     try {
       fs.mkdirSync(directory, { recursive: true });
       const target = path.join(directory, filename);
@@ -180,11 +180,11 @@ export function writePocketcurbArtifact(filename, content) {
     }
   }
 
-  throw new Error(`Unable to write PocketCurb artifact: ${filename}`);
+  throw new Error(`Unable to write Gama artifact: ${filename}`);
 }
 
-export function readPocketcurbArtifact(filename) {
-  for (const directory of getPocketcurbArtifactDirectories()) {
+export function readGamaArtifact(filename) {
+  for (const directory of getGamaArtifactDirectories()) {
     const target = path.join(directory, filename);
     if (!fs.existsSync(target)) {
       continue;

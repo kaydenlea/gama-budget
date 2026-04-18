@@ -1,4 +1,4 @@
-# PocketCurb Repository Review
+# Gama Repository Review
 
 Cross-check of the existing Claude repo review against the actual repository on 2026-04-05.
 

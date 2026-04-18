@@ -75,7 +75,7 @@ If left unresolved, future contributors would inherit a shaky baseline, which wo
 
 ## Interfaces and Types
 
-- `PocketCurb` local review artifact shape remains the same, but Codex status is now deferred until PR stage
+- `Gama` local review artifact shape remains the same, but Codex status is now deferred until PR stage
 - `EdgeInvoker` payload contract in `packages/api-client` is narrowed to object payloads so the mobile Supabase invoke path typechecks correctly
 - Expo typed environment coverage now includes `expo-env.d.ts` and `.expo/types`
 

@@ -6,8 +6,11 @@ Current baseline:
 
 - Next.js 16 App Router with typed routes
 - Tailwind CSS 4 using `@tailwindcss/postcss`
-- landing, waitlist, privacy, sitemap, and robots foundation
-- typed content and metadata helpers for truthful marketing copy
+- landing, waitlist, privacy, sitemap, robots, manifest, favicon, and social-image foundation
+- centralized route registry for canonical URLs, metadata, breadcrumbs, schema, and sitemap freshness
+- environment-aware noindex behavior for local and preview deployments
+- typed JSON-LD helpers for Organization, WebSite, WebPage, and BreadcrumbList output
+- automated tests for metadata, schema, robots, and sitemap behavior
 - room for waitlist plumbing, disclosures, and later SEO or educational expansion
 
 What this lane should not do yet:
@@ -19,8 +22,10 @@ What this lane should not do yet:
 Environment note:
 
 - start from `apps/web/.env.example` for local configuration
-- set `NEXT_PUBLIC_SITE_URL` before production launch so canonical URLs, sitemap entries, and metadata use the real web origin
-- prefer a fully qualified origin such as `https://pocketcurb.com`; bare hosts are normalized, and blank or invalid values fall back to the production default
+- keep `GAMA_DISABLE_INDEXING=true` for local, sandbox, or preview-style environments
+- until the public domain exists, keep `NEXT_PUBLIC_SITE_URL` on localhost or another clearly synthetic non-production origin; do not assume a real `preview.gama.money` host
+- set `NEXT_PUBLIC_SITE_URL=https://gama.money` only when the planned public domain is actually provisioned for launch
+- prefer a fully qualified origin such as `https://gama.money`; bare hosts are normalized, and blank or invalid values fall back to the planned canonical public origin
 
 Current commands:
 

@@ -18,13 +18,5 @@ runCheck("web-typecheck", () => {
 
 runCheck("web-test", () => {
   ensureDependenciesInstalled();
-  runPnpm([
-    "exec",
-    "jest",
-    "--config",
-    "jest.config.cjs",
-    "--runInBand",
-    "--runTestsByPath",
-    "apps/web/src/content/site-copy.e2e.test.ts"
-  ]);
+  runPnpm(["exec", "jest", "--config", "jest.config.cjs", "--runInBand", "--testPathPatterns=apps/web"]);
 });

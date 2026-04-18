@@ -1,7 +1,7 @@
 import { MMKV } from "react-native-mmkv";
 
 export const appCacheStorage = new MMKV({
-  id: "pocketcurb-cache"
+  id: "gama-cache"
 });
 
 const allowedNonSensitivePrefixes = ["cache:", "pref:", "query:", "ui:"] as const;

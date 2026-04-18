@@ -9,7 +9,7 @@ import {
   getCurrentBranch,
   getChangedFilesFromBase,
   tryRunGit,
-  writePocketcurbArtifact
+  writeGamaArtifact
 } from "./git-helpers.mjs";
 
 const args = new Set(process.argv.slice(2));
@@ -207,13 +207,13 @@ function scanRiskPatterns(files) {
 }
 
 function readChangedFiles() {
-  const changedFilesFile = process.env.POCKETCURB_CHANGED_FILES_FILE;
+  const changedFilesFile = process.env.GAMA_CHANGED_FILES_FILE;
   if (changedFilesFile) {
     const content = fs.readFileSync(changedFilesFile, "utf8");
     return content.split(/\r?\n/).filter(Boolean);
   }
 
-  const changedFilesEnv = process.env.POCKETCURB_CHANGED_FILES;
+  const changedFilesEnv = process.env.GAMA_CHANGED_FILES;
   if (changedFilesEnv) {
     return changedFilesEnv.split(/\r?\n/).filter(Boolean);
   }
@@ -231,14 +231,14 @@ function readChangedFiles() {
   }
 }
 
-const branch = process.env.POCKETCURB_BRANCH || (() => {
+const branch = process.env.GAMA_BRANCH || (() => {
   try {
     return getCurrentBranch();
   } catch {
     return tryRunGit(["rev-parse", "--abbrev-ref", "HEAD"]) || tryRunGitViaShell(["rev-parse", "--abbrev-ref", "HEAD"]) || "unknown";
   }
 })();
-const baseRef = process.env.POCKETCURB_BASE_REF || (() => {
+const baseRef = process.env.GAMA_BASE_REF || (() => {
   try {
     return getComparisonBase();
   } catch {
@@ -251,9 +251,9 @@ const gate = recommendedGate(tags);
 const findings = scanRiskPatterns(changedFiles);
 const workflowEvidence = assessWorkflowEvidence(changedFiles, tags);
 const codexReview = {
-  status: process.env.POCKETCURB_CODEX_REVIEW_STATUS || (args.has("--require-ai") ? "failed" : "deferred"),
+  status: process.env.GAMA_CODEX_REVIEW_STATUS || (args.has("--require-ai") ? "failed" : "deferred"),
   message:
-    process.env.POCKETCURB_CODEX_REVIEW_MESSAGE || "Codex review is expected at pull-request stage before merge."
+    process.env.GAMA_CODEX_REVIEW_MESSAGE || "Codex review is expected at pull-request stage before merge."
 };
 
 const artifact = {
@@ -268,8 +268,8 @@ const artifact = {
   codexReview
 };
 
-const artifactPath = writePocketcurbArtifact("local-review.json", `${JSON.stringify(artifact, null, 2)}\n`);
-writePocketcurbArtifact("changed-files.txt", changedFiles.length > 0 ? `${changedFiles.join("\n")}\n` : "");
+const artifactPath = writeGamaArtifact("local-review.json", `${JSON.stringify(artifact, null, 2)}\n`);
+writeGamaArtifact("changed-files.txt", changedFiles.length > 0 ? `${changedFiles.join("\n")}\n` : "");
 
 console.log(`Local review artifact: ${artifactPath}`);
 console.log(`Branch: ${branch}`);

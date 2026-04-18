@@ -1,9 +1,18 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "baseUrl": "../..",
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "paths": {
+      "@gama/core-domain": ["packages/core-domain/src/index.ts"],
+      "@gama/schemas": ["packages/schemas/src/index.ts"],
+      "@gama/api-client": ["packages/api-client/src/index.ts"],
+      "@gama/supabase-types": ["packages/supabase-types/src/index.ts"],
+      "@gama/ui-mobile": ["packages/ui-mobile/src/index.tsx"],
+      "@gama/ui-web": ["packages/ui-web/src/index.tsx"]
+    },
     "types": [],
     "strict": true,
     "noUncheckedIndexedAccess": true,

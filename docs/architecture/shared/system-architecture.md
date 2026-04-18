@@ -1,6 +1,6 @@
 # System Architecture
 
-PocketCurb uses a pnpm monorepo with two product lanes and shared domain packages.
+Gama uses a pnpm monorepo with two product lanes and shared domain packages.
 
 ## High-Level Shape
 

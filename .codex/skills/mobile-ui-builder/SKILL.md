@@ -1,6 +1,6 @@
 ---
 name: mobile-ui-builder
-description: Build or refine PocketCurb mobile UI for the primary product lane. Use when implementing mobile screens, flows, navigation, or components that must reflect the product thesis, mobile architecture, and calm decision-first design rules.
+description: Build or refine Gama mobile UI for the primary product lane. Use when implementing mobile screens, flows, navigation, or components that must reflect the product thesis, mobile architecture, and calm decision-first design rules.
 ---
 
 # Mobile UI Builder

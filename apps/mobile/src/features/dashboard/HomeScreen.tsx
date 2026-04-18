@@ -1,6 +1,6 @@
 import { Link } from "expo-router";
 import { ActivityIndicator, ScrollView, Switch, Text, View } from "react-native";
-import { AppScreen } from "@pocketcurb/ui-mobile";
+import { AppScreen } from "@gama/ui-mobile";
 import { useDailyGuidancePreview } from "./hooks/useDailyGuidancePreview";
 import { DailySpendingMeterCard } from "./components/DailySpendingMeterCard";
 import { ForwardLookingWindowCard } from "./components/ForwardLookingWindowCard";
@@ -28,7 +28,7 @@ export function HomeScreen() {
     <AppScreen>
       <ScrollView contentContainerStyle={{ gap: 16, paddingBottom: 32 }}>
         <View className="gap-3">
-          <Text className="text-xs uppercase tracking-[2.5px] text-pocket-mint">PocketCurb</Text>
+          <Text className="text-xs uppercase tracking-[2.5px] text-pocket-mint">Gama</Text>
           <Text className="text-3xl font-bold text-white">Decision-first clarity, not finance homework.</Text>
           <Text className="text-base leading-6 text-white/70">
             Baseline mobile shell for Safe-to-Spend, shared-spending context, forward-looking cash

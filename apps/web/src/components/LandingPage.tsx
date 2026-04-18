@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { MetricChip, SiteSection, SurfaceCard } from "@pocketcurb/ui-web";
+import { MetricChip, SiteSection, SurfaceCard } from "@gama/ui-web";
 import { siteCopy } from "../content/site-copy";
 
 export function LandingPage() {
   return (
-    <main className="site-shell flex flex-col gap-6 py-8 md:gap-8 md:py-12">
+    <main id="main-content" className="site-shell flex flex-col gap-6 py-8 md:gap-8 md:py-12">
       <section className="site-panel overflow-hidden px-6 py-8 md:px-10 md:py-12">
         <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
           <div className="grid gap-6">

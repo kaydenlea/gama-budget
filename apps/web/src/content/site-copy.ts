@@ -67,7 +67,7 @@ export const siteCopy: {
   };
 } = {
   navigation: [
-    { href: "/", label: "Landing" },
+    { href: "/", label: "Home" },
     { href: "/waitlist", label: "Waitlist" },
     { href: "/privacy", label: "Privacy" }
   ],
@@ -76,7 +76,7 @@ export const siteCopy: {
     kicker: "A calmer website foundation for the MVP path",
     title: "Clarity before cleanup.",
     body:
-      "PocketCurb is building a premium decision-first finance product centered on Safe-to-Spend, forward-looking cash flow, shared-spending correctness, and less admin work.",
+      "Gama is building a premium decision-first finance product centered on Safe-to-Spend, forward-looking cash flow, shared-spending correctness, and less admin work.",
     highlights: [
       { label: "Safe-to-Spend", value: "Daily guidance over guilt loops" },
       { label: "Shared autonomy", value: "Private and shared context kept explicit" },
@@ -86,7 +86,7 @@ export const siteCopy: {
     secondaryCta: { href: "/privacy", label: "Review the privacy stance" }
   },
   differenceIntro:
-    "The web lane should explain what makes PocketCurb different without collapsing into generic budgeting language or pretending the app is already finished.",
+    "The web lane should explain what makes Gama different without collapsing into generic budgeting language or pretending the app is already finished.",
   differencePillars: [
     {
       title: "Safe-to-Spend should answer the day, not punish the past.",
@@ -98,7 +98,7 @@ export const siteCopy: {
     },
     {
       title: "Forward-looking cash flow matters more than a prettier ledger.",
-      body: "PocketCurb is meant to show what upcoming cash pressure means before the user learns about it too late."
+      body: "Gama is meant to show what upcoming cash pressure means before the user learns about it too late."
     },
     {
       title: "Privacy-first trust belongs in the pitch, not only the security docs.",
@@ -114,7 +114,7 @@ export const siteCopy: {
     },
     {
       title: "Freelancers and variable-income users need forward-looking framing.",
-      body: "The web lane should signal that PocketCurb is built for uncertainty, not only for stable paycheck budgeting."
+      body: "The web lane should signal that Gama is built for uncertainty, not only for stable paycheck budgeting."
     },
     {
       title: "Power users want less admin work, not another spreadsheet ritual.",
@@ -223,7 +223,7 @@ export const siteCopy: {
     note:
       "Mobile remains the primary product lane. The website exists to explain the thesis, earn trust, capture demand, and support later SEO without distorting app decisions.",
     links: [
-      { href: "/", label: "Landing" },
+      { href: "/", label: "Home" },
       { href: "/waitlist", label: "Waitlist" },
       { href: "/privacy", label: "Privacy" }
     ]

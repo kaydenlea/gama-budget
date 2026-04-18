@@ -1,13 +1,19 @@
 import type { MetadataRoute } from "next";
-import { buildSiteUrl, indexableRoutes } from "../src/lib/site-config";
+import { buildCanonicalUrl, indexablePages, siteEnvironment, type SiteEnvironment } from "../src/lib/site-config";
+
+export function createSitemapEntries(environment: SiteEnvironment = siteEnvironment): MetadataRoute.Sitemap {
+  if (!environment.allowIndexing) {
+    return [];
+  }
+
+  return indexablePages.map((page) => ({
+    url: buildCanonicalUrl(page.path),
+    lastModified: page.updatedAt,
+    changeFrequency: page.changeFrequency,
+    priority: page.priority
+  }));
+}
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
-
-  return indexableRoutes.map((route) => ({
-    url: buildSiteUrl(route.path),
-    lastModified,
-    changeFrequency: route.changeFrequency,
-    priority: route.priority
-  }));
+  return createSitemapEntries();
 }

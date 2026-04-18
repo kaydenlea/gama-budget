@@ -1,5 +1,5 @@
 {
-  "name": "@pocketcurb/api-client",
+  "name": "@gama/api-client",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -17,8 +17,8 @@
     "test": "jest --config ../../jest.config.cjs --runInBand --testPathPatterns=packages/api-client"
   },
   "dependencies": {
-    "@pocketcurb/core-domain": "workspace:*",
-    "@pocketcurb/schemas": "workspace:*",
-    "@pocketcurb/supabase-types": "workspace:*"
+    "@gama/core-domain": "workspace:*",
+    "@gama/schemas": "workspace:*",
+    "@gama/supabase-types": "workspace:*"
   }
 }

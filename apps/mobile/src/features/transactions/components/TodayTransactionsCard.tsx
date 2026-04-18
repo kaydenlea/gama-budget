@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import { SectionCard } from "@pocketcurb/ui-mobile";
+import { SectionCard } from "@gama/ui-mobile";
 import { mockTransactions } from "../data/mock-transactions";
 
 export function TodayTransactionsCard() {

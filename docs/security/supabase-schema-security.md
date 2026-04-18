@@ -1,6 +1,6 @@
 # Supabase Schema Security
 
-This document defines the minimum security baseline for all future PocketCurb database schema work.
+This document defines the minimum security baseline for all future Gama database schema work.
 
 ## Goal
 

@@ -6,7 +6,7 @@ Accepted.
 
 ## Context
 
-PocketCurb needs a mobile-first product lane, a separate web lane, shared business logic, shared schemas, shared contracts, and shared engineering standards without collapsing platform-specific UX into one code path.
+Gama needs a mobile-first product lane, a separate web lane, shared business logic, shared schemas, shared contracts, and shared engineering standards without collapsing platform-specific UX into one code path.
 
 ## Decision
 
