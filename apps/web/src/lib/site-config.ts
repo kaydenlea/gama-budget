@@ -1,3 +1,12 @@
+import siteOriginHelpers from "./site-origin.cjs";
+
+const {
+  canonicalOrigin,
+  isCanonicalProductionOrigin,
+  normalizeSiteOrigin: normalizeConfiguredSiteOrigin,
+  resolveDeploymentOrigin
+} = siteOriginHelpers;
+
 export type SitePath = "/" | "/waitlist" | "/privacy";
 
 export type SiteChangeFrequency =
@@ -41,13 +50,6 @@ type ResolveSiteEnvironmentInput = {
   disableIndexing?: string | undefined | null;
 };
 
-const canonicalOrigin = "https://gama.money";
-const defaultDevelopmentOrigin = "http://localhost:3000";
-
-function isLoopbackHost(candidate: string) {
-  return /^(localhost|127(?:\.\d{1,3}){3}|\[?::1\]?)(?::\d+)?(?:\/|$)/iu.test(candidate);
-}
-
 function parseBooleanFlag(rawValue: string | undefined | null) {
   const value = rawValue?.trim().toLowerCase();
 
@@ -81,38 +83,14 @@ export function normalizePathname(rawPath = "/") {
 }
 
 export function normalizeSiteOrigin(rawOrigin: string | undefined | null) {
-  const candidate = rawOrigin?.trim();
-  if (!candidate) {
-    return canonicalOrigin;
-  }
-
-  const hasProtocol = /^[a-z][a-z\d+\-.]*:\/\//iu.test(candidate);
-  const isLoopback = isLoopbackHost(candidate);
-
-  if (!isLoopback && /^[a-z][a-z\d+\-.]*:/iu.test(candidate) && !hasProtocol) {
-    return canonicalOrigin;
-  }
-
-  const withProtocol = hasProtocol ? candidate : `${isLoopback ? "http" : "https"}://${candidate}`;
-
-  try {
-    const url = new URL(withProtocol);
-    if (!/^https?:$/iu.test(url.protocol) || !url.hostname) {
-      throw new TypeError("Site origin must use http or https.");
-    }
-
-    return url.origin;
-  } catch {
-    return canonicalOrigin;
-  }
+  return normalizeConfiguredSiteOrigin(rawOrigin);
 }
 
 export function resolveSiteEnvironment(input: ResolveSiteEnvironmentInput = {}): SiteEnvironment {
   const environment = (input.vercelEnv ?? input.nodeEnv ?? "development").trim() || "development";
-  const fallbackOrigin = environment === "production" ? canonicalOrigin : defaultDevelopmentOrigin;
-  const deploymentOrigin = normalizeSiteOrigin(input.rawOrigin ?? fallbackOrigin);
+  const deploymentOrigin = resolveDeploymentOrigin(input.rawOrigin, environment);
   const disableIndexing = parseBooleanFlag(input.disableIndexing) === true;
-  const isProduction = environment === "production" && deploymentOrigin === canonicalOrigin;
+  const isProduction = environment === "production" && isCanonicalProductionOrigin(input.rawOrigin);
 
   return {
     canonicalOrigin,
