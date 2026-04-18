@@ -1,3 +1,4 @@
+import { createManifest } from "../../app/manifest";
 import { createRobotsMetadata } from "../../app/robots";
 import { createSitemapEntries } from "../../app/sitemap";
 import { resolveSiteEnvironment } from "./site-config";
@@ -8,8 +9,8 @@ describe("site routes", () => {
     nodeEnv: "production"
   });
 
-  const previewEnvironment = resolveSiteEnvironment({
-    rawOrigin: "https://preview.gama.money",
+  const nonProductionEnvironment = resolveSiteEnvironment({
+    rawOrigin: "https://preview.example.test",
     nodeEnv: "production"
   });
 
@@ -29,7 +30,7 @@ describe("site routes", () => {
   });
 
   it("blocks all crawling in non-production robots output", () => {
-    expect(createRobotsMetadata(previewEnvironment)).toMatchObject({
+    expect(createRobotsMetadata(nonProductionEnvironment)).toMatchObject({
       rules: {
         userAgent: "*",
         disallow: "/"
@@ -55,6 +56,18 @@ describe("site routes", () => {
   });
 
   it("emits no sitemap entries outside production", () => {
-    expect(createSitemapEntries(previewEnvironment)).toEqual([]);
+    expect(createSitemapEntries(nonProductionEnvironment)).toEqual([]);
+  });
+
+  it("uses the active deployment origin for manifest navigation metadata", () => {
+    expect(createManifest(productionEnvironment)).toMatchObject({
+      start_url: "https://gama.money/",
+      scope: "https://gama.money/"
+    });
+
+    expect(createManifest(nonProductionEnvironment)).toMatchObject({
+      start_url: "https://preview.example.test/",
+      scope: "https://preview.example.test/"
+    });
   });
 });

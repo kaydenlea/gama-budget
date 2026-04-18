@@ -46,21 +46,6 @@ const nextConfig = {
   typedRoutes: true,
   poweredByHeader: false,
   trailingSlash: false,
-  async redirects() {
-    return [
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "host",
-            value: `www.${canonicalHost}`
-          }
-        ],
-        destination: `https://${canonicalHost}/:path*`,
-        permanent: true
-      }
-    ];
-  },
   async headers() {
     const headers = [
       { key: "Content-Security-Policy", value: buildContentSecurityPolicy() },

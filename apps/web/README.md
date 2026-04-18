@@ -23,8 +23,9 @@ Environment note:
 
 - start from `apps/web/.env.example` for local configuration
 - keep `GAMA_DISABLE_INDEXING=true` for local, sandbox, or preview-style environments
-- set `NEXT_PUBLIC_SITE_URL=https://gama.money` before production launch so canonical URLs, sitemap entries, and metadata use the real web origin
-- prefer a fully qualified origin such as `https://gama.money`; bare hosts are normalized, and blank or invalid values fall back to the canonical production origin
+- until the public domain exists, keep `NEXT_PUBLIC_SITE_URL` on localhost or another clearly synthetic non-production origin; do not assume a real `preview.gama.money` host
+- set `NEXT_PUBLIC_SITE_URL=https://gama.money` only when the planned public domain is actually provisioned for launch
+- prefer a fully qualified origin such as `https://gama.money`; bare hosts are normalized, and blank or invalid values fall back to the planned canonical public origin
 
 Current commands:
 

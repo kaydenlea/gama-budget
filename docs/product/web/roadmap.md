@@ -6,7 +6,7 @@ The web lane exists to support trust, demand capture, future share surfaces, and
 
 - keep the web lane on a current official Next.js App Router plus Tailwind baseline
 - maintain a premium landing page, waitlist page, privacy page, sitemap, robots, and typed metadata structure
-- prepare the domain and content strategy for `gama.money`
+- prepare the planned public domain and content strategy for `gama.money`
 - keep waitlist, share-surface, and analytics plumbing intentionally unlaunched until privacy and MVP timing are ready
 
 ## Phase 1: MVP Launch Surfaces

@@ -60,7 +60,7 @@ Implement a durable SEO and platform-safety baseline for the current Next.js web
 ## Edge Cases and Failure Modes
 
 - invalid env values can otherwise create broken canonical URLs or false production indexability
-- previews and local builds can otherwise expose production canonicals plus indexable pages
+- local or synthetic non-production builds can otherwise expose production canonicals plus indexable pages
 - breadcrumb schema can drift from visible breadcrumbs unless both derive from the same registry
 - Next.js metadata route output can drift silently unless tested directly
 - social image routes must stay lightweight and not rely on unavailable fonts or assets
@@ -127,6 +127,7 @@ Implement a durable SEO and platform-safety baseline for the current Next.js web
 - metadata, robots, sitemap, and schema tests pass
 - spec and plan checklists reflect the final shipped scope
 - architecture and SEO docs describe the new centralized defaults accurately
+- non-production examples use localhost or reserved synthetic hosts instead of implying a real `preview.gama.money` deployment
 
 ## Documentation Reconciliation
 

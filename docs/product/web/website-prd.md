@@ -2,7 +2,7 @@
 
 ## Goal
 
-The web lane exists to build trust, explain the Gama thesis, capture early demand, support future share surfaces at `gama.money`, and later support SEO or educational content. It is not the primary product surface.
+The web lane exists to build trust, explain the Gama thesis, capture early demand, support future share surfaces at the planned public domain `gama.money`, and later support SEO or educational content. It is not the primary product surface.
 
 ## Web Jobs
 

@@ -12,7 +12,7 @@ function assert(condition: unknown, message: string): asserts condition {
 
 function verifyDefaultAllowedOrigin(): void {
   assert(isAllowedCorsOrigin("https://gama.money"), "Expected production origin to be allowed");
-  assert(isAllowedCorsOrigin("https://www.gama.money"), "Expected www production origin to be allowed");
+  assert(!isAllowedCorsOrigin("https://www.gama.money"), "Expected non-canonical www origin to be rejected");
 }
 
 function verifyLoopbackAllowedForLocalRuntime(): void {

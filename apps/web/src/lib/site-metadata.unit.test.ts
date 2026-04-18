@@ -7,8 +7,8 @@ describe("site-metadata", () => {
     nodeEnv: "production"
   });
 
-  const previewEnvironment = resolveSiteEnvironment({
-    rawOrigin: "https://preview.gama.money",
+  const nonProductionEnvironment = resolveSiteEnvironment({
+    rawOrigin: "https://preview.example.test",
     nodeEnv: "production"
   });
 
@@ -28,7 +28,7 @@ describe("site-metadata", () => {
   });
 
   it("builds non-production root metadata with noindex robots", () => {
-    const metadata = createRootMetadata(previewEnvironment);
+    const metadata = createRootMetadata(nonProductionEnvironment);
 
     expect(metadata.robots).toMatchObject({
       index: false,

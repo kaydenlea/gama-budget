@@ -1,13 +1,13 @@
 import type { MetadataRoute } from "next";
-import { buildCanonicalUrl, siteConfig } from "../src/lib/site-config";
+import { buildSiteUrl, siteConfig, siteEnvironment, type SiteEnvironment } from "../src/lib/site-config";
 
-export default function manifest(): MetadataRoute.Manifest {
+export function createManifest(environment: SiteEnvironment = siteEnvironment): MetadataRoute.Manifest {
   return {
     name: siteConfig.name,
     short_name: siteConfig.name,
     description: siteConfig.description,
-    start_url: buildCanonicalUrl("/"),
-    scope: buildCanonicalUrl("/"),
+    start_url: buildSiteUrl("/", environment.deploymentOrigin),
+    scope: buildSiteUrl("/", environment.deploymentOrigin),
     display: "standalone",
     background_color: "#faf7f0",
     theme_color: siteConfig.themeColor,
@@ -21,4 +21,8 @@ export default function manifest(): MetadataRoute.Manifest {
       }
     ]
   };
+}
+
+export default function manifest(): MetadataRoute.Manifest {
+  return createManifest();
 }

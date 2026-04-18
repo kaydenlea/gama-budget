@@ -13,9 +13,9 @@ describe("site-config", () => {
       expect(normalizeSiteOrigin("   ")).toBe("https://gama.money");
     });
 
-    it("normalizes bare production hosts to https origins", () => {
+    it("normalizes bare hosts to https origins", () => {
       expect(normalizeSiteOrigin("gama.money")).toBe("https://gama.money");
-      expect(normalizeSiteOrigin("www.gama.money/")).toBe("https://www.gama.money");
+      expect(normalizeSiteOrigin("www.example.test/")).toBe("https://www.example.test");
     });
 
     it("normalizes loopback hosts to http origins", () => {
@@ -24,8 +24,8 @@ describe("site-config", () => {
     });
 
     it("keeps valid fully-qualified origins and strips paths", () => {
-      expect(normalizeSiteOrigin("https://preview.gama.money/")).toBe("https://preview.gama.money");
-      expect(normalizeSiteOrigin("https://preview.gama.money/path?q=1")).toBe("https://preview.gama.money");
+      expect(normalizeSiteOrigin("https://preview.example.test/")).toBe("https://preview.example.test");
+      expect(normalizeSiteOrigin("https://preview.example.test/path?q=1")).toBe("https://preview.example.test");
     });
 
     it("falls back for invalid values", () => {
@@ -46,12 +46,12 @@ describe("site-config", () => {
     it("fails safe outside production", () => {
       expect(
         resolveSiteEnvironment({
-          rawOrigin: "https://preview.gama.money",
+          rawOrigin: "https://preview.example.test",
           nodeEnv: "production"
         })
       ).toEqual({
         canonicalOrigin: "https://gama.money",
-        deploymentOrigin: "https://preview.gama.money",
+        deploymentOrigin: "https://preview.example.test",
         environment: "production",
         isProduction: false,
         allowIndexing: false

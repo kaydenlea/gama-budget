@@ -18,7 +18,7 @@ This pass should centralize metadata, canonical URL generation, crawl controls, 
 
 The current web lane is a small static App Router site with route-level metadata, robots, and sitemap support, but the implementation is thin and easy to drift. It defaults to a production canonical origin even in non-production environments, lacks durable page registries and schema factories, has no environment-aware crawl safety, no breadcrumb system, no favicon or manifest support, and limited verification around search-facing output.
 
-For a product that depends on trust and truthful discovery, this is a structural risk. The web lane needs to be indexable and rich-result eligible where appropriate, while also preventing staging or preview indexing, keeping unsupported claims out of schema, and preserving security and accessibility as first-class constraints.
+For a product that depends on trust and truthful discovery, this is a structural risk. The web lane needs to be indexable and rich-result eligible where appropriate once the public domain exists, while also preventing staging or other non-production indexing, keeping unsupported claims out of schema, and preserving security and accessibility as first-class constraints.
 
 ## Scope
 
@@ -43,7 +43,7 @@ For a product that depends on trust and truthful discovery, this is a structural
 ## UX and Behavior
 
 - every current indexable route should have one stable canonical URL on the production domain
-- production deployments should expose indexable metadata, sitemap entries, and permissive robots rules for real pages
+- the eventual production deployment at `gama.money` should expose indexable metadata, sitemap entries, and permissive robots rules for real pages
 - non-production deployments should be explicitly non-indexable and should disallow crawling
 - waitlist and privacy pages should show user-visible breadcrumbs that reflect the site hierarchy
 - structured data should only describe visible, truthful content already present on the page
@@ -102,8 +102,8 @@ For a product that depends on trust and truthful discovery, this is a structural
 
 ## Edge Cases
 
-- `NEXT_PUBLIC_SITE_URL` may be blank, invalid, bare-host, loopback, preview, or production
-- preview and local deployments must not accidentally emit production-indexable metadata
+- `NEXT_PUBLIC_SITE_URL` may be blank, invalid, bare-host, loopback, synthetic non-production, or the eventual production origin
+- local and synthetic non-production deployments must not accidentally emit production-indexable metadata
 - canonical URLs must never include search params or hash fragments
 - the privacy page is a trust explainer, not a legal privacy policy, so schema must not claim `PrivacyPolicy`
 - AI crawler controls must not block classic search indexing unintentionally
@@ -157,6 +157,7 @@ For a product that depends on trust and truthful discovery, this is a structural
 - self-review completed across metadata, schema, robots, sitemap, layout, and security header changes
 - same-tool fresh-context fallback was used for the planning and verification pass because no second model was requested explicitly in this session
 - production build surfaced an OG-image rendering issue in `next/og`; the unsupported `inline-flex` value was removed and the build was rerun successfully
+- follow-up review corrected a misleading assumption in non-production examples: `gama.money` is the only intended public domain, and synthetic hosts should be used for non-production tests and docs until the domain is provisioned
 
 ## Final Reconciliation
 
