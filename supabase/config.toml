@@ -1,8 +1,5 @@
 project_id = "gama-local"
 
-[functions]
-enabled = true
-
 [functions.safe-to-spend]
 # Keep Supabase's built-in JWT gate disabled here because the function uses
 # shared code-owned JWT verification in supabase/functions/_shared/auth.ts.

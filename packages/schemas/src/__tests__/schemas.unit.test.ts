@@ -1,6 +1,7 @@
 import {
   dailyGuidanceResponseSchema,
-  transactionSimulationSchema
+  transactionSimulationSchema,
+  waitlistSignupSchema
 } from "../index";
 
 describe("transactionSimulationSchema", () => {
@@ -25,6 +26,40 @@ describe("dailyGuidanceResponseSchema", () => {
       runningBalance: 500,
       crisisCushion: 80,
       dailySpendingMeter: "unsafe"
+    });
+
+    expect(parsed.success).toBe(false);
+  });
+});
+
+describe("waitlistSignupSchema", () => {
+  it("normalizes valid email input", () => {
+    const parsed = waitlistSignupSchema.parse({
+      email: "  USER@Example.COM ",
+      firstName: "Kayden",
+      persona: "solo",
+      biggestPain: "Keeping shared spending visible without doing spreadsheet work.",
+      referralSource: "landing-page",
+      marketingConsent: true
+    });
+
+    expect(parsed.email).toBe("user@example.com");
+  });
+
+  it("requires explicit consent", () => {
+    const parsed = waitlistSignupSchema.safeParse({
+      email: "user@example.com",
+      marketingConsent: false
+    });
+
+    expect(parsed.success).toBe(false);
+  });
+
+  it("rejects filled honeypot fields", () => {
+    const parsed = waitlistSignupSchema.safeParse({
+      email: "user@example.com",
+      marketingConsent: true,
+      website: "https://spam.example"
     });
 
     expect(parsed.success).toBe(false);

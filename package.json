@@ -11,6 +11,7 @@
   },
   "scripts": {
     "bootstrap:local": "node ./scripts/bootstrap-local.mjs",
+    "backend:env:pocketcurb": "node ./scripts/setup-pocketcurb-supabase-env.mjs",
     "mobile:start": "node ./scripts/mobile-start.mjs",
     "mobile:dev": "node ./scripts/mobile-start.mjs --clear",
     "hooks:install": "node ./scripts/install-hooks.mjs",

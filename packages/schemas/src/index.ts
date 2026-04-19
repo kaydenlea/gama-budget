@@ -28,6 +28,27 @@ export const dailyGuidanceResponseSchema = z.object({
   dailySpendingMeter: z.enum(["comfortable", "watch", "tight"])
 });
 
+export const waitlistPersonaSchema = z.enum([
+  "solo",
+  "partnered",
+  "household",
+  "advisor",
+  "other"
+]);
+
+export const waitlistSignupSchema = z.object({
+  email: z.string().trim().email().max(254).transform((email) => email.toLowerCase()),
+  firstName: z.string().trim().max(80).optional(),
+  persona: waitlistPersonaSchema.optional(),
+  biggestPain: z.string().trim().max(280).optional(),
+  referralSource: z.string().trim().max(120).optional(),
+  marketingConsent: z.literal(true),
+  website: z.string().trim().max(0).optional()
+});
+
 export type TransactionSimulationInput = z.infer<typeof transactionSimulationSchema>;
 export type DailyGuidanceRequest = z.infer<typeof dailyGuidanceRequestSchema>;
 export type DailyGuidanceResponse = z.infer<typeof dailyGuidanceResponseSchema>;
+export type WaitlistPersona = z.infer<typeof waitlistPersonaSchema>;
+export type WaitlistSignupInput = z.input<typeof waitlistSignupSchema>;
+export type WaitlistSignup = z.infer<typeof waitlistSignupSchema>;

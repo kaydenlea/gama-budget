@@ -1,0 +1,358 @@
+# Waitlist Backend Reference
+
+This document describes the current Gama waitlist backend. It replaces the earlier
+Supabase MCP handoff checklist now that the table, server route, and local smoke
+test are working.
+
+## Current State
+
+The waitlist backend is implemented and locally smoke-tested.
+
+Implemented files:
+
+- `packages/schemas/src/index.ts` defines `waitlistSignupSchema`.
+- `packages/schemas/src/__tests__/schemas.unit.test.ts` covers waitlist input validation.
+- `apps/web/app/api/waitlist/route.ts` exposes `POST /api/waitlist`.
+- `apps/web/src/server/waitlist.ts` stores signups in Supabase and sends Resend emails.
+- `apps/web/src/server/waitlist.unit.test.ts` covers storage, duplicate, config, and email error behavior.
+- `supabase/migrations/20260418000100_create_waitlist_signups.sql` defines the waitlist table.
+- `scripts/setup-pocketcurb-supabase-env.mjs` helps populate local Supabase env values.
+
+Verified on 2026-04-19:
+
+```bash
+pnpm --dir apps/web typecheck
+pnpm --dir apps/web test
+pnpm --dir packages/schemas test
+```
+
+Local API smoke test also passed:
+
+- First `POST /api/waitlist` returned `202` with `{ "status": "accepted" }`.
+- Repeating the same email returned `202` with `{ "status": "duplicate" }`.
+- Resend accepted the configured test sender path.
+
+## Request Flow
+
+The landing page should submit waitlist forms to:
+
+```text
+POST /api/waitlist
+```
+
+The route:
+
+1. Parses JSON from the request body.
+2. Validates with `waitlistSignupSchema`.
+3. Reads server-only env from `process.env`.
+4. Inserts into `public.waitlist_signups` through Supabase REST using the service-role key.
+5. Treats Supabase `409` unique-email conflicts as an idempotent duplicate success.
+6. Sends two Resend emails for new signups:
+   - confirmation email to the signup email
+   - internal notification email to `WAITLIST_NOTIFY_EMAIL`
+
+The backend intentionally avoids browser/mobile Supabase writes. The public site
+submits only to the Next API route.
+
+## Request Body
+
+Expected JSON shape:
+
+```json
+{
+  "email": "person@example.com",
+  "firstName": "Person",
+  "persona": "solo",
+  "biggestPain": "Keeping daily spending decisions calm.",
+  "referralSource": "landing-page",
+  "marketingConsent": true,
+  "website": ""
+}
+```
+
+Fields:
+
+- `email`: required, normalized to lowercase, max 254 characters.
+- `firstName`: optional, max 80 characters.
+- `persona`: optional; one of `solo`, `partnered`, `household`, `advisor`, `other`.
+- `biggestPain`: optional, max 280 characters.
+- `referralSource`: optional, max 120 characters.
+- `marketingConsent`: required and must be `true`.
+- `website`: optional honeypot field; keep it hidden and empty in the UI.
+
+## API Responses
+
+Successful new signup:
+
+```http
+202 Accepted
+```
+
+```json
+{ "status": "accepted" }
+```
+
+Duplicate email:
+
+```http
+202 Accepted
+```
+
+```json
+{ "status": "duplicate" }
+```
+
+Invalid JSON:
+
+```http
+400 Bad Request
+```
+
+```json
+{ "error": "invalid_json" }
+```
+
+Validation failure:
+
+```http
+400 Bad Request
+```
+
+```json
+{ "error": "invalid_waitlist_signup" }
+```
+
+Missing server env:
+
+```http
+503 Service Unavailable
+```
+
+```json
+{ "error": "waitlist_not_configured" }
+```
+
+Supabase or Resend failure:
+
+```http
+502 Bad Gateway
+```
+
+```json
+{ "error": "waitlist_unavailable" }
+```
+
+## Required Env
+
+Local env lives in `apps/web/.env.local`.
+
+Required values:
+
+```bash
+SUPABASE_URL=https://efkvplapeqbyeknbxhwa.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=...
+RESEND_API_KEY=...
+WAITLIST_FROM_EMAIL="Gama <onboarding@resend.dev>"
+WAITLIST_NOTIFY_EMAIL=your-email@example.com
+```
+
+For local testing, `onboarding@resend.dev` is acceptable if Resend accepts the
+recipient for the account.
+
+Before production, replace the sender with a verified domain sender:
+
+```bash
+WAITLIST_FROM_EMAIL="Gama <waitlist@yourdomain.com>"
+WAITLIST_NOTIFY_EMAIL=you@yourdomain.com
+```
+
+Security rules:
+
+- Keep `SUPABASE_SERVICE_ROLE_KEY` server-only.
+- Keep `RESEND_API_KEY` server-only.
+- Do not add either secret to `NEXT_PUBLIC_*`, `EXPO_PUBLIC_*`, tracked `.env.example`, or mobile env.
+- Add these values separately to the deployment provider's server env.
+
+## Supabase State
+
+Project:
+
+```text
+project_ref: efkvplapeqbyeknbxhwa
+```
+
+Supabase MCP applied migration:
+
+```text
+20260419012234_create_waitlist_signups
+```
+
+Local migration file:
+
+```text
+supabase/migrations/20260418000100_create_waitlist_signups.sql
+```
+
+Table:
+
+```text
+public.waitlist_signups
+```
+
+Columns:
+
+- `id uuid primary key default gen_random_uuid()`
+- `email text not null`
+- `first_name text`
+- `persona text`
+- `biggest_pain text`
+- `referral_source text`
+- `marketing_consent boolean not null`
+- `submitted_at timestamptz not null default timezone('utc', now())`
+- `user_agent text`
+- `ip_address text`
+- `created_at timestamptz not null default timezone('utc', now())`
+
+Constraints:
+
+- unique email
+- email format check
+- `marketing_consent is true`
+- persona allowlist
+
+Index:
+
+- `waitlist_signups_submitted_at_idx` on `submitted_at desc`
+
+RLS:
+
+- RLS is enabled.
+- There are no direct browser/mobile client policies.
+- The Supabase advisor reports `RLS Enabled No Policy` for this table; that is expected and intentional because only the service-role API route should access it.
+
+## Supabase Verification Queries
+
+Confirm table exists:
+
+```sql
+select
+  table_schema,
+  table_name
+from information_schema.tables
+where table_schema = 'public'
+  and table_name = 'waitlist_signups';
+```
+
+Confirm RLS:
+
+```sql
+select
+  n.nspname as schema_name,
+  c.relname as table_name,
+  c.relrowsecurity as rls_enabled
+from pg_class c
+join pg_namespace n on n.oid = c.relnamespace
+where n.nspname = 'public'
+  and c.relname = 'waitlist_signups';
+```
+
+Confirm no client policies:
+
+```sql
+select
+  schemaname,
+  tablename,
+  policyname,
+  roles,
+  cmd
+from pg_policies
+where schemaname = 'public'
+  and tablename = 'waitlist_signups';
+```
+
+Expected policy result: zero rows.
+
+## Smoke Test
+
+Start the web app:
+
+```bash
+pnpm --dir apps/web dev
+```
+
+Submit a test signup:
+
+```bash
+curl -i http://localhost:3000/api/waitlist \
+  -H 'content-type: application/json' \
+  -d '{
+    "email": "your-email@example.com",
+    "firstName": "Test",
+    "persona": "solo",
+    "biggestPain": "Testing waitlist setup.",
+    "referralSource": "local-smoke-test",
+    "marketingConsent": true,
+    "website": ""
+  }'
+```
+
+Expected first response:
+
+```json
+{ "status": "accepted" }
+```
+
+Expected duplicate response:
+
+```json
+{ "status": "duplicate" }
+```
+
+## UI Integration Contract
+
+When wiring the landing page form:
+
+1. Submit to `POST /api/waitlist`.
+2. Send `marketingConsent: true` only after the user explicitly consents.
+3. Include a hidden honeypot input named `website`; keep it empty.
+4. Treat `accepted` and `duplicate` as success states.
+5. Show field-level validation for `400`.
+6. Show temporary unavailable copy for `502` or `503`.
+7. Do not expose Supabase or Resend keys to the client.
+
+## Remaining Production Work
+
+Before real public traffic:
+
+- Verify a sending domain in Resend.
+- Replace `onboarding@resend.dev` with a sender on the verified domain.
+- Add the required env vars to the deployment provider.
+- Add basic rate limiting for `POST /api/waitlist`.
+- Decide whether Resend failures should still return success when Supabase storage has already succeeded.
+
+Current behavior stores first and emails second. If Resend fails after storage
+succeeds, the route returns `502` even though the signup may already exist in
+Supabase. For production, consider treating storage success as the primary
+success condition and logging notification failures for manual follow-up or retry.
+
+## CLI Notes
+
+The repo was previously linked with:
+
+```bash
+supabase link --project-ref efkvplapeqbyeknbxhwa
+```
+
+`supabase db push` was blocked because the remote project has migration history
+entries not present in this checkout:
+
+```text
+20260406022331
+20260406025114
+20260406030822
+20260406031543
+```
+
+Do not run `supabase migration repair --status reverted ...` unless intentionally
+rewriting migration history metadata. For small schema checks or one-off
+verification, prefer Supabase MCP tools against the existing remote project.
