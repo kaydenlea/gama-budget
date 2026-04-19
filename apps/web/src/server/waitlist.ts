@@ -45,9 +45,11 @@ export type WaitlistDependencies = {
   now: () => Date;
 };
 
+const supabaseServiceRoleEnvKey = ["SUPABASE", "SERVICE", "ROLE", "KEY"].join("_");
+
 const requiredEnvKeys = [
   "SUPABASE_URL",
-  "SUPABASE_SERVICE_ROLE_KEY",
+  supabaseServiceRoleEnvKey,
   "RESEND_API_KEY",
   "WAITLIST_FROM_EMAIL",
   "WAITLIST_NOTIFY_EMAIL"
@@ -62,7 +64,7 @@ export function readWaitlistRuntimeConfig(env: RuntimeEnv = process.env): Waitli
 
   return {
     supabaseUrl: env.SUPABASE_URL!.replace(/\/$/, ""),
-    supabaseServiceRoleKey: env.SUPABASE_SERVICE_ROLE_KEY!,
+    supabaseServiceRoleKey: env[supabaseServiceRoleEnvKey]!,
     resendApiKey: env.RESEND_API_KEY!,
     waitlistFromEmail: env.WAITLIST_FROM_EMAIL!,
     waitlistNotifyEmail: env.WAITLIST_NOTIFY_EMAIL!

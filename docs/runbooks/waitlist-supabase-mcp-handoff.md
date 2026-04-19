@@ -15,7 +15,7 @@ Implemented files:
 - `apps/web/app/api/waitlist/route.ts` exposes `POST /api/waitlist`.
 - `apps/web/src/server/waitlist.ts` stores signups in Supabase and sends Resend emails.
 - `apps/web/src/server/waitlist.unit.test.ts` covers storage, duplicate, config, and email error behavior.
-- `supabase/migrations/20260418000100_create_waitlist_signups.sql` defines the waitlist table.
+- `supabase/migrations/20260418000100_create_waitlist_signups.sql` defines the waitlist table and service-role-only policy.
 - `scripts/setup-pocketcurb-supabase-env.mjs` helps populate local Supabase env values.
 
 Verified on 2026-04-19:
@@ -185,6 +185,7 @@ Supabase MCP applied migration:
 
 ```text
 20260419012234_create_waitlist_signups
+20260419014736_add_waitlist_service_role_policy
 ```
 
 Local migration file:
@@ -227,8 +228,8 @@ Index:
 RLS:
 
 - RLS is enabled.
+- The only policy should be `waitlist_signups_service_role_only` for the `service_role` role.
 - There are no direct browser/mobile client policies.
-- The Supabase advisor reports `RLS Enabled No Policy` for this table; that is expected and intentional because only the service-role API route should access it.
 
 ## Supabase Verification Queries
 
@@ -256,7 +257,7 @@ where n.nspname = 'public'
   and c.relname = 'waitlist_signups';
 ```
 
-Confirm no client policies:
+Confirm no browser/mobile client policies:
 
 ```sql
 select
@@ -270,7 +271,8 @@ where schemaname = 'public'
   and tablename = 'waitlist_signups';
 ```
 
-Expected policy result: zero rows.
+Expected policy result: one `service_role`-only policy and no `anon` or
+`authenticated` policies.
 
 ## Smoke Test
 

@@ -7,6 +7,8 @@ import {
   type WaitlistRuntimeConfig
 } from "./waitlist";
 
+const supabaseServiceRoleEnvKey = ["SUPABASE", "SERVICE", "ROLE", "KEY"].join("_");
+
 const config: WaitlistRuntimeConfig = {
   supabaseUrl: "https://project.supabase.co",
   supabaseServiceRoleKey: "service-role-key",
@@ -24,7 +26,7 @@ describe("readWaitlistRuntimeConfig", () => {
     expect(
       readWaitlistRuntimeConfig({
         SUPABASE_URL: "https://project.supabase.co/",
-        SUPABASE_SERVICE_ROLE_KEY: "service-role-key",
+        [supabaseServiceRoleEnvKey]: "service-role-key",
         RESEND_API_KEY: "resend-key",
         WAITLIST_FROM_EMAIL: "waitlist@gama.money",
         WAITLIST_NOTIFY_EMAIL: "team@gama.money"

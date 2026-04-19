@@ -24,5 +24,12 @@ create index waitlist_signups_submitted_at_idx
 
 alter table public.waitlist_signups enable row level security;
 
+create policy waitlist_signups_service_role_only
+  on public.waitlist_signups
+  for all
+  to service_role
+  using ((select auth.role()) = 'service_role')
+  with check ((select auth.role()) = 'service_role');
+
 -- No browser or mobile client policies on purpose. The public website writes
 -- through the server-only Next route with the Supabase service role key.

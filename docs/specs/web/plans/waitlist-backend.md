@@ -33,7 +33,7 @@ Prepare the waitlist backend and email path so the landing or waitlist UI can be
 
 - Add `public.waitlist_signups`.
 - Enforce unique emails and known persona values.
-- Enable RLS and do not add direct browser policies.
+- Enable RLS and add only a service-role policy, with no direct browser policies.
 
 ### Slice 3: API Route
 

@@ -49,7 +49,7 @@ Responses:
 
 Supabase table: `public.waitlist_signups`.
 
-The browser must not write to this table directly. Row-level security stays enabled with no broad client policies. The Next route uses the service role key on the server only.
+The browser must not write to this table directly. Row-level security stays enabled with only a service-role policy and no broad client policies. The Next route uses the service role key on the server only.
 
 Stored fields:
 
