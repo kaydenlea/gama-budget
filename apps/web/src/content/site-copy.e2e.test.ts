@@ -13,7 +13,7 @@ describe("siteCopy", () => {
     expect(siteCopy.home.trustBridge.slides.map((slide) => slide.previewSlug)).toContain("accounts-trust");
     expect(siteCopy.home.trustBridge.slides.map((slide) => slide.previewSlug)).toContain("add-transaction-trust");
     expect(siteCopy.home.screenGallery.cards.map((card) => card.previewSlug)).toContain("stories");
-    expect(siteCopy.waitlist.hero.body).toContain("decision-first");
+    expect(siteCopy.waitlist.hero.body).toContain("short-term money clarity");
     expect(siteCopy.shared.storyScenes.map((scene) => scene.body).join(" ")).toContain("shared-spend");
     expect(siteCopy.waitlist.earlyAccess.notLiveBody).toContain("server-owned backend");
     expect(siteCopy.privacy.hero.title).toContain("Privacy-first");

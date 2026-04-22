@@ -395,9 +395,9 @@ export const siteCopy = {
   waitlist: {
     hero: {
       eyebrow: "Early access",
-      title: "Know what is safe to spend, then keep the useful story of where your money went.",
+      title: "Know what is safe to spend.",
       body:
-        "Gama is building a decision-first money product for people who want short-term clarity without budgeting homework, and who also want trips, dinners, shared spending, and favorite places to stay useful instead of fragmented.",
+        "Gama gives you short-term money clarity, then keeps trips, dinners, shared spending, and favorite places easy to revisit.",
       primaryCta: { href: "#early-access", label: "Join the early-access list" },
       secondaryCta: { href: "/privacy", label: "See how trust is handled" },
       supporting: [
@@ -408,9 +408,9 @@ export const siteCopy = {
     },
     positioning: {
       eyebrow: "What makes Gama different",
-      title: "A money product that helps with the next decision before it asks for cleanup.",
+      title: "Built for the next money decision.",
       body:
-        "The strongest wedge is not generic budgeting. It is short-term clarity first, then event, place, and shared-spend intelligence layered on top in a way that earns trust."
+        "Start with Safe-to-Spend, then add events, places, and shared-spend context when it matters."
     },
     differentiators: [
       {

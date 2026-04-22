@@ -110,7 +110,7 @@ export function WaitlistSignupForm({ expectations }: WaitlistSignupFormProps) {
       <h3 className="mt-4 text-3xl font-semibold leading-tight text-[var(--color-ink)]">
         Join the Gama waitlist.
       </h3>
-      <p className={`mt-4 text-sm leading-7 md:text-base ${messageTone}`} aria-live="polite">
+      <p className={`mt-3 text-sm leading-6 md:text-base ${messageTone}`} aria-live="polite">
         {message}
       </p>
 
@@ -200,11 +200,9 @@ export function WaitlistSignupForm({ expectations }: WaitlistSignupFormProps) {
         </button>
       </form>
 
-      <div className="site-rule mt-6" />
-
-      <ul className="mt-6 grid gap-3 text-sm leading-7 text-[var(--color-muted)] md:text-base">
+      <ul className="waitlist-form-expectations">
         {expectations.map((item) => (
-          <li key={item} className="rounded-[1.4rem] border border-[var(--color-line)]/75 bg-white/80 px-4 py-4">
+          <li key={item}>
             {item}
           </li>
         ))}

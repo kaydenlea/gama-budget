@@ -739,6 +739,184 @@ a {
   max-width: 38rem;
 }
 
+.waitlist-clean-page {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+  padding-top: 1.25rem;
+  padding-bottom: 4rem;
+}
+
+.waitlist-clean-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(25rem, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+  min-height: min(44rem, calc(100vh - 8rem));
+}
+
+.waitlist-clean-hero-copy,
+.waitlist-clean-hero-text,
+.waitlist-clean-section-head,
+.waitlist-clean-trust-copy {
+  display: grid;
+}
+
+.waitlist-clean-hero-copy {
+  gap: 1.45rem;
+  max-width: 42rem;
+}
+
+.waitlist-clean-hero-text {
+  gap: 1.15rem;
+}
+
+.waitlist-clean-hero-text h1 {
+  max-width: 11.5ch;
+  color: var(--color-ink);
+  font-size: clamp(3.25rem, 7vw, 6.4rem);
+  line-height: 0.91;
+  text-wrap: balance;
+}
+
+.waitlist-clean-hero-text p,
+.waitlist-clean-section-head p,
+.early-access-body,
+.waitlist-clean-trust-copy p {
+  color: var(--color-muted);
+  font-size: clamp(1rem, 1.2vw, 1.12rem);
+  line-height: 1.7;
+}
+
+.waitlist-clean-actions,
+.waitlist-clean-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.waitlist-clean-hero-visual {
+  position: relative;
+  min-width: 0;
+}
+
+.waitlist-clean-summary {
+  display: grid;
+  gap: 1.35rem;
+}
+
+.waitlist-clean-section-head {
+  gap: 1rem;
+  max-width: 47rem;
+}
+
+.waitlist-clean-section-head h2,
+.waitlist-clean-trust-copy h2 {
+  max-width: 13ch;
+  color: var(--color-ink);
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.waitlist-clean-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.waitlist-clean-card {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+  min-height: 11rem;
+  border: 1px solid rgba(17, 17, 17, 0.06);
+  border-radius: 1.35rem;
+  background: rgba(255, 255, 255, 0.66);
+  padding: 1.1rem;
+  box-shadow: 0 14px 34px rgba(16, 18, 28, 0.045);
+}
+
+.waitlist-clean-card h3 {
+  color: var(--color-ink);
+  font-size: 1.15rem;
+  line-height: 1.12;
+  letter-spacing: -0.045em;
+}
+
+.waitlist-clean-card p {
+  color: var(--color-muted);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.waitlist-clean-signup {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(25rem, 1fr);
+  gap: clamp(1.6rem, 4vw, 3rem);
+  align-items: start;
+  padding: 2.2rem 0 0;
+}
+
+.waitlist-clean-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.35rem;
+}
+
+.waitlist-clean-points span {
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.48rem 0.72rem;
+  color: var(--color-muted-strong);
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.waitlist-clean-trust {
+  display: flex;
+  gap: 1.25rem;
+  align-items: end;
+  justify-content: space-between;
+  border-top: 1px solid rgba(17, 17, 17, 0.08);
+  padding-top: 2rem;
+}
+
+.waitlist-clean-trust-copy {
+  gap: 0.95rem;
+  max-width: 42rem;
+}
+
+.waitlist-form-expectations {
+  display: grid;
+  gap: 0.55rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  color: var(--color-muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+  list-style: none;
+}
+
+.waitlist-form-expectations li {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.waitlist-form-expectations li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.58em;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 999px;
+  background: var(--color-teal);
+}
+
 .early-access-title {
   max-width: 9ch;
   margin-top: 1.1rem;
@@ -3151,6 +3329,58 @@ a {
     display: grid;
     gap: 2.15rem;
   }
+
+  .waitlist-clean-page {
+    gap: 2.6rem;
+  }
+
+  .waitlist-clean-hero,
+  .waitlist-clean-signup {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .waitlist-clean-hero {
+    min-height: 0;
+    text-align: center;
+  }
+
+  .waitlist-clean-hero-copy,
+  .waitlist-clean-section-head,
+  .early-access-copy,
+  .waitlist-clean-trust-copy {
+    justify-items: center;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .waitlist-clean-actions,
+  .waitlist-clean-chip-row,
+  .waitlist-clean-points {
+    justify-content: center;
+  }
+
+  .waitlist-clean-hero-visual {
+    width: min(100%, 37rem);
+    margin-inline: auto;
+  }
+
+  .waitlist-clean-card-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .waitlist-clean-card {
+    min-height: 0;
+  }
+
+  .waitlist-clean-signup {
+    padding-top: 0.6rem;
+  }
+
+  .waitlist-clean-trust {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+  }
 }
 
 @media (min-width: 720px) and (max-width: 959px) and (orientation: portrait) {
@@ -3259,6 +3489,36 @@ a {
 
   .hero-home-marquee-item strong {
     font-size: 0.98rem;
+  }
+
+  .waitlist-clean-page {
+    gap: 2.2rem;
+    padding-top: 0.8rem;
+  }
+
+  .waitlist-clean-hero-text h1 {
+    font-size: clamp(2.55rem, 13vw, 4.2rem);
+  }
+
+  .waitlist-clean-actions {
+    width: 100%;
+  }
+
+  .waitlist-clean-actions .site-link,
+  .waitlist-clean-actions .site-link-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .waitlist-clean-hero-visual {
+    margin-top: -1.2rem;
+  }
+
+  .waitlist-clean-summary,
+  .waitlist-clean-signup,
+  .waitlist-clean-trust {
+    width: min(100%, calc(100vw - 1rem));
+    margin-inline: auto;
   }
 
   .premium-hero-visual,
