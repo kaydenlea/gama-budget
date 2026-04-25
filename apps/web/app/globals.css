@@ -3036,10 +3036,11 @@ a {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 182%;
-  height: 182%;
-  transform: translate3d(-39%, -36%, 0);
-  animation: none;
+  width: 168%;
+  height: 168%;
+  transform: translate3d(-31%, -30%, 0);
+  animation: map-camera-pan 18s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  will-change: transform;
   background:
     repeating-linear-gradient(
       0deg,
@@ -3295,55 +3296,51 @@ a {
 }
 
 .home-signature-map-location-flight .home-signature-map-popup {
-  animation: none;
+  animation: map-popup-flight 18s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .home-signature-map-location-dining .home-signature-map-popup {
-  animation: none;
-  opacity: 1;
-  transform: translateY(0) scale(1);
+  animation: map-popup-dining 18s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .home-signature-map-location-grocery .home-signature-map-popup {
-  animation: none;
+  animation: map-popup-grocery 18s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .home-signature-map-location-flight .home-signature-map-marker-wrap {
-  animation: none;
+  animation: map-marker-flight 18s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .home-signature-map-location-dining .home-signature-map-marker-wrap {
-  animation: none;
+  animation: map-marker-dining 18s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .home-signature-map-location-grocery .home-signature-map-marker-wrap {
-  animation: none;
+  animation: map-marker-grocery 18s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .home-signature-map-location-flight .home-signature-map-click-pulse {
-  animation: none;
+  animation: map-click-flight 18s ease-out infinite;
 }
 
 .home-signature-map-location-dining .home-signature-map-click-pulse {
-  animation: none;
+  animation: map-click-dining 18s ease-out infinite;
 }
 
 .home-signature-map-location-grocery .home-signature-map-click-pulse {
-  animation: none;
+  animation: map-click-grocery 18s ease-out infinite;
 }
 
 .home-signature-map-location-flight .home-signature-map-selected {
-  animation: none;
+  animation: map-badge-flight 18s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .home-signature-map-location-dining .home-signature-map-selected {
-  animation: none;
-  opacity: 1;
-  transform: translateY(0);
+  animation: map-badge-dining 18s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .home-signature-map-location-grocery .home-signature-map-selected {
-  animation: none;
+  animation: map-badge-grocery 18s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .home-signature-event-viewport {
