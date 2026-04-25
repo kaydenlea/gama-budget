@@ -100,30 +100,33 @@ async function SignatureFeatureCard({ card }: { card: HomeSignatureFeatureCard }
   const crop = card.id === "overview-timeline" ? "events" : card.id === "receipt-recap" ? "eventDetails" : undefined;
 
   return (
-    <article
-      className={joinClasses(
-        "home-signature-card",
-        `home-signature-card-${card.id}`
-      )}
-    >
-      <div className="home-signature-card-device-window">
-        <MockupPreviewPhone
-          className={joinClasses("home-signature-card-phone", `home-signature-card-phone-${card.id}`)}
-          preview={card.previewSlug}
-          {...(crop ? { crop } : {})}
-        />
-      </div>
-
-      <div className="home-signature-card-copy">
-        <span className="home-signature-card-icon" aria-hidden="true">
-          <SignatureCardIcon icon={card.icon} />
-        </span>
-        <div className="home-signature-card-text">
-          <h3>{card.title}</h3>
-          <p>{card.body}</p>
+    <Reveal className="home-visual-reveal" delayMs={60}>
+      <article
+        className={joinClasses(
+          "home-signature-card",
+          `home-signature-card-${card.id}`
+        )}
+      >
+        <div className="home-signature-card-device-window">
+          <MockupPreviewPhone
+            className={joinClasses("home-signature-card-phone", `home-signature-card-phone-${card.id}`)}
+            preview={card.previewSlug}
+            priority
+            {...(crop ? { crop } : {})}
+          />
         </div>
-      </div>
-    </article>
+
+        <div className="home-signature-card-copy">
+          <span className="home-signature-card-icon" aria-hidden="true">
+            <SignatureCardIcon icon={card.icon} />
+          </span>
+          <div className="home-signature-card-text">
+            <h3>{card.title}</h3>
+            <p>{card.body}</p>
+          </div>
+        </div>
+      </article>
+    </Reveal>
   );
 }
 
@@ -150,9 +153,9 @@ export async function LandingPage() {
               </div>
             </div>
 
-            <div className="hero-home-visual">
+            <Reveal className="hero-home-visual home-visual-reveal" delayMs={90}>
               <ProductHeroVisual />
-            </div>
+            </Reveal>
           </div>
 
           <div className="hero-home-marquee-shell">

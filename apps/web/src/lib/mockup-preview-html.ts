@@ -248,7 +248,7 @@ function buildSharedStyle(slug: MockupPreviewSlug, crop?: PreviewCrop) {
       `
     : "";
   const previewVariantStyle =
-    slug === "accounts-trust"
+    slug === "accounts" || slug === "accounts-trust"
       ? `
         .preview-scale-root .mobile-container > main {
           padding-top: 2rem !important;
@@ -256,6 +256,48 @@ function buildSharedStyle(slug: MockupPreviewSlug, crop?: PreviewCrop) {
 
         .preview-scale-root .mobile-container > main > div.absolute {
           display: none !important;
+        }
+
+        .preview-scale-root .glass-island,
+        .preview-scale-root .glass-island-dark,
+        .preview-scale-root .ios-glass-pill,
+        .preview-scale-root .ios-emerald-glass,
+        .preview-scale-root [class*="backdrop-blur"] {
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+          filter: none !important;
+        }
+
+        .preview-scale-root .glass-island-dark {
+          background: rgba(32, 41, 50, 0.96) !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+          box-shadow: none !important;
+        }
+
+        .preview-scale-root .glass-island {
+          background: rgba(243, 247, 251, 0.98) !important;
+          border-color: rgba(255, 255, 255, 0.78) !important;
+          box-shadow: none !important;
+        }
+
+        .preview-scale-root .ios-glass-pill {
+          background: rgba(245, 248, 252, 0.98) !important;
+          border-color: rgba(226, 233, 241, 0.92) !important;
+          box-shadow: 0 8px 20px rgba(15, 23, 32, 0.08) !important;
+        }
+
+        .preview-scale-root .ios-emerald-glass {
+          background: rgba(116, 196, 76, 0.92) !important;
+          border-color: rgba(116, 196, 76, 0.96) !important;
+          box-shadow: none !important;
+        }
+
+        .preview-scale-root .immersive-dark-top .bg-black\\/20 {
+          background: rgba(14, 24, 31, 0.96) !important;
+        }
+
+        .preview-scale-root .immersive-dark-top .bg-white\\/10 {
+          background: rgba(255, 255, 255, 0.14) !important;
         }
       `
       : "";
@@ -279,6 +321,15 @@ function buildSharedStyle(slug: MockupPreviewSlug, crop?: PreviewCrop) {
     body {
       min-height: 100vh !important;
       isolation: isolate;
+      position: relative !important;
+    }
+    body::before {
+      content: "" !important;
+      position: fixed !important;
+      inset: 0 !important;
+      background: ${preview.background} !important;
+      pointer-events: none !important;
+      z-index: -1 !important;
     }
     html[data-preview-scale="managed"],
     html[data-preview-scale="managed"] body {
@@ -308,6 +359,8 @@ function buildSharedStyle(slug: MockupPreviewSlug, crop?: PreviewCrop) {
       transform-origin: top left !important;
       will-change: transform !important;
       backface-visibility: hidden !important;
+      -webkit-backface-visibility: hidden !important;
+      contain: paint !important;
     }
     * {
       box-sizing: border-box;
@@ -341,12 +394,15 @@ function buildSharedStyle(slug: MockupPreviewSlug, crop?: PreviewCrop) {
   `;
 }
 
-function buildScalingScript() {
+function buildScalingScript(slug: MockupPreviewSlug) {
+  const useZoomScaling = slug === "accounts" || slug === "accounts-trust";
+
   return `
     <script>
       (() => {
         const canvasWidth = ${PREVIEW_CANVAS_WIDTH};
         const canvasHeight = ${PREVIEW_CANVAS_HEIGHT};
+        const useZoomScaling = ${useZoomScaling ? "true" : "false"};
 
         const ensureRoot = () => {
           const existing = document.querySelector(".preview-scale-root");
@@ -378,8 +434,17 @@ function buildScalingScript() {
           document.documentElement.dataset.previewScale = "managed";
           document.body.style.width = "100%";
           document.body.style.height = "100%";
-          root.style.zoom = "";
-          root.style.transform = "translate(" + offsetX + "px, " + offsetY + "px) scale(" + overscanScale + ")";
+          if (useZoomScaling) {
+            root.style.transform = "none";
+            root.style.zoom = String(overscanScale);
+            root.style.left = (offsetX / overscanScale) + "px";
+            root.style.top = (offsetY / overscanScale) + "px";
+          } else {
+            root.style.zoom = "";
+            root.style.left = "0px";
+            root.style.top = "0px";
+            root.style.transform = "translate(" + offsetX + "px, " + offsetY + "px) scale(" + overscanScale + ")";
+          }
         };
 
         if (document.readyState === "loading") {
@@ -399,7 +464,7 @@ async function buildPreviewHtmlInternal(slug: MockupPreviewSlug, crop?: PreviewC
   const tailwindCss = await compileTailwindCss(source);
   const sharedStyle = buildSharedStyle(slug, crop);
   const previewSource = replaceMaterialSymbolLigatures(stabilizeViewport(stripRuntimeDependencies(source)));
-  const scalingScript = buildScalingScript();
+  const scalingScript = buildScalingScript(slug);
 
   return previewSource
     .replace("</head>", `<style>${tailwindCss}\n${sharedStyle}</style></head>`)

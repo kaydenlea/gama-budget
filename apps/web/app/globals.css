@@ -502,6 +502,18 @@ a {
   transform: translate3d(0, 0, 0);
 }
 
+.home-visual-reveal {
+  width: 100%;
+}
+
+.home-visual-reveal.reveal {
+  transform: translate3d(0, 42px, 0);
+}
+
+.home-visual-reveal.reveal-visible {
+  transform: translate3d(0, 0, 0);
+}
+
 .proof-strip {
   display: grid;
   gap: 0.85rem;
@@ -3090,8 +3102,8 @@ a {
 .home-trust-carousel-stage {
   position: relative;
   min-height: 32.5rem;
-  overflow: hidden;
-  isolation: isolate;
+  overflow: visible;
+  isolation: auto;
   border-radius: 2rem;
   padding: 0.55rem 0 0.45rem;
 }
@@ -3110,8 +3122,7 @@ a {
     linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.03)),
     rgba(11, 16, 26, 0.42);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  overflow: hidden;
-  animation: trust-slide-enter 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: visible;
 }
 
 .home-trust-slide-active {
@@ -3181,8 +3192,8 @@ a {
   min-height: calc(min(21.5rem, 78vw) * 852 / 393 / 2);
   height: calc(min(21.5rem, 78vw) * 852 / 393 / 2);
   min-width: 0;
-  overflow: hidden;
-  isolation: isolate;
+  overflow: visible;
+  isolation: auto;
 }
 
 .home-trust-slide-device-card {
@@ -3206,13 +3217,22 @@ a {
 .home-trust-slide-device-viewport .home-walkthrough-preview-mask {
   inset: 0.48rem 0.44rem 0.72rem;
   border-radius: 2.72rem;
-  clip-path: inset(0 round 2.72rem);
+  clip-path: none;
+  contain: none;
+  transform: none;
 }
 
 .home-trust-preview-frame {
-  background: #0b141a;
-  opacity: 1;
+  background: transparent;
   transition: none;
+}
+
+@media (min-width: 960px) {
+  .home-trust-slide,
+  .home-trust-carousel-tab-active::after {
+    animation: none;
+    transition: none;
+  }
 }
 
 
@@ -3826,5 +3846,67 @@ a {
 
   .home-walkthrough-copy-card {
     animation: none;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .reveal,
+  .home-visual-reveal.reveal,
+  .reveal-visible,
+  .home-visual-reveal.reveal-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .premium-orb,
+  .premium-ridge,
+  .premium-hero-ring,
+  .premium-hero-card,
+  .hero-home-marquee-track,
+  .home-walkthrough-copy-card,
+  .home-trust-slide,
+  .home-trust-carousel-tab-active::after {
+    animation: none;
+  }
+
+  .premium-orb,
+  .premium-hero-halo,
+  .hero-email-panel::before {
+    filter: none;
+  }
+
+  .device-shell,
+  .device-shell-framed,
+  .home-signature-card-phone {
+    filter: none;
+  }
+
+  .premium-hero-card,
+  .home-proof-card,
+  .site-panel,
+  .fluid-feature-card,
+  .glass-note-card,
+  .glimpse-float-card {
+    backdrop-filter: none;
+  }
+
+  .device-screen-wrap,
+  .home-walkthrough-preview-mask,
+  .home-trust-slide-device-viewport .home-walkthrough-preview-mask {
+    clip-path: none;
+  }
+
+  .device-iframe,
+  .home-walkthrough-preview-mask,
+  .home-walkthrough-preview-frame,
+  .home-trust-preview-frame {
+    transform: none;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .home-walkthrough-preview-frame {
+    transition: none;
   }
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { mockupPreviews, type MockupPreviewSlug } from "../content/mockup-previews";
+import { Reveal } from "./Reveal";
 
 type ShowcaseStep = {
   id: string;
@@ -29,7 +30,7 @@ function WalkthroughPreview({
   return (
     <iframe
       className={joinClasses("home-walkthrough-preview-frame", isActive && "home-walkthrough-preview-frame-active")}
-      loading={isActive ? "eager" : "lazy"}
+      loading="eager"
       sandbox=""
       scrolling="no"
       src={`/preview/${previewSlug}`}
@@ -46,7 +47,7 @@ function MobileWalkthroughPreviewPhone({ previewSlug }: { previewSlug: MockupPre
         <div className="device-screen-wrap" style={{ background: mockupPreviews[previewSlug].background }}>
           <iframe
             className="device-iframe"
-            loading="lazy"
+            loading="eager"
             sandbox=""
             scrolling="no"
             src={`/preview/${previewSlug}`}
@@ -176,7 +177,7 @@ export function ScrollFeatureShowcase({
                 </div>
               </div>
 
-              <div className="home-walkthrough-device-stage">
+              <Reveal className="home-walkthrough-device-stage home-visual-reveal" delayMs={100}>
                 <div className="home-walkthrough-device-card">
                   <div className="home-walkthrough-device-viewport">
                     <div className="home-walkthrough-device-shell" aria-hidden="true">
@@ -186,7 +187,7 @@ export function ScrollFeatureShowcase({
                     </div>
                   </div>
                 </div>
-              </div>
+              </Reveal>
             </div>
           </div>
         </div>
@@ -200,13 +201,13 @@ export function ScrollFeatureShowcase({
                 <p>{step.body}</p>
               </div>
 
-              <div className="home-walkthrough-mobile-device">
+              <Reveal className="home-walkthrough-mobile-device home-visual-reveal" delayMs={80}>
                 <div className="home-walkthrough-device-card home-walkthrough-device-card-mobile">
                   <div className="home-walkthrough-device-viewport home-walkthrough-device-viewport-mobile">
                     <MobileWalkthroughPreviewPhone previewSlug={step.previewSlug} />
                   </div>
                 </div>
-              </div>
+              </Reveal>
             </article>
           ))}
         </div>

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { MockupPreviewSlug } from "../content/mockup-previews";
+import { mockupPreviews, type MockupPreviewSlug } from "../content/mockup-previews";
+import { Reveal } from "./Reveal";
 
 type TrustSlide = {
   id: string;
@@ -89,6 +90,10 @@ export function TrustFeatureCarousel({ slides }: { slides: readonly TrustSlide[]
       return;
     }
 
+    if (typeof window !== "undefined" && window.matchMedia("(min-width: 960px)").matches) {
+      return;
+    }
+
     const timer = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % slides.length);
     }, 5200);
@@ -103,7 +108,7 @@ export function TrustFeatureCarousel({ slides }: { slides: readonly TrustSlide[]
   }
 
   const activeSlide = (slides[activeIndex] ?? slides[0])!;
-  const previewSrc = `/preview/${activeSlide.previewSlug}`;
+  const previewBackground = mockupPreviews[activeSlide.previewSlug].background;
 
   return (
     <div className="home-trust-carousel" aria-label="Trust highlights">
@@ -126,7 +131,7 @@ export function TrustFeatureCarousel({ slides }: { slides: readonly TrustSlide[]
       </div>
 
       <div className="home-trust-carousel-stage">
-        <div key={activeSlide.id} className="home-trust-slide home-trust-slide-active">
+        <div className="home-trust-slide home-trust-slide-active">
           <div className="home-trust-slide-copy">
             <div className="home-trust-slide-eyebrow-row">
               <span className="home-trust-slide-icon">
@@ -138,25 +143,28 @@ export function TrustFeatureCarousel({ slides }: { slides: readonly TrustSlide[]
             <p>{activeSlide.body}</p>
           </div>
 
-          <div className="home-trust-slide-device-wrap" aria-hidden="true">
-            <div className="home-walkthrough-device-card home-trust-slide-device-card">
-              <div className="home-walkthrough-device-viewport home-trust-slide-device-viewport">
-                <div className="home-walkthrough-device-shell">
-                  <div className="home-walkthrough-preview-mask">
-                    <iframe
-                      className="home-walkthrough-preview-frame home-walkthrough-preview-frame-active home-trust-preview-frame"
-                      loading="eager"
-                      sandbox=""
-                      scrolling="no"
-                      src={previewSrc}
-                      tabIndex={-1}
-                      title={`Gama ${activeSlide.previewSlug} trust preview`}
-                    />
+          <Reveal className="home-trust-slide-device-wrap home-visual-reveal" delayMs={110}>
+            <div aria-hidden="true">
+              <div className="home-walkthrough-device-card home-trust-slide-device-card">
+                <div className="home-walkthrough-device-viewport home-trust-slide-device-viewport">
+                  <div className="home-walkthrough-device-shell">
+                    <div className="home-walkthrough-preview-mask" style={{ background: previewBackground }}>
+                      <iframe
+                        className="home-walkthrough-preview-frame home-walkthrough-preview-frame-active home-trust-preview-frame"
+                        loading="eager"
+                        sandbox=""
+                        scrolling="no"
+                        src={`/preview/${activeSlide.previewSlug}`}
+                        style={{ background: previewBackground }}
+                        tabIndex={-1}
+                        title={`Gama ${activeSlide.previewSlug} trust preview`}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </div>

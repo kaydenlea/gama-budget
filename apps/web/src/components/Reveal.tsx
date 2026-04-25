@@ -16,7 +16,7 @@ export function Reveal({
   delayMs?: number;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const node = ref.current;
@@ -24,6 +24,17 @@ export function Reveal({
     if (!node) {
       return;
     }
+
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+    const rect = node.getBoundingClientRect();
+    const isInitiallyNearViewport = rect.top <= viewportHeight * 0.92 && rect.bottom >= 0;
+
+    if (isInitiallyNearViewport || typeof IntersectionObserver === "undefined") {
+      setIsVisible(true);
+      return;
+    }
+
+    setIsVisible(false);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -35,8 +46,8 @@ export function Reveal({
         }
       },
       {
-        rootMargin: "0px 0px -12% 0px",
-        threshold: 0.18
+        rootMargin: "0px 0px -8% 0px",
+        threshold: 0.01
       }
     );
 
