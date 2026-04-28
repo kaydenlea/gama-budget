@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import type { MockupPreviewSlug } from "../content/mockup-previews";
-import { EmbeddedPreviewFrame } from "./ProductVisuals";
 
 type TrustSlide = {
   id: string;
@@ -15,26 +14,6 @@ type TrustSlide = {
 
 function joinClasses(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
-}
-
-const PREVIEW_BUST = "20260424-1";
-
-function warmPreviewDocuments(slugs: readonly MockupPreviewSlug[]) {
-  const uniqueUrls = Array.from(new Set(slugs.map((slug) => `/preview/${slug}?v=${PREVIEW_BUST}`)));
-
-  const warm = () => {
-    for (const url of uniqueUrls) {
-      void fetch(url, { credentials: "same-origin" }).catch(() => undefined);
-    }
-  };
-
-  if ("requestIdleCallback" in window) {
-    const idleId = window.requestIdleCallback(warm, { timeout: 2000 });
-    return () => window.cancelIdleCallback(idleId);
-  }
-
-  const timeoutId = setTimeout(warm, 300);
-  return () => window.clearTimeout(timeoutId);
 }
 
 function TrustIcon({ icon }: { icon: TrustSlide["icon"] }) {
@@ -104,26 +83,49 @@ function TrustIcon({ icon }: { icon: TrustSlide["icon"] }) {
 
 export function TrustFeatureCarousel({ slides }: { slides: readonly TrustSlide[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => warmPreviewDocuments(slides.map((slide) => slide.previewSlug)), [slides]);
+  const [animationKey, setAnimationKey] = useState(0);
 
   useEffect(() => {
     if (slides.length <= 1) {
       return;
     }
 
-    const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % slides.length);
-    }, 5200);
+    let timeoutId: number | undefined;
+    let cancelled = false;
+
+    const schedule = () => {
+      timeoutId = window.setTimeout(() => {
+        if (cancelled) return;
+        setActiveIndex((current) => (current + 1) % slides.length);
+        setAnimationKey((k) => k + 1);
+        schedule();
+      }, 5200);
+    };
+
+    schedule();
+
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible" && !cancelled) {
+        if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+        schedule();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
 
     return () => {
-      window.clearInterval(timer);
+      cancelled = true;
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, [slides.length]);
 
   if (slides.length === 0) {
     return null;
   }
+
+  const activeSlide = (slides[activeIndex] ?? slides[0])!;
+  const previewSrc = `/preview/${activeSlide.previewSlug}`;
 
   return (
     <div className="home-trust-carousel" aria-label="Trust highlights">
@@ -134,9 +136,12 @@ export function TrustFeatureCarousel({ slides }: { slides: readonly TrustSlide[]
             aria-label={`Show ${slide.eyebrow}`}
             aria-pressed={index === activeIndex}
             className={joinClasses("home-trust-carousel-tab", index === activeIndex && "home-trust-carousel-tab-active")}
-            onClick={() => setActiveIndex(index)}
+            onClick={() => { setActiveIndex(index); setAnimationKey((k) => k + 1); }}
             type="button"
           >
+            {index === activeIndex && (
+              <span key={animationKey} className="home-trust-carousel-tab-progress" aria-hidden="true" />
+            )}
             <span className="home-trust-carousel-tab-icon">
               <TrustIcon icon={slide.icon} />
             </span>
@@ -146,38 +151,38 @@ export function TrustFeatureCarousel({ slides }: { slides: readonly TrustSlide[]
       </div>
 
       <div className="home-trust-carousel-stage">
-        {(() => {
-          const activeSlide = slides[activeIndex] ?? slides[0];
+        <div key={activeSlide.id} className="home-trust-slide home-trust-slide-active">
+          <div className="home-trust-slide-copy">
+            <div className="home-trust-slide-eyebrow-row">
+              <span className="home-trust-slide-icon">
+                <TrustIcon icon={activeSlide.icon} />
+              </span>
+              <span className="home-trust-slide-kicker">{activeSlide.eyebrow}</span>
+            </div>
+            <h3>{activeSlide.title}</h3>
+            <p>{activeSlide.body}</p>
+          </div>
 
-          if (!activeSlide) {
-            return null;
-          }
-
-          return (
-            <div key={activeSlide.id} className="home-trust-slide home-trust-slide-active">
-              <div className="home-trust-slide-copy">
-                <h3>{activeSlide.title}</h3>
-                <p>{activeSlide.body}</p>
-              </div>
-
-              <div className="home-trust-slide-device-wrap" aria-hidden="true">
-                <div className="home-walkthrough-device-card home-trust-slide-device-card">
-                  <div className="home-walkthrough-device-viewport home-trust-slide-device-viewport">
-                    <div className="home-walkthrough-device-shell">
-                      <div className="home-walkthrough-preview-mask">
-                        <EmbeddedPreviewFrame
-                          className="home-walkthrough-preview-frame home-walkthrough-preview-frame-active home-trust-preview-frame"
-                          previewSlug={activeSlide.previewSlug}
-                          title={`Gama ${activeSlide.previewSlug} trust preview`}
-                        />
-                      </div>
-                    </div>
+          <div className="home-trust-slide-device-wrap" aria-hidden="true">
+            <div className="home-walkthrough-device-card home-trust-slide-device-card">
+              <div className="home-walkthrough-device-viewport home-trust-slide-device-viewport">
+                <div className="home-walkthrough-device-shell">
+                  <div className="home-walkthrough-preview-mask">
+                    <iframe
+                      className="home-walkthrough-preview-frame home-walkthrough-preview-frame-active home-trust-preview-frame"
+                      loading="eager"
+                      sandbox=""
+                      scrolling="no"
+                      src={previewSrc}
+                      tabIndex={-1}
+                      title={`Gama ${activeSlide.previewSlug} trust preview`}
+                    />
                   </div>
                 </div>
               </div>
             </div>
-          );
-        })()}
+          </div>
+        </div>
       </div>
     </div>
   );

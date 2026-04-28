@@ -31,10 +31,8 @@ function TikTokIcon() {
 
 function XIcon() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24">
-      <path d="M5 4.5L19 19.5" fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="1.8" />
-      <path d="M8.6 4.5H19L15.4 8.6" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
-      <path d="M5 19.5H15.4L19 15.4" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L2.25 2.25h6.937l4.265 5.638L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
     </svg>
   );
 }

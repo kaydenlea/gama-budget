@@ -1,14 +1,13 @@
 "use client";
 
 import { MetricChip } from "@gama/ui-web";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { siteCopy } from "../content/site-copy";
 import { mockupPreviews, type MockupPreviewSlug } from "../content/mockup-previews";
 
 type StoryScene = (typeof siteCopy.shared.storyScenes)[number];
 type MockupPreviewCrop = "events" | "eventDetails" | "storiesSignature";
 const PREVIEW_BUST = "20260425-11";
-const PREVIEW_ROOT_MARGIN = "150% 0px";
 
 function joinClasses(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
@@ -27,56 +26,19 @@ export function EmbeddedPreviewFrame({
   crop?: MockupPreviewCrop;
   eager?: boolean;
 }) {
-  const hostRef = useRef<HTMLDivElement | null>(null);
-  const [shouldRender, setShouldRender] = useState(eager);
-
-  useEffect(() => {
-    if (shouldRender || eager) {
-      return;
-    }
-
-    const host = hostRef.current;
-
-    if (!host) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-
-        if (entry?.isIntersecting) {
-          setShouldRender(true);
-          observer.disconnect();
-        }
-      },
-      {
-        rootMargin: PREVIEW_ROOT_MARGIN,
-      }
-    );
-
-    observer.observe(host);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [eager, shouldRender]);
-
   const src = `/preview/${previewSlug}${crop ? `?crop=${crop}&v=${PREVIEW_BUST}` : `?v=${PREVIEW_BUST}`}`;
 
   return (
-    <div ref={hostRef} className="embedded-preview-host">
-      {shouldRender ? (
-        <iframe
-          aria-label={title}
-          className={className}
-          loading={eager ? "eager" : "lazy"}
-          sandbox=""
-          scrolling="no"
-          src={src}
-          title={title}
-        />
-      ) : null}
+    <div aria-hidden="true" className="embedded-preview-host">
+      <iframe
+        aria-label={title}
+        className={className}
+        loading={eager ? "eager" : "lazy"}
+        sandbox=""
+        scrolling="no"
+        src={src}
+        title={title}
+      />
     </div>
   );
 }
@@ -84,10 +46,12 @@ export function EmbeddedPreviewFrame({
 function DeviceShell({
   className,
   crop,
+  eager = false,
   preview = "overview-screen"
 }: {
   className?: string;
   crop?: MockupPreviewCrop;
+  eager?: boolean;
   preview?: MockupPreviewSlug;
 }) {
   return (
@@ -99,6 +63,7 @@ function DeviceShell({
         >
           <EmbeddedPreviewFrame
             className="device-iframe"
+            eager={eager}
             previewSlug={preview}
             title={`Gama ${preview} preview`}
             {...(crop ? { crop } : {})}
@@ -502,7 +467,7 @@ export function ProductHeroVisual({ compact = false }: { compact?: boolean }) {
         title="Loaded"
       />
 
-      <DeviceShell className="premium-hero-device" preview="overview-screen" />
+      <DeviceShell className="premium-hero-device" eager preview="overview-screen" />
     </div>
   );
 }

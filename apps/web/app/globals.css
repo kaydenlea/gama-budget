@@ -38,7 +38,7 @@ html {
   background: var(--color-canvas);
   color: var(--color-ink);
   scroll-behavior: smooth;
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 body {
@@ -579,11 +579,8 @@ a {
 
 .hero-freeform {
   position: relative;
-  overflow: clip;
-  width: 100vw;
-  max-width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  overflow: hidden;
+  width: 100%;
   margin-top: calc(var(--nav-overlay-height) * -1);
   padding: calc(var(--nav-overlay-height) + 1.5rem) 0 3rem;
 }
@@ -1207,10 +1204,17 @@ a {
   position: absolute;
   inset: 0.48rem 0.44rem 0.72rem;
   z-index: 2;
-  overflow: hidden;
+  overflow: clip;
   border-radius: 2.72rem;
   background: #f2f5f7;
   clip-path: inset(0 round 2.72rem);
+  contain: paint;
+}
+
+.embedded-preview-host {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 .device-iframe {
@@ -1219,6 +1223,7 @@ a {
   width: 100%;
   height: 100%;
   border: 0;
+  border-radius: 2.72rem;
   background: #0b141a;
   transform: translateZ(0);
 }
@@ -3738,19 +3743,7 @@ a {
   padding-bottom: 4.75rem;
 }
 
-.hero-home,
-.home-signature-band,
-.home-walkthrough-band,
-.home-trust-band {
-  contain: layout paint style;
-}
 
-.home-signature-band,
-.home-walkthrough-band,
-.home-trust-band {
-  content-visibility: auto;
-  contain-intrinsic-size: 900px;
-}
 
 .home-gallery-shell,
 .home-walkthrough-shell {
@@ -4005,18 +3998,21 @@ a {
   overflow: hidden;
   border-radius: 2.96rem;
   clip-path: inset(0 round 2.96rem);
-  background: #0b141a;
+  background: #0c0c0f;
   z-index: 1;
   isolation: isolate;
+  contain: paint;
   transform: translateZ(0);
+  will-change: transform;
 }
+
 
 .home-walkthrough-preview-mask .home-walkthrough-preview-frame {
   inset: 0;
   width: 100%;
   height: 100%;
-  border-radius: 0;
-  clip-path: none;
+  border-radius: 2.96rem;
+  clip-path: inset(0 round 2.96rem);
 }
 
 .home-walkthrough-preview-frame-active {
@@ -4250,14 +4246,14 @@ a {
     color 260ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.home-trust-carousel-tab::after {
-  content: "";
+.home-trust-carousel-tab-progress {
   position: absolute;
   inset: 0;
-  width: 0;
   background: linear-gradient(90deg, rgba(90, 112, 255, 0.18), rgba(90, 112, 255, 0.05));
-  opacity: 0;
   pointer-events: none;
+  transform-origin: left center;
+  will-change: transform;
+  animation: trust-tab-progress 5200ms linear forwards;
 }
 
 .home-trust-carousel-tab-active {
@@ -4266,11 +4262,6 @@ a {
   color: rgba(245, 248, 255, 0.96);
 }
 
-.home-trust-carousel-tab-active::after {
-  width: 100%;
-  opacity: 1;
-  animation: trust-tab-progress 5200ms linear;
-}
 
 .home-trust-carousel-tab-icon {
   display: grid;
@@ -4562,10 +4553,6 @@ a {
   .home-walkthrough-shell {
     padding-top: 2.4rem;
     padding-bottom: 2.6rem;
-  }
-
-  .home-walkthrough-desktop-region {
-    display: none;
   }
 
   .home-walkthrough-mobile-list {
@@ -5464,11 +5451,11 @@ a {
 
 @keyframes trust-tab-progress {
   0% {
-    width: 0;
+    transform: scaleX(0);
   }
 
   100% {
-    width: 100%;
+    transform: scaleX(1);
   }
 }
 
@@ -5793,6 +5780,7 @@ a {
 
 @media (max-width: 959px) {
   .home-walkthrough-desktop-region {
+    display: none;
     height: auto;
   }
 
@@ -5819,3 +5807,4 @@ a {
 [data-in-view="false"] .home-signature-map-selected {
   animation-play-state: paused;
 }
+

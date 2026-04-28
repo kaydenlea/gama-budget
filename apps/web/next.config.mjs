@@ -8,6 +8,7 @@ const nextConfig = {
   typedRoutes: true,
   poweredByHeader: false,
   trailingSlash: false,
+  allowedDevOrigins: ["192.168.1.88"],
   async headers() {
     const defaultHeaders = buildSecurityHeaders({
       nodeEnv: process.env.NODE_ENV,

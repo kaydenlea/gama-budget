@@ -1,7 +1,6 @@
 import { siteCopy } from "../content/site-copy";
 import { HeroWaitlistForm } from "./HeroWaitlistForm";
 import { MockupPreviewPhone, ProductHeroVisual } from "./ProductVisuals";
-import { Reveal } from "./Reveal";
 import { ScrollFeatureShowcase } from "./ScrollFeatureShowcase";
 import { TrustFeatureCarousel } from "./TrustFeatureCarousel";
 import { ViewportMotionGate } from "./ViewportMotionGate";
@@ -389,8 +388,7 @@ export async function LandingPage() {
 
   return (
     <main id="main-content" className="landing-page flex flex-col gap-10 pb-12 md:gap-16 md:pb-18">
-      <Reveal>
-        <section className="hero-freeform hero-home">
+      <section className="hero-freeform hero-home">
           <div className="hero-freeform-inner">
             <div className="hero-home-copy">
               <span className="site-kicker">{siteCopy.home.hero.eyebrow}</span>
@@ -436,8 +434,7 @@ export async function LandingPage() {
               </div>
             </div>
           </div>
-        </section>
-      </Reveal>
+      </section>
 
       <section className="home-signature-band" aria-labelledby="home-signature-title" data-nav-theme="dark">
         <div className="site-shell home-signature-shell">

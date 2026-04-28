@@ -15,28 +15,9 @@ type ShowcaseStep = {
 };
 
 const DESKTOP_BREAKPOINT_QUERY = "(min-width: 960px)";
-const PREVIEW_BUST = "20260424-1";
 
 function joinClasses(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
-}
-
-function warmPreviewDocuments(slugs: readonly MockupPreviewSlug[]) {
-  const uniqueUrls = Array.from(new Set(slugs.map((slug) => `/preview/${slug}?v=${PREVIEW_BUST}`)));
-
-  const warm = () => {
-    for (const url of uniqueUrls) {
-      void fetch(url, { credentials: "same-origin" }).catch(() => undefined);
-    }
-  };
-
-  if ("requestIdleCallback" in window) {
-    const idleId = window.requestIdleCallback(warm, { timeout: 1500 });
-    return () => window.cancelIdleCallback(idleId);
-  }
-
-  const timeoutId = setTimeout(warm, 250);
-  return () => window.clearTimeout(timeoutId);
 }
 
 function WalkthroughPreview({
@@ -78,44 +59,29 @@ export function ScrollFeatureShowcase({
   steps: readonly ShowcaseStep[];
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isDesktopViewport, setIsDesktopViewport] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [hasPrimedDesktopPreviews, setHasPrimedDesktopPreviews] = useState(false);
+  const [hasPrimedDesktopPreviews] = useState(true);
   const regionRef = useRef<HTMLDivElement | null>(null);
   const activeIndexRef = useRef(0);
   const scrollProgressRef = useRef(0);
   const boundsRef = useRef({ top: 0, scrollableDistance: 1 });
-  const isNearViewportRef = useRef(false);
 
   activeIndexRef.current = activeIndex;
   scrollProgressRef.current = scrollProgress;
 
-  useEffect(() => warmPreviewDocuments(steps.map((step) => step.previewSlug)), [steps]);
-
   useEffect(() => {
-    const region = regionRef.current;
+    const desktopQuery = window.matchMedia(DESKTOP_BREAKPOINT_QUERY);
 
-    if (!region) {
-      return;
-    }
+    const syncViewport = () => {
+      setIsDesktopViewport(desktopQuery.matches);
+    };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-
-        if (entry?.isIntersecting) {
-          setHasPrimedDesktopPreviews(true);
-          observer.disconnect();
-        }
-      },
-      {
-        rootMargin: "20% 0px"
-      }
-    );
-
-    observer.observe(region);
+    syncViewport();
+    desktopQuery.addEventListener("change", syncViewport);
 
     return () => {
-      observer.disconnect();
+      desktopQuery.removeEventListener("change", syncViewport);
     };
   }, []);
 
@@ -144,10 +110,11 @@ export function ScrollFeatureShowcase({
     };
 
     const updateDesktopStep = () => {
-      if (!desktopQuery.matches || !isNearViewportRef.current) {
+      if (!desktopQuery.matches) {
         return;
       }
 
+      measure();
       const { top, scrollableDistance } = boundsRef.current;
       const consumed = Math.min(Math.max(window.scrollY - top, 0), scrollableDistance);
       const progress = consumed / scrollableDistance;
@@ -188,16 +155,12 @@ export function ScrollFeatureShowcase({
       (entries) => {
         const entry = entries[0];
 
-        isNearViewportRef.current = Boolean(entry?.isIntersecting);
-
         if (entry?.isIntersecting) {
           measure();
           requestUpdate();
         }
       },
-      {
-        rootMargin: "40% 0px",
-      }
+      { rootMargin: "200% 0px" }
     );
 
     const region = regionRef.current;
@@ -238,88 +201,90 @@ export function ScrollFeatureShowcase({
   return (
     <section className="home-walkthrough-band" aria-label="Product walkthrough">
       <div className="site-shell home-walkthrough-shell">
-        <div
-          ref={regionRef}
-          className="home-walkthrough-desktop-region"
-          style={{ "--walkthrough-step-count": desktopStepCount } as CSSProperties}
-        >
-          <div className="home-walkthrough-desktop-sticky">
-            <div className="home-walkthrough-desktop-layout">
-              <div className="home-walkthrough-copy-stage">
-                <div className="home-walkthrough-copy-panel">
-                  <div className="home-walkthrough-progress-meta" aria-label="Walkthrough progress">
-                    <div className="home-walkthrough-progress-head">
-                      <span className="home-walkthrough-progress-count">{progressDisplay}</span>
-                      <span className="home-walkthrough-progress-title">{activeStep.eyebrow}</span>
+        {isDesktopViewport ? (
+          <div
+            ref={regionRef}
+            className="home-walkthrough-desktop-region"
+            style={{ "--walkthrough-step-count": desktopStepCount } as CSSProperties}
+          >
+            <div className="home-walkthrough-desktop-sticky">
+              <div className="home-walkthrough-desktop-layout">
+                <div className="home-walkthrough-copy-stage">
+                  <div className="home-walkthrough-copy-panel">
+                    <div className="home-walkthrough-progress-meta" aria-label="Walkthrough progress">
+                      <div className="home-walkthrough-progress-head">
+                        <span className="home-walkthrough-progress-count">{progressDisplay}</span>
+                        <span className="home-walkthrough-progress-title">{activeStep.eyebrow}</span>
+                      </div>
+                      <div className="home-walkthrough-progress-track" aria-hidden="true">
+                        <span
+                          className="home-walkthrough-progress-fill"
+                          style={{ transform: `scaleX(${scrollProgress})` }}
+                        />
+                      </div>
                     </div>
-                    <div className="home-walkthrough-progress-track" aria-hidden="true">
-                      <span
-                        className="home-walkthrough-progress-fill"
-                        style={{ transform: `scaleX(${scrollProgress})` }}
-                      />
-                    </div>
+
+                    <article key={activeStep.id} className="home-walkthrough-copy-card" aria-live="polite">
+                      <span className="home-walkthrough-step-index">{activeStep.stepLabel}</span>
+                      <h3>{activeStep.title}</h3>
+                      <p>{activeStep.body}</p>
+
+                      <ul className="home-walkthrough-step-highlights">
+                        {activeStep.highlights.map((highlight) => (
+                          <li key={highlight}>{highlight}</li>
+                        ))}
+                      </ul>
+                    </article>
                   </div>
-
-                  <article key={activeStep.id} className="home-walkthrough-copy-card" aria-live="polite">
-                    <span className="home-walkthrough-step-index">{activeStep.stepLabel}</span>
-                    <h3>{activeStep.title}</h3>
-                    <p>{activeStep.body}</p>
-
-                    <ul className="home-walkthrough-step-highlights">
-                      {activeStep.highlights.map((highlight) => (
-                        <li key={highlight}>{highlight}</li>
-                      ))}
-                    </ul>
-                  </article>
                 </div>
-              </div>
 
-              <div className="home-walkthrough-device-stage">
-                <div className="home-walkthrough-device-card">
-                  <div className="home-walkthrough-device-viewport">
-                    <div className="home-walkthrough-device-shell" aria-hidden="true">
-                      {hasPrimedDesktopPreviews
-                        ? steps.map((step, index) => (
-                            <WalkthroughPreview
-                              key={step.id}
-                              isActive={index === activeIndex}
-                              previewSlug={step.previewSlug}
-                            />
-                          ))
-                        : (
-                            <WalkthroughPreview
-                              key={activeStep.id}
-                              isActive
-                              previewSlug={activeStep.previewSlug}
-                            />
-                          )}
+                <div className="home-walkthrough-device-stage">
+                  <div className="home-walkthrough-device-card">
+                    <div className="home-walkthrough-device-viewport">
+                      <div className="home-walkthrough-device-shell" aria-hidden="true">
+                        {hasPrimedDesktopPreviews
+                          ? steps.map((step, index) => (
+                              <WalkthroughPreview
+                                key={step.id}
+                                isActive={index === activeIndex}
+                                previewSlug={step.previewSlug}
+                              />
+                            ))
+                          : (
+                              <WalkthroughPreview
+                                key={activeStep.id}
+                                isActive
+                                previewSlug={activeStep.previewSlug}
+                              />
+                            )}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div className="home-walkthrough-mobile-list" role="list" aria-label="Product walkthrough steps">
+            {steps.map((step) => (
+              <article key={step.id} className="home-walkthrough-mobile-card" role="listitem">
+                <div className="home-walkthrough-mobile-copy">
+                  <span className="home-walkthrough-step-index">{step.stepLabel}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.body}</p>
+                </div>
 
-        <div className="home-walkthrough-mobile-list" role="list" aria-label="Product walkthrough steps">
-          {steps.map((step) => (
-            <article key={step.id} className="home-walkthrough-mobile-card" role="listitem">
-              <div className="home-walkthrough-mobile-copy">
-                <span className="home-walkthrough-step-index">{step.stepLabel}</span>
-                <h3>{step.title}</h3>
-                <p>{step.body}</p>
-              </div>
-
-              <div className="home-walkthrough-mobile-device">
-                <div className="home-walkthrough-device-card home-walkthrough-device-card-mobile">
-                  <div className="home-walkthrough-device-viewport home-walkthrough-device-viewport-mobile">
-                    <MobileWalkthroughPreviewPhone previewSlug={step.previewSlug} />
+                <div className="home-walkthrough-mobile-device">
+                  <div className="home-walkthrough-device-card home-walkthrough-device-card-mobile">
+                    <div className="home-walkthrough-device-viewport home-walkthrough-device-viewport-mobile">
+                      <MobileWalkthroughPreviewPhone previewSlug={step.previewSlug} />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </article>
-          ))}
-        </div>
+              </article>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
