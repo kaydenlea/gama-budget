@@ -356,7 +356,7 @@ Important UX states:
 
 ## Decisions Made Now
 
-- the product brand is now Gama and the planned public website domain is `gama.money`
+- the product brand is now Gama and the planned public website domain is `gamabudget.com`
 - the MVP focuses on short-term clarity, event-aware organization, place-aware context, and privacy-bounded sharing
 - the primary MVP differentiation is trusted clarity plus event and place intelligence, not a public budgeting community
 - the social layer is artifact-first; public raw-spending feeds are out of scope

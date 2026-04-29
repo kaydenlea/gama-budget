@@ -8,13 +8,13 @@ import {
 describe("site-config", () => {
   describe("normalizeSiteOrigin", () => {
     it("falls back for empty values", () => {
-      expect(normalizeSiteOrigin(undefined)).toBe("https://gama.money");
-      expect(normalizeSiteOrigin("")).toBe("https://gama.money");
-      expect(normalizeSiteOrigin("   ")).toBe("https://gama.money");
+      expect(normalizeSiteOrigin(undefined)).toBe("https://gamabudget.com");
+      expect(normalizeSiteOrigin("")).toBe("https://gamabudget.com");
+      expect(normalizeSiteOrigin("   ")).toBe("https://gamabudget.com");
     });
 
     it("normalizes bare hosts to https origins", () => {
-      expect(normalizeSiteOrigin("gama.money")).toBe("https://gama.money");
+      expect(normalizeSiteOrigin("gamabudget.com")).toBe("https://gamabudget.com");
       expect(normalizeSiteOrigin("www.example.test/")).toBe("https://www.example.test");
     });
 
@@ -29,8 +29,8 @@ describe("site-config", () => {
     });
 
     it("falls back for invalid values", () => {
-      expect(normalizeSiteOrigin("nota url with spaces")).toBe("https://gama.money");
-      expect(normalizeSiteOrigin("mailto:test@example.com")).toBe("https://gama.money");
+      expect(normalizeSiteOrigin("nota url with spaces")).toBe("https://gamabudget.com");
+      expect(normalizeSiteOrigin("mailto:test@example.com")).toBe("https://gamabudget.com");
     });
   });
 
@@ -50,7 +50,7 @@ describe("site-config", () => {
           nodeEnv: "production"
         })
       ).toEqual({
-        canonicalOrigin: "https://gama.money",
+        canonicalOrigin: "https://gamabudget.com",
         deploymentOrigin: "https://preview.example.test",
         environment: "production",
         isProduction: false,
@@ -61,12 +61,12 @@ describe("site-config", () => {
     it("allows indexing only on the canonical production origin", () => {
       expect(
         resolveSiteEnvironment({
-          rawOrigin: "https://gama.money",
+          rawOrigin: "https://gamabudget.com",
           nodeEnv: "production"
         })
       ).toEqual({
-        canonicalOrigin: "https://gama.money",
-        deploymentOrigin: "https://gama.money",
+        canonicalOrigin: "https://gamabudget.com",
+        deploymentOrigin: "https://gamabudget.com",
         environment: "production",
         isProduction: true,
         allowIndexing: true
@@ -79,7 +79,7 @@ describe("site-config", () => {
           nodeEnv: "development"
         })
       ).toEqual({
-        canonicalOrigin: "https://gama.money",
+        canonicalOrigin: "https://gamabudget.com",
         deploymentOrigin: "http://localhost:3000",
         environment: "development",
         isProduction: false,
@@ -93,8 +93,8 @@ describe("site-config", () => {
           nodeEnv: "production"
         })
       ).toEqual({
-        canonicalOrigin: "https://gama.money",
-        deploymentOrigin: "https://gama.money",
+        canonicalOrigin: "https://gamabudget.com",
+        deploymentOrigin: "https://gamabudget.com",
         environment: "production",
         isProduction: false,
         allowIndexing: false
@@ -108,8 +108,8 @@ describe("site-config", () => {
           nodeEnv: "production"
         })
       ).toEqual({
-        canonicalOrigin: "https://gama.money",
-        deploymentOrigin: "https://gama.money",
+        canonicalOrigin: "https://gamabudget.com",
+        deploymentOrigin: "https://gamabudget.com",
         environment: "production",
         isProduction: false,
         allowIndexing: false
@@ -119,7 +119,7 @@ describe("site-config", () => {
     it("supports explicit indexing disablement", () => {
       expect(
         resolveSiteEnvironment({
-          rawOrigin: "https://gama.money",
+          rawOrigin: "https://gamabudget.com",
           nodeEnv: "production",
           disableIndexing: "true"
         }).allowIndexing
@@ -129,7 +129,7 @@ describe("site-config", () => {
 
   describe("buildCanonicalUrl", () => {
     it("always targets the canonical origin and normalized path", () => {
-      expect(buildCanonicalUrl("/privacy/?utm_source=chatgpt")).toBe("https://gama.money/privacy");
+      expect(buildCanonicalUrl("/privacy/?utm_source=chatgpt")).toBe("https://gamabudget.com/privacy");
     });
   });
 });

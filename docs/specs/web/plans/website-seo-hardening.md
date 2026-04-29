@@ -129,7 +129,7 @@ Implement a durable SEO and platform-safety baseline for the current Next.js web
 - regression tests cover missing-origin production behavior for both shared site-environment logic and Next header decisions
 - spec and plan checklists reflect the final shipped scope
 - architecture and SEO docs describe the new centralized defaults accurately
-- non-production examples use localhost or reserved synthetic hosts instead of implying a real `preview.gama.money` deployment
+- non-production examples use localhost or reserved synthetic hosts instead of implying a real preview subdomain deployment
 
 ## Documentation Reconciliation
 

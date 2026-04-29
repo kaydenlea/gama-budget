@@ -8,11 +8,11 @@ describe("site-schema", () => {
     expect(schemas).toHaveLength(2);
     expect(schemas[0]).toMatchObject({
       "@type": "Organization",
-      url: "https://gama.money/"
+      url: "https://gamabudget.com/"
     });
     expect(schemas[1]).toMatchObject({
       "@type": "WebSite",
-      url: "https://gama.money/"
+      url: "https://gamabudget.com/"
     });
   });
 
@@ -42,13 +42,13 @@ describe("site-schema", () => {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://gama.money/"
+        item: "https://gamabudget.com/"
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Privacy and Trust",
-        item: "https://gama.money/privacy"
+        item: "https://gamabudget.com/privacy"
       }
     ]);
   });

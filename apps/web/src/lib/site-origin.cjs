@@ -1,4 +1,4 @@
-const canonicalOrigin = "https://gama.money";
+const canonicalOrigin = "https://gamabudget.com";
 const defaultDevelopmentOrigin = "http://localhost:3000";
 
 function isLoopbackHost(candidate) {

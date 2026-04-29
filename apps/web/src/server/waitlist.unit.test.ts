@@ -14,8 +14,8 @@ const config: WaitlistRuntimeConfig = {
   supabaseUrl: "https://project.supabase.co",
   supabaseServiceRoleKey: "service-role-key",
   resendApiKey: "resend-key",
-  waitlistFromEmail: "Gama <waitlist@gama.money>",
-  waitlistNotifyEmail: "team@gama.money"
+  waitlistFromEmail: "Gama <waitlist@gamabudget.com>",
+  waitlistNotifyEmail: "team@gamabudget.com"
 };
 
 describe("readWaitlistRuntimeConfig", () => {
@@ -29,8 +29,8 @@ describe("readWaitlistRuntimeConfig", () => {
         SUPABASE_URL: "https://project.supabase.co/",
         [supabaseServiceRoleEnvKey]: "service-role-key",
         RESEND_API_KEY: "resend-key",
-        WAITLIST_FROM_EMAIL: "waitlist@gama.money",
-        WAITLIST_NOTIFY_EMAIL: "team@gama.money"
+        WAITLIST_FROM_EMAIL: "waitlist@gamabudget.com",
+        WAITLIST_NOTIFY_EMAIL: "team@gamabudget.com"
       }).supabaseUrl
     ).toBe("https://project.supabase.co");
   });

@@ -3,8 +3,8 @@
 - Date: 2026-04-18
 - Status: Drafted for rebrand and product-direction update
 - Brand: `Gama`
-- Website: planned public domain `gama.money`
-- Note: this brief now matches the repo-wide `Gama` and `gama.money` baseline established in the accompanying rebrand pass. The domain is planned, not yet provisioned.
+- Website: planned public domain `gamabudget.com`
+- Note: this brief now matches the repo-wide `Gama` and `gamabudget.com` baseline. The domain is planned, not yet provisioned.
 
 ## Overview
 
@@ -12,7 +12,7 @@ Gama is a mobile-first money product for people who want short-term clarity with
 
 The product should answer the daily decision question first: "What is safe to spend, what changed, and what needs attention?" It should then turn transactions from a private ledger into higher-value experiences such as event budgets, curated digital receipts, private weekly money stories, and map-aware place context that helps users revisit, recommend, and understand where their money actually went.
 
-The website at the planned public domain `gama.money` should explain this wedge clearly, capture early demand, and later host trusted share surfaces and educational content without distorting the mobile product lane.
+The website at the planned public domain `gamabudget.com` should explain this wedge clearly, capture early demand, and later host trusted share surfaces and educational content without distorting the mobile product lane.
 
 ## Problem
 

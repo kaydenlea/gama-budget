@@ -65,5 +65,12 @@
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.28.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@sentry/browser": "7.119.1",
+      "@xmldom/xmldom": "0.8.13",
+      "postcss": "8.5.10"
+    }
   }
 }

@@ -1,7 +1,7 @@
 // Keep the allowlist limited to the one intended public origin.
-// Do not add `www.gama.money` until that host is actually provisioned and the
+// Do not add `www.gamabudget.com` until that host is actually provisioned and the
 // redirect/canonical policy is finalized across web, SEO, and edge-function CORS.
-const defaultAllowedOrigins = ["https://gama.money"] as const;
+const defaultAllowedOrigins = ["https://gamabudget.com"] as const;
 const loopbackHostPattern = /^(localhost|127(?:\.\d{1,3}){3}|::1)$/iu;
 
 let cachedAllowedOriginsEnv: string | null | undefined;

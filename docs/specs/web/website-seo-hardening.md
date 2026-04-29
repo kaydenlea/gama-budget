@@ -43,7 +43,7 @@ For a product that depends on trust and truthful discovery, this is a structural
 ## UX and Behavior
 
 - every current indexable route should have one stable canonical URL on the production domain
-- the eventual production deployment at `gama.money` should expose indexable metadata, sitemap entries, and permissive robots rules for real pages
+- the eventual production deployment at `gamabudget.com` should expose indexable metadata, sitemap entries, and permissive robots rules for real pages
 - non-production deployments should be explicitly non-indexable and should disallow crawling
 - waitlist and privacy pages should show user-visible breadcrumbs that reflect the site hierarchy
 - structured data should only describe visible, truthful content already present on the page
@@ -157,7 +157,7 @@ For a product that depends on trust and truthful discovery, this is a structural
 - self-review completed across metadata, schema, robots, sitemap, layout, and security header changes
 - same-tool fresh-context fallback was used for the planning and verification pass because no second model was requested explicitly in this session
 - production build surfaced an OG-image rendering issue in `next/og`; the unsupported `inline-flex` value was removed and the build was rerun successfully
-- follow-up review corrected a misleading assumption in non-production examples: `gama.money` is the only intended public domain, and synthetic hosts should be used for non-production tests and docs until the domain is provisioned
+- follow-up review corrected a misleading assumption in non-production examples: `gamabudget.com` is the only intended public domain, and synthetic hosts should be used for non-production tests and docs until the domain is provisioned
 - post-implementation review found that missing `NEXT_PUBLIC_SITE_URL` still promoted production builds into indexable mode; the environment contract was tightened so indexing requires an explicit canonical public origin and otherwise fails closed
 
 ## Final Reconciliation

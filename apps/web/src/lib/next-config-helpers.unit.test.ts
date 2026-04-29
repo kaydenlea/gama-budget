@@ -10,7 +10,7 @@ describe("next-config helpers", () => {
     expect(
       isIndexableProductionEnvironment({
         nodeEnv: "production",
-        siteUrl: "https://gama.money"
+        siteUrl: "https://gamabudget.com"
       })
     ).toBe(true);
 
@@ -49,7 +49,7 @@ describe("next-config helpers", () => {
   it("supports a route-scoped embedded preview policy without weakening the default site posture", () => {
     const headers = buildSecurityHeaders({
       nodeEnv: "production",
-      siteUrl: "https://gama.money",
+      siteUrl: "https://gamabudget.com",
       allowEmbeddedPreview: true
     });
 

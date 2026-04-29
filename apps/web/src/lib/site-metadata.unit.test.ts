@@ -3,7 +3,7 @@ import { createPageMetadata, createRootMetadata } from "./site-metadata";
 
 describe("site-metadata", () => {
   const productionEnvironment = resolveSiteEnvironment({
-    rawOrigin: "https://gama.money",
+    rawOrigin: "https://gamabudget.com",
     nodeEnv: "production"
   });
 
@@ -15,13 +15,13 @@ describe("site-metadata", () => {
   it("builds production page metadata with canonical URLs and indexable robots", () => {
     const metadata = createPageMetadata(sitePages.home, productionEnvironment);
 
-    expect(metadata.alternates?.canonical).toBe("https://gama.money/");
+    expect(metadata.alternates?.canonical).toBe("https://gamabudget.com/");
     expect(metadata.robots).toMatchObject({
       index: true,
       follow: true
     });
     expect(metadata.openGraph).toMatchObject({
-      url: "https://gama.money/",
+      url: "https://gamabudget.com/",
       title: "Gama | Decision-first money clarity."
     });
     expect(metadata).not.toHaveProperty("keywords");
@@ -30,7 +30,7 @@ describe("site-metadata", () => {
   it("marks hidden secondary pages as noindex in production", () => {
     const metadata = createPageMetadata(sitePages.waitlist, productionEnvironment);
 
-    expect(metadata.alternates?.canonical).toBe("https://gama.money/waitlist");
+    expect(metadata.alternates?.canonical).toBe("https://gamabudget.com/waitlist");
     expect(metadata.robots).toMatchObject({
       index: false,
       follow: false

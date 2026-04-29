@@ -11,8 +11,8 @@ function assert(condition: unknown, message: string): asserts condition {
 }
 
 function verifyDefaultAllowedOrigin(): void {
-  assert(isAllowedCorsOrigin("https://gama.money"), "Expected production origin to be allowed");
-  assert(!isAllowedCorsOrigin("https://www.gama.money"), "Expected non-canonical www origin to be rejected");
+  assert(isAllowedCorsOrigin("https://gamabudget.com"), "Expected production origin to be allowed");
+  assert(!isAllowedCorsOrigin("https://www.gamabudget.com"), "Expected non-canonical www origin to be rejected");
 }
 
 function verifyLoopbackAllowedForLocalRuntime(): void {
@@ -38,12 +38,12 @@ function verifyDisallowedOriginRejected(): void {
 function verifyResponseHeadersReflectAllowedOrigin(): void {
   const headers = buildCorsHeaders(
     new Request("https://gama.test/function", {
-      headers: { origin: "https://gama.money" },
+      headers: { origin: "https://gamabudget.com" },
     }),
   );
 
   assert(
-    headers["access-control-allow-origin"] === "https://gama.money",
+    headers["access-control-allow-origin"] === "https://gamabudget.com",
     "Expected allowed origin to be reflected in response headers",
   );
 }

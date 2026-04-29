@@ -5,7 +5,7 @@ import { resolveSiteEnvironment } from "./site-config";
 
 describe("site routes", () => {
   const productionEnvironment = resolveSiteEnvironment({
-    rawOrigin: "https://gama.money",
+    rawOrigin: "https://gamabudget.com",
     nodeEnv: "production"
   });
 
@@ -18,7 +18,7 @@ describe("site routes", () => {
     const robots = createRobotsMetadata(productionEnvironment);
     const rules = Array.isArray(robots.rules) ? robots.rules : [robots.rules];
 
-    expect(robots.sitemap).toBe("https://gama.money/sitemap.xml");
+    expect(robots.sitemap).toBe("https://gamabudget.com/sitemap.xml");
     expect(rules).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ userAgent: "*", allow: "/" }),
@@ -41,7 +41,7 @@ describe("site routes", () => {
   it("includes only canonical production pages in the sitemap", () => {
     expect(createSitemapEntries(productionEnvironment)).toEqual([
       expect.objectContaining({
-        url: "https://gama.money/",
+        url: "https://gamabudget.com/",
         lastModified: "2026-04-18"
       })
     ]);
@@ -53,8 +53,8 @@ describe("site routes", () => {
 
   it("uses the active deployment origin for manifest navigation metadata", () => {
     expect(createManifest(productionEnvironment)).toMatchObject({
-      start_url: "https://gama.money/",
-      scope: "https://gama.money/"
+      start_url: "https://gamabudget.com/",
+      scope: "https://gamabudget.com/"
     });
 
     expect(createManifest(nonProductionEnvironment)).toMatchObject({
