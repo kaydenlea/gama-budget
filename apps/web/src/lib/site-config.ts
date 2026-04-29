@@ -110,7 +110,8 @@ export const siteEnvironment = resolveSiteEnvironment({
 
 export const siteConfig = {
   name: "Gama",
-  title: "Gama | Decision-first money clarity.",
+  titleBrand: "Gama Budget",
+  title: "Gama Budget | Decision-first money clarity.",
   description:
     "Gama is building a decision-first money product centered on Safe-to-Spend, forward-looking cash flow, shared-spending correctness, event context, and less admin work.",
   category: "personal finance",

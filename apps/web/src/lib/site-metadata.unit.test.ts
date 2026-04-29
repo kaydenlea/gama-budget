@@ -22,7 +22,10 @@ describe("site-metadata", () => {
     });
     expect(metadata.openGraph).toMatchObject({
       url: "https://gamabudget.com/",
-      title: "Gama | Decision-first money clarity."
+      title: "Gama Budget | Decision-first money clarity."
+    });
+    expect(metadata.title).toMatchObject({
+      absolute: "Gama Budget | Decision-first money clarity."
     });
     expect(metadata).not.toHaveProperty("keywords");
   });
@@ -54,8 +57,8 @@ describe("site-metadata", () => {
     const metadata = createRootMetadata(productionEnvironment);
 
     expect(metadata.title).toMatchObject({
-      default: "Gama | Decision-first money clarity.",
-      template: "Gama | %s"
+      default: "Gama Budget | Decision-first money clarity.",
+      template: "Gama Budget | %s"
     });
   });
 });
