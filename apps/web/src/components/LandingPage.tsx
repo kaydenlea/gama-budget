@@ -145,6 +145,22 @@ function EventTimelineSignatureVisual() {
         { icon: "\uD83C\uDFE0", value: "$1,850" },
         { icon: "\u26A1\uFE0F", value: "$124" }
       ]
+    },
+    {
+      id: "market-run",
+      accent: "green",
+      date: "Jan 06",
+      title: "Saturday Market",
+      category: "Groceries",
+      total: "$64.80",
+      marker: "\uD83C\uDF3F",
+      image:
+        "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=80",
+      imageAlt: "Farmers market produce",
+      spends: [
+        { icon: "\uD83E\uDD6C", value: "$38.20" },
+        { icon: "\u2615", value: "$6.40" }
+      ]
     }
   ] as const;
 
@@ -316,7 +332,9 @@ function PlaceContextSignatureVisual() {
                 <div className="home-signature-map-marker-wrap">
                   <span className="home-signature-map-click-pulse" />
                   <div className="home-signature-map-active-pin-ring">
-                    <span className="home-signature-map-active-pin">{location.icon}</span>
+                    <span className="home-signature-map-active-pin">
+                      <span className="home-signature-map-active-pin-emoji">{location.icon}</span>
+                    </span>
                   </div>
                   <span className="home-signature-map-selected">Selected</span>
                 </div>

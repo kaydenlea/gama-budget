@@ -537,8 +537,8 @@ export const siteCopy = {
     secondaryCta: { href: "/", label: "Back to home" },
   },
   footer: {
-    note: "Decision-first clarity, forward-looking cash flow, and privacy-first trust.",
-    contactLabel: "Contact",
+    note: "Budget around life moments with forward-looking cash flow.",
+    contactLabel: "Email Gama",
     contactHref: "mailto:gamabudget@gmail.com",
     utilityLinks: [{ href: "/", label: "Home" }] as const satisfies readonly FooterLink[],
     links: [{ href: "/", label: "Home" }] as const satisfies readonly NavLink[],

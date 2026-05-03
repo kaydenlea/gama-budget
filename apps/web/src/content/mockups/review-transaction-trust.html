@@ -122,14 +122,24 @@
           border: 1px solid rgba(249, 235, 237, 0.8);
       }
       .review-square-card {
-          aspect-ratio: 1 / 1;
+          aspect-ratio: auto;
+          height: 8.4rem;
           min-height: 0;
+          padding-top: 1rem !important;
+          padding-bottom: 1rem !important;
+      }
+      .review-square-card > :not([hidden]) ~ :not([hidden]) {
+          margin-top: 0.52rem !important;
+          margin-bottom: 0 !important;
+      }
+      .review-square-card p {
+          margin-bottom: 0.28rem !important;
       }
       .review-square-card > div:first-child {
-          width: 3rem;
-          height: 3rem;
-          min-width: 3rem;
-          min-height: 3rem;
+          width: 2.55rem;
+          height: 2.55rem;
+          min-width: 2.55rem;
+          min-height: 2.55rem;
           aspect-ratio: 1 / 1;
           border-radius: 999px;
           flex-shrink: 0;
@@ -142,8 +152,8 @@
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          height: 2rem;
-          min-height: 2rem;
+          height: 1.76rem;
+          min-height: 1.76rem;
           padding-top: 0 !important;
           padding-bottom: 0 !important;
           line-height: 1.1;
@@ -196,16 +206,16 @@
 <!-- Color-Coded Illustrative Cards -->
 <div class="grid grid-cols-2 gap-3.5">
 <!-- Category Card (Dining) -->
-<button class="review-square-card bg-white/70 rounded-[2rem] p-4 flex flex-col items-center justify-center text-center space-y-2.5 hover:bg-white/90 transition-colors group shadow-sm border border-black/5">
-<div class="w-12 h-12 rounded-full shadow-sm flex items-center justify-center text-on-surface-variant group-active:scale-95 transition-transform bg-white ring-1 ring-black/5"><span class="text-2xl">🍴</span></div>
+<button class="review-square-card bg-white/70 rounded-[2rem] px-4 py-2 flex flex-col items-center justify-center text-center space-y-1 hover:bg-white/90 transition-colors group shadow-sm border border-black/5">
+<div class="w-10 h-10 rounded-full shadow-sm flex items-center justify-center text-on-surface-variant group-active:scale-95 transition-transform bg-white ring-1 ring-black/5"><span class="text-xl">🍴</span></div>
 <div>
 <p class="text-on-surface/50 text-[10px] font-bold uppercase tracking-wider mb-1.5">Category</p>
 <span class="review-chip bg-[#f9f1e8] text-[#8b5e34] px-3.5 py-1.5 rounded-full text-[13px] font-extrabold">Dining</span>
 </div>
 </button>
 <!-- Event Card (Date Night) -->
-<button class="review-square-card bg-white/70 rounded-[2rem] p-4 flex flex-col items-center justify-center text-center space-y-2.5 hover:bg-white/90 transition-colors group shadow-sm border border-black/5">
-<div class="w-12 h-12 rounded-full shadow-sm flex items-center justify-center text-on-surface-variant group-active:scale-95 transition-transform bg-white ring-1 ring-black/5"><span class="text-2xl">🎉</span></div>
+<button class="review-square-card bg-white/70 rounded-[2rem] px-4 py-2 flex flex-col items-center justify-center text-center space-y-1 hover:bg-white/90 transition-colors group shadow-sm border border-black/5">
+<div class="w-10 h-10 rounded-full shadow-sm flex items-center justify-center text-on-surface-variant group-active:scale-95 transition-transform bg-white ring-1 ring-black/5"><span class="text-xl">🎉</span></div>
 <div>
 <p class="text-on-surface/50 text-[10px] font-bold uppercase tracking-wider mb-1.5">Event</p>
 <span class="review-chip bg-[#f9ebed] text-[#a64452] px-3.5 py-1.5 rounded-full text-[13px] font-extrabold whitespace-nowrap">Date Night</span>

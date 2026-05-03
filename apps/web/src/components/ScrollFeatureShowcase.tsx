@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { mockupPreviews, type MockupPreviewSlug } from "../content/mockup-previews";
 import { EmbeddedPreviewFrame } from "./ProductVisuals";
 
@@ -22,9 +22,11 @@ function joinClasses(...classes: Array<string | false | null | undefined>) {
 
 function WalkthroughPreview({
   isActive,
+  onActivePreviewChange,
   previewSlug
 }: {
   isActive?: boolean;
+  onActivePreviewChange?: (previewSlug: MockupPreviewSlug) => void;
   previewSlug: MockupPreviewSlug;
 }) {
   return (
@@ -32,6 +34,8 @@ function WalkthroughPreview({
       className={joinClasses("home-walkthrough-preview-frame", isActive && "home-walkthrough-preview-frame-active")}
       previewSlug={previewSlug}
       title={`Gama ${previewSlug} walkthrough preview`}
+      {...(onActivePreviewChange ? { onActivePreviewChange } : {})}
+      {...(previewSlug === "accounts" ? {} : { variant: "walkthrough" as const })}
     />
   );
 }
@@ -45,6 +49,7 @@ function MobileWalkthroughPreviewPhone({ previewSlug }: { previewSlug: MockupPre
             className="device-iframe"
             previewSlug={previewSlug}
             title={`Gama ${previewSlug} mobile walkthrough preview`}
+            {...(previewSlug === "accounts" ? {} : { variant: "walkthrough" as const })}
           />
         </div>
       </div>
@@ -58,6 +63,7 @@ export function ScrollFeatureShowcase({
   steps: readonly ShowcaseStep[];
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [displayedIndex, setDisplayedIndex] = useState(0);
   const [isDesktopViewport, setIsDesktopViewport] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const regionRef = useRef<HTMLDivElement | null>(null);
@@ -67,6 +73,14 @@ export function ScrollFeatureShowcase({
 
   activeIndexRef.current = activeIndex;
   scrollProgressRef.current = scrollProgress;
+
+  const handleDisplayedPreviewChange = useCallback((previewSlug: MockupPreviewSlug) => {
+    const nextDisplayedIndex = steps.findIndex((step) => step.previewSlug === previewSlug);
+
+    if (nextDisplayedIndex >= 0) {
+      setDisplayedIndex(nextDisplayedIndex);
+    }
+  }, [steps]);
 
   useEffect(() => {
     const desktopQuery = window.matchMedia(DESKTOP_BREAKPOINT_QUERY);
@@ -116,9 +130,9 @@ export function ScrollFeatureShowcase({
       const { top, scrollableDistance } = boundsRef.current;
       const consumed = Math.min(Math.max(window.scrollY - top, 0), scrollableDistance);
       const progress = consumed / scrollableDistance;
-      const nextIndex = Math.min(steps.length - 1, Math.round(progress * Math.max(steps.length - 1, 1)));
+      const nextIndex = Math.min(steps.length - 1, Math.floor(progress * Math.max(steps.length, 1)));
 
-      if (Math.abs(progress - scrollProgressRef.current) > 0.01) {
+      if (Math.abs(progress - scrollProgressRef.current) > 0.005) {
         setScrollProgress(progress);
       }
 
@@ -193,8 +207,9 @@ export function ScrollFeatureShowcase({
   }
 
   const activeStep = (steps[activeIndex] ?? steps[0])!;
+  const displayedStep = (steps[displayedIndex] ?? activeStep)!;
   const desktopStepCount = Math.max(steps.length - 1, 0);
-  const progressDisplay = `${activeIndex + 1}/${steps.length}`;
+  const progressDisplay = `${displayedIndex + 1}/${steps.length}`;
 
   return (
     <section className="home-walkthrough-band" aria-label="Product walkthrough">
@@ -203,7 +218,12 @@ export function ScrollFeatureShowcase({
           <div
             ref={regionRef}
             className="home-walkthrough-desktop-region"
-            style={{ "--walkthrough-step-count": desktopStepCount } as CSSProperties}
+            style={
+              {
+                "--walkthrough-progress-segments": steps.length,
+                "--walkthrough-step-count": desktopStepCount,
+              } as CSSProperties
+            }
           >
             <div className="home-walkthrough-desktop-sticky">
               <div className="home-walkthrough-desktop-layout">
@@ -212,23 +232,41 @@ export function ScrollFeatureShowcase({
                     <div className="home-walkthrough-progress-meta" aria-label="Walkthrough progress">
                       <div className="home-walkthrough-progress-head">
                         <span className="home-walkthrough-progress-count">{progressDisplay}</span>
-                        <span className="home-walkthrough-progress-title">{activeStep.eyebrow}</span>
+                        <span className="home-walkthrough-progress-title">{displayedStep.eyebrow}</span>
                       </div>
                       <div className="home-walkthrough-progress-track" aria-hidden="true">
-                        <span
-                          className="home-walkthrough-progress-fill"
-                          style={{ transform: `scaleX(${scrollProgress})` }}
-                        />
+                        {steps.map((step, index) => {
+                          const segmentCount = Math.max(steps.length, 1);
+                          const segmentFill = Math.min(Math.max(scrollProgress * segmentCount - index, 0), 1);
+                          const isActive = segmentFill > 0;
+
+                          return (
+                            <span
+                              key={step.id}
+                              aria-hidden="true"
+                              className={joinClasses(
+                                "home-walkthrough-progress-segment",
+                                isActive && "home-walkthrough-progress-segment-active",
+                                index === displayedIndex && "home-walkthrough-progress-segment-current",
+                              )}
+                            >
+                              <span
+                                className="home-walkthrough-progress-segment-fill"
+                                style={{ transform: `scaleX(${segmentFill})` }}
+                              />
+                            </span>
+                          );
+                        })}
                       </div>
                     </div>
 
-                    <article key={activeStep.id} className="home-walkthrough-copy-card" aria-live="polite">
-                      <span className="home-walkthrough-step-index">{activeStep.stepLabel}</span>
-                      <h3>{activeStep.title}</h3>
-                      <p>{activeStep.body}</p>
+                    <article key={displayedStep.id} className="home-walkthrough-copy-card" aria-live="polite">
+                      <span className="home-walkthrough-step-index">{displayedStep.stepLabel}</span>
+                      <h3>{displayedStep.title}</h3>
+                      <p>{displayedStep.body}</p>
 
                       <ul className="home-walkthrough-step-highlights">
-                        {activeStep.highlights.map((highlight) => (
+                        {displayedStep.highlights.map((highlight) => (
                           <li key={highlight}>{highlight}</li>
                         ))}
                       </ul>
@@ -242,6 +280,7 @@ export function ScrollFeatureShowcase({
                       <div className="home-walkthrough-device-shell" aria-hidden="true">
                         <WalkthroughPreview
                           isActive
+                          onActivePreviewChange={handleDisplayedPreviewChange}
                           previewSlug={activeStep.previewSlug}
                         />
                       </div>

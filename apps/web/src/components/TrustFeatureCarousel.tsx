@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { MockupPreviewSlug } from "../content/mockup-previews";
 import { EmbeddedPreviewFrame } from "./ProductVisuals";
 
@@ -84,7 +84,16 @@ function TrustIcon({ icon }: { icon: TrustSlide["icon"] }) {
 
 export function TrustFeatureCarousel({ slides }: { slides: readonly TrustSlide[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [displayedIndex, setDisplayedIndex] = useState(0);
   const [animationKey, setAnimationKey] = useState(0);
+
+  const handleDisplayedPreviewChange = useCallback((previewSlug: MockupPreviewSlug) => {
+    const nextDisplayedIndex = slides.findIndex((slide) => slide.previewSlug === previewSlug);
+
+    if (nextDisplayedIndex >= 0) {
+      setDisplayedIndex(nextDisplayedIndex);
+    }
+  }, [slides]);
 
   useEffect(() => {
     if (slides.length <= 1) {
@@ -126,6 +135,7 @@ export function TrustFeatureCarousel({ slides }: { slides: readonly TrustSlide[]
   }
 
   const activeSlide = (slides[activeIndex] ?? slides[0])!;
+  const displayedSlide = (slides[displayedIndex] ?? activeSlide)!;
 
   return (
     <div className="home-trust-carousel" aria-label="Trust highlights">
@@ -152,15 +162,15 @@ export function TrustFeatureCarousel({ slides }: { slides: readonly TrustSlide[]
 
       <div className="home-trust-carousel-stage">
         <div className="home-trust-slide home-trust-slide-active">
-          <div key={activeSlide.id} className="home-trust-slide-copy">
+          <div key={displayedSlide.id} className="home-trust-slide-copy">
             <div className="home-trust-slide-eyebrow-row">
               <span className="home-trust-slide-icon">
-                <TrustIcon icon={activeSlide.icon} />
+                <TrustIcon icon={displayedSlide.icon} />
               </span>
-              <span className="home-trust-slide-kicker">{activeSlide.eyebrow}</span>
+              <span className="home-trust-slide-kicker">{displayedSlide.eyebrow}</span>
             </div>
-            <h3>{activeSlide.title}</h3>
-            <p>{activeSlide.body}</p>
+            <h3>{displayedSlide.title}</h3>
+            <p>{displayedSlide.body}</p>
           </div>
 
           <div className="home-trust-slide-device-wrap" aria-hidden="true">
@@ -170,8 +180,10 @@ export function TrustFeatureCarousel({ slides }: { slides: readonly TrustSlide[]
                   <div className="home-walkthrough-preview-mask">
                     <EmbeddedPreviewFrame
                       className="home-walkthrough-preview-frame home-walkthrough-preview-frame-active home-trust-preview-frame"
+                      onActivePreviewChange={handleDisplayedPreviewChange}
                       previewSlug={activeSlide.previewSlug}
                       title={`Gama ${activeSlide.previewSlug} trust preview`}
+                      variant="trust"
                     />
                   </div>
                 </div>

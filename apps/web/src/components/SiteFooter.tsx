@@ -37,7 +37,18 @@ function XIcon() {
   );
 }
 
+function EmailIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <rect x="3.75" y="5.5" width="16.5" height="13" rx="3" fill="none" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M5.6 8.1 12 12.7l6.4-4.6" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
 export function SiteFooter() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="site-footer-shell py-8 md:py-10">
       <SiteContainer className="site-footer-grid">
@@ -53,9 +64,7 @@ export function SiteFooter() {
               />
               <div className="site-footer-brand-copy">
                 <p className="site-footer-brand-name">Gama</p>
-                <p className="site-footer-brand-note">
-                  A daily budgeting tool built around real-life moments, with forward-looking cash flow clarity.
-                </p>
+                <p className="site-footer-brand-note">{siteCopy.footer.note}</p>
               </div>
             </div>
           </div>
@@ -64,28 +73,25 @@ export function SiteFooter() {
             <div className="site-footer-meta-group">
               <span className="site-footer-label">Social</span>
               <div className="site-footer-social-placeholder" aria-label="Social links coming soon">
-                <span className="site-footer-social-icon" aria-label="Instagram coming soon" role="img">
+                <span className="site-footer-social-icon site-footer-social-icon-instagram" aria-label="Instagram coming soon" role="img">
                   <InstagramIcon />
                 </span>
-                <span className="site-footer-social-icon" aria-label="TikTok coming soon" role="img">
+                <span className="site-footer-social-icon site-footer-social-icon-tiktok" aria-label="TikTok coming soon" role="img">
                   <TikTokIcon />
                 </span>
-                <span className="site-footer-social-icon" aria-label="X coming soon" role="img">
+                <span className="site-footer-social-icon site-footer-social-icon-x" aria-label="X coming soon" role="img">
                   <XIcon />
                 </span>
+                <a className="site-footer-social-icon site-footer-contact-link" href={siteCopy.footer.contactHref} aria-label={siteCopy.footer.contactLabel}>
+                  <EmailIcon />
+                </a>
               </div>
-            </div>
-            <div className="site-footer-meta-group">
-              <span className="site-footer-label">Contact</span>
-              <a className="site-footer-link" href={siteCopy.footer.contactHref}>
-                {siteCopy.footer.contactLabel}
-              </a>
             </div>
           </div>
         </div>
 
         <div className="site-footer-bottom">
-          <p>© Gama</p>
+          <p>© {currentYear} Gama</p>
         </div>
       </SiteContainer>
     </footer>

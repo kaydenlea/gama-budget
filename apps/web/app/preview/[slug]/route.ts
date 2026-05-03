@@ -2,7 +2,8 @@ import { mockupPreviews, type MockupPreviewSlug } from "../../../src/content/moc
 import {
   getMockupPreviewHtml,
   type PreviewCrop,
-  type PreviewMotionMode
+  type PreviewMotionMode,
+  type PreviewVariant
 } from "../../../src/lib/mockup-preview-html";
 
 export const runtime = "nodejs";
@@ -16,11 +17,14 @@ export async function GET(
   const searchParams = new URL(request.url).searchParams;
   const cropParam = searchParams.get("crop");
   const motionParam = searchParams.get("motion");
+  const variantParam = searchParams.get("variant");
   const crop =
     cropParam === "events" || cropParam === "eventDetails" || cropParam === "storiesSignature"
       ? cropParam
       : undefined;
   const motion: PreviewMotionMode = motionParam === "static" ? "static" : "active";
+  const variant: PreviewVariant | undefined =
+    variantParam === "trust" || variantParam === "walkthrough" ? variantParam : undefined;
 
   if (!(slug in mockupPreviews)) {
     return new Response("Not found", {
@@ -32,7 +36,7 @@ export async function GET(
     });
   }
 
-  return new Response(await getMockupPreviewHtml(slug as MockupPreviewSlug, crop as PreviewCrop | undefined, motion), {
+  return new Response(await getMockupPreviewHtml(slug as MockupPreviewSlug, crop as PreviewCrop | undefined, motion, variant), {
     headers: {
       "Content-Type": "text/html; charset=utf-8",
       "Cache-Control":

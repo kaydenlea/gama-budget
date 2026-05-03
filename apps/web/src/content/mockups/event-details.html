@@ -146,29 +146,46 @@
       }
       @keyframes event-details-scroll-sequence {
         0%,
-        9% {
-          transform: translateY(0);
+        8% {
+          transform: translate3d(0, 0, 0);
         }
-        28% {
-          transform: translateY(-176px);
+        24% {
+          transform: translate3d(0, -164px, 0);
+        }
+        29% {
+          transform: translate3d(0, -176px, 0);
         }
         38% {
-          transform: translateY(-176px);
+          transform: translate3d(0, -176px, 0);
         }
-        58% {
-          transform: translateY(-338px);
+        55% {
+          transform: translate3d(0, -326px, 0);
+        }
+        60% {
+          transform: translate3d(0, -338px, 0);
         }
         68% {
-          transform: translateY(-338px);
+          transform: translate3d(0, -338px, 0);
         }
-        90%,
+        78% {
+          transform: translate3d(0, -684px, 0);
+        }
+        84%,
+        94% {
+          transform: translate3d(0, -700px, 0);
+        }
+        99% {
+          transform: translate3d(0, -12px, 0);
+        }
         100% {
-          transform: translateY(-700px);
+          transform: translate3d(0, 0, 0);
         }
       }
       .event-details-scroll-shell {
-        animation: event-details-scroll-sequence 13.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+        animation: event-details-scroll-sequence 15.8s linear infinite;
+        transform: translate3d(0, 0, 0);
         will-change: transform;
+        backface-visibility: hidden;
       }
       .event-details-scroll-shell {
         --event-kicker-size: 0.54rem;
@@ -193,6 +210,21 @@
         font-weight: 800 !important;
         letter-spacing: 0.18em !important;
         color: rgba(255, 255, 255, 0.84) !important;
+      }
+      .event-details-scroll-shell .immersive-dark-top > header {
+        margin-bottom: 2.5rem !important;
+      }
+      .event-details-scroll-shell .immersive-dark-top > header .w-10.h-10 {
+        width: 2.25rem !important;
+        height: 2.25rem !important;
+      }
+      .event-details-scroll-shell .immersive-dark-top > header .glass-island-dark.px-4 {
+        padding-inline: 0.9rem !important;
+        padding-block: 0.38rem !important;
+        gap: 0.32rem !important;
+      }
+      .event-details-scroll-shell .immersive-dark-top > header .material-symbols-outlined {
+        font-size: 0.82rem !important;
       }
       .event-details-scroll-shell .relative.z-20.text-center.mb-4 h2 {
         font-size: var(--event-title-size) !important;
@@ -311,6 +343,36 @@
       .event-details-scroll-shell [class*="Share"],
       .event-details-scroll-shell [class*="Group"] {
         letter-spacing: 0.12em !important;
+      }
+      .event-details-scroll-shell .glass-island.squircle-refined {
+        background: #e7eef5 !important;
+        border-color: rgba(203, 213, 225, 0.72) !important;
+      }
+      .event-details-scroll-shell .glass-island.squircle-refined .inbox-item,
+      .event-details-scroll-shell .glass-island.squircle-refined .category-item {
+        background: rgba(255, 255, 255, 0.98) !important;
+        border-color: rgba(226, 232, 240, 0.95) !important;
+      }
+      .event-details-scroll-shell .flex.flex-col.items-center.gap-0\.5 > div.w-9.h-9 {
+        width: 2.15rem !important;
+        height: 2.15rem !important;
+      }
+      .event-details-scroll-shell .flex.flex-col.items-center.gap-0\.5 > div.w-9.h-9 .material-symbols-outlined {
+        font-size: 0.88rem !important;
+      }
+      .event-details-scroll-shell button .w-6.h-6 {
+        width: 1.42rem !important;
+        height: 1.42rem !important;
+      }
+      .event-details-scroll-shell button .w-6.h-6 .material-symbols-outlined {
+        font-size: 0.86rem !important;
+      }
+      .event-details-scroll-shell .map-preview-container .absolute.bottom-3.right-3.w-8.h-8 {
+        width: 1.72rem !important;
+        height: 1.72rem !important;
+      }
+      .event-details-scroll-shell .map-preview-container .absolute.bottom-3.right-3.w-8.h-8 .material-symbols-outlined {
+        font-size: 0.9rem !important;
       }
       .event-details-scroll-shell .inbox-item .flex.flex-col.items-end.gap-1 {
         gap: 0.18rem !important;

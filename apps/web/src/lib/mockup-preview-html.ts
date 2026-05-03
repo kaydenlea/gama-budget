@@ -64,6 +64,7 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 const previewHtmlCache = new Map<string, Promise<string>>();
 export type PreviewCrop = "events" | "eventDetails" | "storiesSignature";
 export type PreviewMotionMode = "active" | "static";
+export type PreviewVariant = "trust" | "walkthrough";
 
 type TailwindConfig = Record<string, unknown>;
 
@@ -260,6 +261,7 @@ function buildSharedStyle(
   slug: MockupPreviewSlug,
   crop?: PreviewCrop,
   motion: PreviewMotionMode = "active",
+  variant?: PreviewVariant,
 ) {
   const preview = mockupPreviews[slug];
   const previewRootBackground = preview.mode === "page" ? "transparent" : preview.background;
@@ -293,26 +295,179 @@ function buildSharedStyle(
         }
       `
     : "";
-  const previewVariantStyle =
-    slug === "accounts-trust"
+  const trustContentInsetStyle =
+    variant === "trust"
       ? `
+        .preview-scale-root .mobile-container > .immersive-dark-top,
         .preview-scale-root .mobile-container > main {
-          padding-top: 2rem !important;
+          padding-left: 1.35rem !important;
+          padding-right: 1.35rem !important;
         }
 
-        .preview-scale-root .mobile-container > main > div.absolute {
-          display: none !important;
+        .preview-scale-root main.luminous-glass > header {
+          padding-left: 1.35rem !important;
+          padding-right: 1.35rem !important;
+        }
+
+        .preview-scale-root .trust-review-scale,
+        .preview-scale-root .trust-add-scale {
+          width: 100% !important;
+          margin-left: 0 !important;
+          padding-left: 1.35rem !important;
+          padding-right: 1.35rem !important;
+        }
+
+        .preview-scale-root nav.fixed,
+        .preview-scale-root nav.absolute {
+          padding-left: 1.35rem !important;
+          padding-right: 1.35rem !important;
         }
       `
-      : slug === "transactions-categorized" ||
-          slug === "review-transaction-trust" ||
-          slug === "add-transaction-trust"
-        ? `
-        .preview-scale-root {
-          font-size: 0.92rem !important;
+      : "";
+  const walkthroughContentInsetStyle =
+    variant === "walkthrough"
+      ? `
+        .preview-scale-root .mobile-viewport > .immersive-dark-top,
+        .preview-scale-root .mobile-viewport > main,
+        .preview-scale-root .mobile-container > .immersive-dark-top,
+        .preview-scale-root .mobile-container > main {
+          padding-left: 1.35rem !important;
+          padding-right: 1.35rem !important;
+        }
+
+        .preview-scale-root nav.fixed,
+        .preview-scale-root nav.absolute {
+          padding-left: 1.35rem !important;
+          padding-right: 1.35rem !important;
+        }
+
+        .preview-scale-root main > .absolute.left-3.right-3,
+        .preview-scale-root main > .absolute.left-3 {
+          left: 1.35rem !important;
+          right: 1.35rem !important;
+        }
+
+        .preview-scale-root .ios-glass-pill,
+        .preview-scale-root .bridge-glass {
+          background: rgba(255, 255, 255, 0.98) !important;
+          border-color: rgba(255, 255, 255, 0.7) !important;
+          -webkit-backdrop-filter: none !important;
+          backdrop-filter: none !important;
+        }
+
+        .preview-scale-root .glass-island.rounded-3xl,
+        .preview-scale-root .glass-island.squircle-refined {
+          background: rgba(245, 248, 252, 0.94) !important;
+          border-color: rgba(255, 255, 255, 0.76) !important;
+          box-shadow: 0 10px 24px rgba(32, 52, 75, 0.045) !important;
+        }
+
+        .preview-scale-root .glass-island.rounded-3xl > .bg-white,
+        .preview-scale-root .glass-island.rounded-3xl > button,
+        .preview-scale-root .glass-island.squircle-refined > .bg-white,
+        .preview-scale-root .glass-island.squircle-refined > button,
+        .preview-scale-root .glass-island.squircle-refined .inbox-item,
+        .preview-scale-root .glass-island.squircle-refined .category-item {
+          background-color: rgba(255, 255, 255, 0.98) !important;
+          border-color: rgba(226, 232, 240, 0.52) !important;
+        }
+
+        .preview-scale-root .ios-glass-pill .absolute.-inset-y-1.-inset-x-1\\.5,
+        .preview-scale-root .ios-glass-pill .w-full.bg-white\\/90 {
+          background: rgba(246, 249, 252, 0.96) !important;
+          border-color: rgba(148, 163, 184, 0.2) !important;
+          box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.06) !important;
+        }
+
+        .preview-scale-root .ios-glass-pill .w-full.bg-white\\/90 button.bg-primary\\/92 {
+          background: #20344b !important;
+          box-shadow: 0 8px 16px rgba(18, 29, 44, 0.18) !important;
         }
       `
-        : "";
+      : "";
+  const overviewWalkthroughStyle =
+    variant === "walkthrough" && slug === "overview-screen"
+      ? `
+        .preview-scale-root .mobile-viewport > .immersive-dark-top,
+        .preview-scale-root .mobile-viewport > main {
+          padding-left: 0.72rem !important;
+          padding-right: 0.72rem !important;
+        }
+
+        .preview-scale-root .mobile-viewport main > .absolute.left-3.right-3 {
+          left: 0.72rem !important;
+          right: 0.72rem !important;
+        }
+      `
+      : "";
+  const overviewGreenStyle =
+    slug === "overview-screen"
+      ? `
+        .preview-scale-root .ios-emerald-glass {
+          background: rgba(116, 196, 76, 0.72) !important;
+          border-color: rgba(116, 196, 76, 0.3) !important;
+        }
+
+        .preview-scale-root .chart-glow-emerald {
+          filter: drop-shadow(0 0 8px rgba(116, 196, 76, 0.5)) !important;
+        }
+
+        .preview-scale-root #areaGradient stop[stop-color="rgba(16, 185, 129, 0.2)"] {
+          stop-color: rgba(116, 196, 76, 0.2) !important;
+        }
+
+        .preview-scale-root #areaGradient stop[stop-color="rgba(16, 185, 129, 0)"] {
+          stop-color: rgba(116, 196, 76, 0) !important;
+        }
+
+        .preview-scale-root #spendingGradient stop[stop-color="#10b981"] {
+          stop-color: #74c44c !important;
+        }
+      `
+      : "";
+  const billsViewAllStyle =
+    slug === "bills"
+      ? `
+        .preview-scale-root .glass-island.rounded-3xl > button.bg-transparent {
+          background: transparent !important;
+          box-shadow: none !important;
+        }
+      `
+      : "";
+  const previewVariantStyle =
+    variant === "trust" && slug === "transactions-categorized"
+      ? `
+        .preview-scale-root .immersive-dark-top > .relative.z-20 {
+          padding-top: 1rem !important;
+          padding-left: 1.35rem !important;
+          padding-right: 1.35rem !important;
+        }
+
+        .preview-scale-root .immersive-dark-top > .relative.z-20 > header {
+          padding-top: 0 !important;
+          padding-bottom: 0 !important;
+        }
+
+        .preview-scale-root .trust-nav-button {
+          width: 2.5rem !important;
+          height: 2.5rem !important;
+        }
+
+        .preview-scale-root .trust-nav-pill {
+          padding: 0.375rem 1rem !important;
+        }
+
+        .preview-scale-root .trust-nav-pill h1 {
+          font-size: 10px !important;
+          letter-spacing: 0.18em !important;
+        }
+
+        .preview-scale-root > main {
+          padding-left: 1.35rem !important;
+          padding-right: 1.35rem !important;
+        }
+      `
+      : "";
   const storySignatureStyle =
     crop === "storiesSignature"
       ? `
@@ -353,6 +508,12 @@ function buildSharedStyle(
           max-width: none !important;
           padding: 1.25rem !important;
           margin-bottom: 1rem !important;
+        }
+
+        .preview-scale-root .story-success-card .glass-ios {
+          width: 100% !important;
+          padding: 0.58rem 0.78rem !important;
+          margin-bottom: 0 !important;
         }
       `
       : "";
@@ -527,6 +688,11 @@ function buildSharedStyle(
     }
     ${viewportStyle}
     ${fixedNavStyle}
+    ${trustContentInsetStyle}
+    ${walkthroughContentInsetStyle}
+    ${overviewWalkthroughStyle}
+    ${overviewGreenStyle}
+    ${billsViewAllStyle}
     ${previewVariantStyle}
     ${storySignatureStyle}
     ${cropStyle}
@@ -539,7 +705,7 @@ function buildScalingScriptForCrop(
   crop?: PreviewCrop,
   motion: PreviewMotionMode = "active",
 ) {
-  const mode = crop === "storiesSignature" ? "cover-top" : "fit";
+  const mode = crop === "storiesSignature" ? "cover-top" : "cover";
 
   return `
     <script>
@@ -548,6 +714,43 @@ function buildScalingScriptForCrop(
         const canvasHeight = ${PREVIEW_CANVAS_HEIGHT};
         const mode = "${mode}";
         const motion = "${motion}";
+        let hasPostedReady = false;
+        const postReady = () => {
+          if (hasPostedReady) {
+            return;
+          }
+
+          hasPostedReady = true;
+          document.documentElement.dataset.previewReady = "true";
+          let readyPostCount = 0;
+          const sendReady = () => {
+            readyPostCount += 1;
+            window.parent?.postMessage(
+              {
+                type: "gama-preview-ready",
+                token: window.name
+              },
+              "*"
+            );
+
+            if (readyPostCount >= 5) {
+              window.clearInterval(readyInterval);
+            }
+          };
+          const readyInterval = window.setInterval(sendReady, 120);
+          sendReady();
+        };
+        const scheduleReady = () => {
+          const fontsReady = document.fonts?.ready ?? Promise.resolve();
+
+          fontsReady
+            .catch(() => undefined)
+            .then(() => {
+              window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(postReady);
+              });
+            });
+        };
         const normalizeLetterSpacing = () => {
           const root = document.querySelector(".preview-scale-root");
 
@@ -629,16 +832,21 @@ function buildScalingScriptForCrop(
         const applyScale = () => {
           const widthScale = window.innerWidth / canvasWidth;
           const heightScale = window.innerHeight / canvasHeight;
-          const nextScale = mode === "cover-top" ? Math.max(widthScale, heightScale) : Math.min(widthScale, heightScale);
+          const nextScale =
+            mode === "cover" || mode === "cover-top"
+              ? Math.max(widthScale, heightScale)
+              : Math.min(widthScale, heightScale);
           const overscanScale = nextScale;
           const root = ensureRoot();
           const offsetX =
-            mode === "cover-top"
+            mode === "cover" || mode === "cover-top"
               ? (window.innerWidth - canvasWidth * overscanScale) / 2
               : Math.max((window.innerWidth - canvasWidth * overscanScale) / 2, 0);
           const offsetY =
             mode === "cover-top"
               ? Math.min((window.innerHeight - canvasHeight * overscanScale) * 0.22, 0)
+              : mode === "cover"
+                ? (window.innerHeight - canvasHeight * overscanScale) / 2
               : Math.max((window.innerHeight - canvasHeight * overscanScale) / 2, 0);
 
           document.documentElement.dataset.previewScale = "managed";
@@ -648,6 +856,7 @@ function buildScalingScriptForCrop(
           root.style.zoom = "";
           root.style.transform = "translate(" + offsetX + "px, " + offsetY + "px) scale(" + overscanScale + ")";
           normalizeLetterSpacing();
+          scheduleReady();
         };
 
         if (document.readyState === "loading") {
@@ -666,10 +875,11 @@ async function buildPreviewHtmlInternal(
   slug: MockupPreviewSlug,
   crop?: PreviewCrop,
   motion: PreviewMotionMode = "active",
+  variant?: PreviewVariant,
 ) {
   const source = readFileSync(join(MOCKUP_DIR, mockupPreviews[slug].file), "utf8");
   const tailwindCss = await compileTailwindCss(source);
-  const sharedStyle = buildSharedStyle(slug, crop, motion);
+  const sharedStyle = buildSharedStyle(slug, crop, motion, variant);
   const previewSource = replaceMaterialSymbolLigatures(
     stabilizeViewport(stripRuntimeDependencies(source)),
   );
@@ -684,17 +894,18 @@ export function getMockupPreviewHtml(
   slug: MockupPreviewSlug,
   crop?: PreviewCrop,
   motion: PreviewMotionMode = "active",
+  variant?: PreviewVariant,
 ) {
   if (isDevelopment) {
-    return buildPreviewHtmlInternal(slug, crop, motion);
+    return buildPreviewHtmlInternal(slug, crop, motion, variant);
   }
 
   if (slug === "overview-screen") {
-    return buildPreviewHtmlInternal(slug, crop, motion);
+    return buildPreviewHtmlInternal(slug, crop, motion, variant);
   }
 
-  if (crop) {
-    return buildPreviewHtmlInternal(slug, crop, motion);
+  if (crop || variant) {
+    return buildPreviewHtmlInternal(slug, crop, motion, variant);
   }
 
   const cacheKey = `${slug}:${motion}`;

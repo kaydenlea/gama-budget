@@ -8,8 +8,10 @@ import { mockupPreviews, type MockupPreviewSlug } from "../content/mockup-previe
 type StoryScene = (typeof siteCopy.shared.storyScenes)[number];
 type MockupPreviewCrop = "events" | "eventDetails" | "storiesSignature";
 type PreviewMotionMode = "active" | "static";
-const PREVIEW_BUST = "20260425-11";
+type PreviewVariant = "trust" | "walkthrough";
+const PREVIEW_BUST = "20260502-13";
 const PREVIEW_FADE_MS = 360;
+const PREVIEW_READY_MESSAGE = "gama-preview-ready";
 
 type PreviewFrameStatus = "active" | "incoming" | "outgoing";
 
@@ -40,7 +42,14 @@ function PreviewFrameLayer({
   title: string;
 }) {
   const hasMarkedReadyRef = useRef(false);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const loadFallbackIdRef = useRef<number | undefined>(undefined);
+  const onHostLoadRef = useRef(onHostLoad);
+  const onReadyRef = useRef(onReady);
+  const readyToken = `preview-frame-${frame.id}`;
+
+  onHostLoadRef.current = onHostLoad;
+  onReadyRef.current = onReady;
 
   const markReady = useCallback(() => {
     if (hasMarkedReadyRef.current) {
@@ -48,9 +57,9 @@ function PreviewFrameLayer({
     }
 
     hasMarkedReadyRef.current = true;
-    onReady(frame.id);
-    onHostLoad?.();
-  }, [frame.id, onHostLoad, onReady]);
+    onReadyRef.current(frame.id);
+    onHostLoadRef.current?.();
+  }, [frame.id]);
 
   useEffect(() => {
     hasMarkedReadyRef.current = false;
@@ -60,10 +69,33 @@ function PreviewFrameLayer({
         window.clearTimeout(loadFallbackIdRef.current);
       }
     };
-  }, [frame.src, markReady]);
+  }, [frame.id, frame.src]);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.source !== iframeRef.current?.contentWindow) {
+        return;
+      }
+
+      const data = event.data as { token?: string; type?: string } | null;
+
+      if (data?.type !== PREVIEW_READY_MESSAGE || data.token !== readyToken) {
+        return;
+      }
+
+      markReady();
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [markReady, readyToken]);
 
   return (
     <iframe
+      ref={iframeRef}
       aria-label={title}
       className={joinClasses(
         className,
@@ -74,9 +106,10 @@ function PreviewFrameLayer({
       data-preview-frame-status={frame.status}
       loading={eager ? "eager" : "lazy"}
       onLoad={() => {
-        loadFallbackIdRef.current = window.setTimeout(markReady, 80);
+        loadFallbackIdRef.current = window.setTimeout(markReady, eager ? 900 : 2400);
       }}
-      sandbox=""
+      name={readyToken}
+      sandbox="allow-scripts"
       scrolling="no"
       src={frame.src}
       tabIndex={-1}
@@ -93,8 +126,10 @@ export function EmbeddedPreviewFrame({
   eager = false,
   motion = "active",
   onLoad,
+  onActivePreviewChange,
   rootMargin = "65% 0px",
   suspendWhenOffscreen = true,
+  variant,
 }: {
   className: string;
   previewSlug: MockupPreviewSlug;
@@ -103,8 +138,10 @@ export function EmbeddedPreviewFrame({
   eager?: boolean;
   motion?: PreviewMotionMode;
   onLoad?: () => void;
+  onActivePreviewChange?: (previewSlug: MockupPreviewSlug) => void;
   rootMargin?: string;
   suspendWhenOffscreen?: boolean;
+  variant?: PreviewVariant;
 }) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const nextFrameIdRef = useRef(1);
@@ -120,9 +157,13 @@ export function EmbeddedPreviewFrame({
       params.set("motion", motion);
     }
 
+    if (variant) {
+      params.set("variant", variant);
+    }
+
     params.set("v", PREVIEW_BUST);
     return `/preview/${previewSlug}?${params.toString()}`;
-  }, [crop, motion, previewSlug]);
+  }, [crop, motion, previewSlug, variant]);
   const [frames, setFrames] = useState<PreviewFrameState[]>([
     {
       id: 0,
@@ -132,6 +173,14 @@ export function EmbeddedPreviewFrame({
     },
   ]);
   const hasReadyFrame = frames.some((frame) => frame.ready && frame.status === "active");
+
+  useEffect(() => {
+    const activeReadyFrame = frames.find((frame) => frame.ready && frame.status === "active");
+
+    if (activeReadyFrame?.src === src) {
+      onActivePreviewChange?.(previewSlug);
+    }
+  }, [frames, onActivePreviewChange, previewSlug, src]);
 
   useEffect(() => {
     if (!suspendWhenOffscreen || eager) {
@@ -471,8 +520,8 @@ export function ProductHeroVisual({ compact = false }: { compact?: boolean }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const t = window.setTimeout(() => setReady(true), 2000);
-    return () => window.clearTimeout(t);
+    const timeoutId = window.setTimeout(() => setReady(true), 1400);
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   useEffect(() => {
@@ -594,9 +643,8 @@ export function ProductHeroVisual({ compact = false }: { compact?: boolean }) {
     <div
       ref={ref}
       className={joinClasses("premium-hero-visual", compact && "premium-hero-visual-compact")}
-      style={{ opacity: ready ? 1 : 0, transition: ready ? "opacity 500ms ease" : "none" }}
+      style={{ opacity: ready ? 1 : 0, transition: ready ? "opacity 420ms ease" : "none" }}
     >
-      <div className="premium-hero-halo" aria-hidden="true" />
       <HeroContextChip
         accentClassName="premium-context-chip-icon-safe"
         chipClassName="premium-context-chip-safe"
