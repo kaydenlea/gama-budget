@@ -59,11 +59,19 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "globals": "^16.0.0",
     "jest": "^29.7.0",
+    "next": "16.2.3",
     "prettier": "^3.5.3",
     "react-test-renderer": "^19.1.0",
     "ts-jest": "^29.3.1",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.28.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@sentry/browser": "7.119.1",
+      "@xmldom/xmldom": "0.8.13",
+      "postcss": "8.5.10"
+    }
   }
 }

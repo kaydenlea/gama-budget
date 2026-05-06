@@ -6,12 +6,13 @@ The web lane exists to support trust, demand capture, future share surfaces, and
 
 - keep the web lane on a current official Next.js App Router plus Tailwind baseline
 - maintain a premium landing page, waitlist page, privacy page, sitemap, robots, and typed metadata structure
-- prepare the planned public domain and content strategy for `gama.money`
-- keep waitlist, share-surface, and analytics plumbing intentionally unlaunched until privacy and MVP timing are ready
+- prepare the planned public domain and content strategy for `gamabudget.com`
+- keep share-surface and analytics plumbing intentionally unlaunched until privacy and MVP timing are ready
+- keep the existing waitlist intake path in controlled launch-readiness mode until deployment env, sender-domain setup, monitoring, retention, and abuse controls are reviewed
 
 ## Phase 1: MVP Launch Surfaces
 
-- turn the waitlist foundation into a live, disclosure-safe intake flow
+- promote the current waitlist intake flow only after launch-owner review of disclosure, sender domain, Supabase storage, rate limiting, and monitoring
 - add stronger trust, FAQ, and launch-readiness content
 - align launch messaging with event receipts, maps, and weekly stories only where those features are actually ready
 - align launch messaging with the mobile MVP in [docs/product/mobile/roadmap.md](../mobile/roadmap.md)

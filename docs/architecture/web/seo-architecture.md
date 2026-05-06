@@ -21,7 +21,7 @@ SEO architecture should support discoverability and trustworthy content distribu
 - no unsupported feature claims
 - waitlist, contact, and analytics flows must follow privacy and disclosure standards
 - canonical URL ownership should live in the web lane, not be scattered through page prose
-- `gama.money` is the only intended public domain; non-production examples should use localhost or clearly synthetic hosts, not implied `*.gama.money` preview subdomains
-- do not add `www.gama.money` to runtime allowlists or redirects until that host is actually provisioned and the canonical-domain policy is finalized
+- `gamabudget.com` is the only intended public domain; non-production examples should use localhost or clearly synthetic hosts, not implied preview subdomains
+- do not add `www.gamabudget.com` to runtime allowlists or redirects until that host is actually provisioned and the canonical-domain policy is finalized
 - non-production deployments should default to `noindex` plus crawl disallow unless intentionally promoted
 - training-crawler controls may be stricter than search-discovery controls, but classic search eligibility must remain intact

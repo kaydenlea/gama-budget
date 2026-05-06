@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Subscriptions &amp; Bills | PocketCurb</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#20344b",
+                        "brand-green": "#74c44c",
+                        "on-surface": "#28343b",
+                        "surface-variant": "#d7e4ed",
+                        "luminous-blue": "#f0f7ff",
+                        "emerald": {
+                            "400": "#10b981",
+                            "500": "#059669",
+                            "950": "#022c22",
+                        }
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1.2rem",
+                        "lg": "2rem",
+                        "xl": "2.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: #0b141a;
+            min-height: 100vh;
+            color: #28343b;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .immersive-dark-top {
+            background: linear-gradient(180deg, #0b141a 0%, #0e1a22 70%, #12212a 100%);
+        }
+        .glass-island {
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .glass-island-dark {
+            background: rgba(255, 255, 255, 0.13);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+        }
+        .active-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        .squircle-refined {
+            border-radius: 1.4rem;
+        }
+        .transaction-squircle {
+            border-radius: 1.25rem;
+        }
+        .bridge-glass {
+            background: rgba(255, 255, 255, 0.97);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .progress-indicator-glow {
+            filter: drop-shadow(0 0 12px rgba(116, 196, 76, 0.4));
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .showcase-soft-number {
+            font-weight: 800 !important;
+            letter-spacing: -0.04em !important;
+        }
+
+        .showcase-soft-total {
+            font-weight: 800 !important;
+            letter-spacing: -0.035em !important;
+        }
+        .bridge-progress-ring {
+            filter: drop-shadow(0 0 9px rgba(116, 196, 76, 0.22));
+        }
+        .bridge-progress-shell {
+            background: rgba(243, 248, 255, 0.78);
+            border: 1px solid rgba(255, 255, 255, 0.88);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.92),
+                0 7px 14px rgba(32, 52, 75, 0.1);
+        }
+        .bridge-progress-track {
+            stroke: rgba(151, 187, 126, 0.42);
+        }
+        .bridge-progress-value {
+            color: #4faa3d;
+        }
+        .bridge-progress-center-disc {
+            background: rgba(243, 248, 255, 0.22);
+            border: 1px solid rgba(220, 233, 246, 0.32);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.48);
+        }
+        .bridge-metric-label {
+            font-size: 0.42rem;
+            letter-spacing: 0.18em;
+        }
+        .bridge-metric-value {
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary/10">
+<!-- Top Analytical Section -->
+<section class="immersive-dark-top px-3 relative pt-4 pb-24">
+<header class="flex justify-between items-center mb-10">
+<div class="glass-island-dark w-10 h-10 flex items-center justify-center rounded-full hover:scale-95 transition-transform cursor-pointer overflow-hidden ring-1 ring-white/10">
+<span class="material-symbols-outlined text-white font-bold text-[18px]">person</span>
+</div>
+<div class="glass-island-dark px-4 py-1.5 rounded-full border border-white/10 flex items-center justify-center">
+<h1 class="text-[10px] font-extrabold tracking-[0.18em] text-white/90 uppercase">Bills</h1>
+</div>
+<div class="glass-island-dark w-10 h-10 flex items-center justify-center rounded-full hover:scale-95 transition-transform cursor-pointer ring-1 ring-white/10">
+<span class="material-symbols-outlined text-white font-bold text-[18px]">settings</span>
+</div>
+</header>
+<div class="max-w-lg mx-auto relative z-10 flex flex-col items-center text-center">
+<p class="text-white/30 text-[9px] font-black uppercase tracking-[0.24em] mb-1">Monthly Forecast</p>
+<div class="flex items-start gap-1 mb-4">
+<span class="text-white/40 text-lg font-bold mt-2">$</span>
+<span class="text-[60px] font-black tracking-tighter text-white leading-none font-headline">2,758</span>
+<span class="text-white/20 text-[10px] font-black tracking-[0.12em] mt-2 ml-1">USD</span>
+</div>
+<div class="relative w-full max-w-[280px] h-[32px] glass-island-dark rounded-full border border-white/10 p-1 flex items-center overflow-hidden">
+<div class="absolute inset-y-1 left-1 bg-gradient-to-r from-brand-green/40 to-brand-green/10 rounded-full" style="width: 85%;"></div>
+<div class="relative z-10 w-full flex justify-between items-center px-4">
+<span class="text-[9px] font-black text-white/90 uppercase tracking-[0.12em]">October</span>
+<span class="text-[9px] font-black text-brand-green uppercase tracking-[0.12em]">3 Days Left</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Grounded Activity Sheet -->
+<main class="relative z-10 px-3 pb-36 min-h-[65vh] bg-[#f2f5f7] pt-18">
+<!-- Unified Instrument Bridge - Vertically Centered on Transition Line -->
+<div class="absolute left-3 right-3 z-30 max-w-lg mx-auto top-0 -translate-y-1/2">
+<div class="bridge-glass p-3 grid grid-cols-[minmax(0,1fr)_3.55rem_minmax(0,1fr)] items-center gap-0 rounded-[1.6rem]">
+<!-- Remaining (Left) -->
+<div class="min-w-0 py-[0.95rem] px-2.5 -mr-[0.88rem] flex flex-col items-start justify-center text-left rounded-[0.95rem] bg-blue-100/20 ring-1 ring-blue-200/24">
+<span class="bridge-metric-label text-blue-900/55 font-black uppercase mb-1">Remaining</span>
+<span class="bridge-metric-value text-[15px] text-primary leading-none">$40.00</span>
+</div>
+<!-- Progress Circle (Center) -->
+<div class="bridge-progress-shell relative w-[3.55rem] h-[3.55rem] flex items-center justify-center shrink-0 overflow-visible rounded-full">
+<svg class="w-[3.15rem] h-[3.15rem] overflow-visible transform -rotate-90 bridge-progress-ring" viewbox="0 0 100 100">
+<circle class="bridge-progress-track" cx="50" cy="50" fill="transparent" r="42.5" stroke-width="9"></circle>
+<circle class="bridge-progress-value" cx="50" cy="50" fill="transparent" r="42.5" stroke="currentColor" stroke-dasharray="267.04" stroke-dashoffset="16.02" stroke-linecap="round" stroke-width="9" transform="rotate(-2 50 50)"></circle>
+</svg>
+<div class="bridge-progress-center-disc absolute z-0 w-[2.24rem] h-[2.24rem] rounded-full"></div>
+<div class="absolute inset-0 z-10 flex flex-col items-center justify-center">
+<span class="text-[14px] font-extrabold text-primary tracking-[-0.04em] leading-none">98<span class="text-[7px] font-bold text-primary/55">%</span></span>
+</div>
+</div>
+<!-- Settled (Right) -->
+<div class="min-w-0 py-[0.95rem] px-2.5 -ml-[0.88rem] flex flex-col items-end justify-center text-right rounded-[0.95rem] bg-emerald-100/20 ring-1 ring-emerald-200/24">
+<span class="bridge-metric-label text-emerald-800/55 font-black uppercase mb-1">Settled</span>
+<span class="bridge-metric-value text-[15px] text-brand-green leading-none">$2,718</span>
+</div>
+</div>
+</div>
+<div class="max-w-md mx-auto -mt-1 space-y-7">
+<!-- UPCOMING Section -->
+<section class="space-y-4">
+<div class="flex items-center justify-between px-2">
+<h2 class="text-[10px] font-black tracking-[0.16em] text-primary/40 uppercase">Upcoming</h2>
+<div class="bg-amber-100/40 rounded-full px-3 py-1 flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-amber-500"></div>
+<span class="showcase-soft-total text-[11px] text-amber-700 tracking-tight">$763.99</span>
+</div>
+</div>
+<div class="glass-island rounded-3xl p-1.5 space-y-1">
+<!-- Netflix -->
+<div class="p-4 transaction-squircle flex items-center justify-between transition-all active:scale-[0.98] bg-white">
+<div class="flex items-center gap-2.5">
+<div class="w-11 h-11 transaction-squircle bg-slate-100 border border-slate-200 shadow-sm flex items-center justify-center text-xl">📺</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-[13px] font-extrabold text-primary">Netflix</span>
+<span class="px-1.5 py-0.5 rounded-md bg-red-100/80 text-red-600 text-[6px] font-black uppercase">ENT</span>
+</div>
+<span class="text-[10px] font-bold text-primary/40">Due in 2 days</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<p class="showcase-soft-number text-[12px] text-primary">$19.99</p>
+<div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+</div>
+</div>
+<!-- Equinox -->
+<div class="p-4 transaction-squircle flex items-center justify-between transition-all active:scale-[0.98] bg-white">
+<div class="flex items-center gap-2.5">
+<div class="w-11 h-11 transaction-squircle bg-slate-100 border border-slate-200 shadow-sm flex items-center justify-center text-xl">💪</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-[13px] font-extrabold text-primary">Equinox</span>
+<span class="px-1.5 py-0.5 rounded-md bg-orange-100/80 text-orange-600 text-[6px] font-black uppercase">FIT</span>
+</div>
+<span class="text-[10px] font-bold text-primary/40">Due in 4 days</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<p class="showcase-soft-number text-[12px] text-primary">$245.00</p>
+<div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+</div>
+</div>
+<!-- Car Lease -->
+<div class="p-4 transaction-squircle flex items-center justify-between transition-all active:scale-[0.98] bg-white">
+<div class="flex items-center gap-2.5">
+<div class="w-11 h-11 transaction-squircle bg-slate-100 border border-slate-200 shadow-sm flex items-center justify-center text-xl">🚗</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="text-[13px] font-extrabold text-primary">Car</span>
+<span class="px-1.5 py-0.5 rounded-md bg-blue-100/80 text-blue-600 text-[6px] font-black uppercase">AUTO</span>
+</div>
+<span class="text-[10px] font-bold text-primary/40">Due in 6 days</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<p class="showcase-soft-number text-[12px] text-primary">$499.00</p>
+<div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+</div>
+</div>
+<button class="flex items-center justify-center gap-2 py-3 mt-1 w-full group transition-colors rounded-b-[1.25rem] border-t border-white/40 bg-transparent">
+<span class="text-[9px] font-black text-primary/40 uppercase tracking-[0.16em]">View All</span>
+<span class="material-symbols-outlined text-primary/30 text-[16px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- SETTLED Section (Reel) -->
+<section class="space-y-4">
+<div class="flex items-center justify-between px-2">
+<h2 class="text-[10px] font-black tracking-[0.16em] text-primary/40 uppercase">Settled</h2>
+<div class="bg-emerald-100/40 rounded-full px-3 py-1 flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+<span class="showcase-soft-total text-[11px] text-emerald-700 tracking-tight">$2,154.99</span>
+</div>
+</div>
+<div class="overflow-x-auto hide-scrollbar -mx-3 px-3">
+<div class="flex gap-4 pb-4 w-max">
+<!-- Card 1: Rent -->
+<div class="bg-white rounded-[1.8rem] shadow-sm border border-white/80 flex flex-col items-center text-center relative active:scale-[0.97] transition-all w-36 shrink-0 py-3 px-4">
+<div class="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-lg shadow-sm mb-3">🏠</div>
+<span class="absolute top-4 right-4 material-symbols-outlined text-brand-green text-[18px] active-icon">check_circle</span>
+<h3 class="text-[8px] font-black text-primary/40 uppercase tracking-[0.06em] mb-1">Rent</h3>
+<p class="showcase-soft-number text-[16px] text-primary leading-tight">$2,100</p>
+<div class="mt-3 flex items-center gap-1">
+<span class="bg-blue-50 text-blue-600 text-[6px] font-black px-2 py-0.5 rounded-full uppercase border border-blue-100/50">HOME</span>
+<span class="text-[6px] font-bold text-primary/30 uppercase">Oct 01</span>
+</div>
+</div>
+<!-- Card 2: Adobe -->
+<div class="bg-white rounded-[1.8rem] shadow-sm border border-white/80 flex flex-col items-center text-center relative active:scale-[0.97] transition-all w-36 shrink-0 py-3 px-4">
+<div class="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-lg shadow-sm mb-3">🎨</div>
+<span class="absolute top-4 right-4 material-symbols-outlined text-brand-green text-[18px] active-icon">check_circle</span>
+<h3 class="text-[8px] font-black text-primary/40 uppercase tracking-[0.06em] mb-1">Adobe CC</h3>
+<p class="showcase-soft-number text-[16px] text-primary leading-tight">$54.99</p>
+<div class="mt-3 flex items-center gap-1">
+<span class="bg-purple-50 text-purple-600 text-[6px] font-black px-2 py-0.5 rounded-full uppercase border border-purple-100/50">TECH</span>
+<span class="text-[6px] font-bold text-primary/30 uppercase">Oct 04</span>
+</div>
+</div>
+<!-- Card 3: Equinox -->
+<div class="bg-white rounded-[1.8rem] shadow-sm border border-white/80 flex flex-col items-center text-center relative active:scale-[0.97] transition-all w-36 shrink-0 py-3 px-4">
+<div class="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-lg shadow-sm mb-3">💪</div>
+<span class="absolute top-4 right-4 material-symbols-outlined text-brand-green text-[18px] active-icon">check_circle</span>
+<h3 class="text-[8px] font-black text-primary/40 uppercase tracking-[0.06em] mb-1">Equinox</h3>
+<p class="showcase-soft-number text-[16px] text-primary leading-tight">$245.00</p>
+<div class="mt-3 flex items-center gap-1">
+<span class="bg-orange-50 text-orange-600 text-[6px] font-black px-2 py-0.5 rounded-full uppercase border border-orange-100/50">FIT</span>
+<span class="text-[6px] font-bold text-primary/30 uppercase">Oct 06</span>
+</div>
+</div>
+<!-- Card 4: Car Lease -->
+<div class="bg-white rounded-[1.8rem] shadow-sm border border-white/80 flex flex-col items-center text-center relative active:scale-[0.97] transition-all w-36 shrink-0 py-3 px-4">
+<div class="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-lg shadow-sm mb-3">🚗</div>
+<span class="absolute top-4 right-4 material-symbols-outlined text-brand-green text-[18px] active-icon">check_circle</span>
+<h3 class="text-[8px] font-black text-primary/40 uppercase tracking-[0.06em] mb-1">Car</h3>
+<p class="showcase-soft-number text-[16px] text-primary leading-tight">$499.00</p>
+<div class="mt-3 flex items-center gap-1">
+<span class="bg-emerald-50 text-emerald-600 text-[6px] font-black px-2 py-0.5 rounded-full uppercase border border-emerald-100/50">AUTO</span>
+<span class="text-[6px] font-bold text-primary/30 uppercase">Oct 10</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Navigation Layer (Detached Island) -->
+<nav class="fixed left-0 w-full z-50 flex justify-between px-3 pointer-events-none bottom-8 max-w-sm mx-auto left-0 right-0">
+<div class="glass-island p-1.5 rounded-full border border-white/60 shadow-2xl flex gap-1 pointer-events-auto">
+<div class="w-12 h-12 rounded-full flex items-center justify-center text-primary/40 hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[22px]" data-icon="grid_view">grid_view</span>
+</div>
+<div class="w-12 h-12 rounded-full flex items-center justify-center bg-primary text-white shadow-lg cursor-pointer">
+<span class="material-symbols-outlined text-[22px] active-icon" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<div class="w-12 h-12 rounded-full flex items-center justify-center text-primary/40 hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[22px]" data-icon="insights">insights</span>
+</div>
+</div>
+<div class="glass-island w-14 h-14 rounded-full border border-white/60 shadow-2xl pointer-events-auto flex items-center justify-center cursor-pointer hover:scale-95 active:scale-90 transition-all">
+<span class="material-symbols-outlined font-bold text-2xl text-primary active-icon">add</span>
+</div>
+</nav>
+</body></html>

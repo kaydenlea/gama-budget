@@ -3,7 +3,7 @@ import { createPageMetadata, createRootMetadata } from "./site-metadata";
 
 describe("site-metadata", () => {
   const productionEnvironment = resolveSiteEnvironment({
-    rawOrigin: "https://gama.money",
+    rawOrigin: "https://gamabudget.com",
     nodeEnv: "production"
   });
 
@@ -13,18 +13,31 @@ describe("site-metadata", () => {
   });
 
   it("builds production page metadata with canonical URLs and indexable robots", () => {
-    const metadata = createPageMetadata(sitePages.waitlist, productionEnvironment);
+    const metadata = createPageMetadata(sitePages.home, productionEnvironment);
 
-    expect(metadata.alternates?.canonical).toBe("https://gama.money/waitlist");
+    expect(metadata.alternates?.canonical).toBe("https://gamabudget.com/");
     expect(metadata.robots).toMatchObject({
       index: true,
       follow: true
     });
     expect(metadata.openGraph).toMatchObject({
-      url: "https://gama.money/waitlist",
-      title: "Waitlist | Gama"
+      url: "https://gamabudget.com/",
+      title: "Gama Budget | Decision-first money clarity."
+    });
+    expect(metadata.title).toMatchObject({
+      absolute: "Gama Budget | Decision-first money clarity."
     });
     expect(metadata).not.toHaveProperty("keywords");
+  });
+
+  it("marks hidden secondary pages as noindex in production", () => {
+    const metadata = createPageMetadata(sitePages.waitlist, productionEnvironment);
+
+    expect(metadata.alternates?.canonical).toBe("https://gamabudget.com/waitlist");
+    expect(metadata.robots).toMatchObject({
+      index: false,
+      follow: false
+    });
   });
 
   it("builds non-production root metadata with noindex robots", () => {
@@ -37,6 +50,15 @@ describe("site-metadata", () => {
     expect(metadata.manifest).toBe("/manifest.webmanifest");
     expect(metadata.icons).toMatchObject({
       icon: [{ url: "/icon.png", type: "image/png" }]
+    });
+  });
+
+  it("uses a root title template that leads with the Gama brand", () => {
+    const metadata = createRootMetadata(productionEnvironment);
+
+    expect(metadata.title).toMatchObject({
+      default: "Gama Budget | Decision-first money clarity.",
+      template: "Gama Budget | %s"
     });
   });
 });

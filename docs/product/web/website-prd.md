@@ -2,7 +2,7 @@
 
 ## Goal
 
-The web lane exists to build trust, explain the Gama thesis, capture early demand, support future share surfaces at the planned public domain `gama.money`, and later support SEO or educational content. It is not the primary product surface.
+The web lane exists to build trust, explain the Gama thesis, capture early demand, support future share surfaces at the planned public domain `gamabudget.com`, and later support SEO or educational content. It is not the primary product surface.
 
 ## Web Jobs
 
@@ -28,8 +28,9 @@ The repo should maintain a production-minded website foundation before the actua
 - premium landing, waitlist, share-view, and privacy surface foundation
 - route-level metadata, sitemap, and robots support
 - typed content structures that keep SEO and growth work grounded in product truth
+- server-owned waitlist intake path with explicit consent, validation, service-role-only storage, and confirmation email handling
 
-The live waitlist backend, share hosting backends, and live analytics integrations remain intentionally deferred until MVP timing, disclosure, and operational ownership are ready.
+Share hosting backends and live analytics integrations remain intentionally deferred until MVP timing, disclosure, and operational ownership are ready. Public waitlist promotion still requires launch-owner review of deployment env, sender-domain setup, monitoring, retention, and abuse controls.
 
 ## Messaging Constraints
 

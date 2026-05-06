@@ -35,3 +35,6 @@ supabase/.temp/
 sentry-debug.log
 artifacts/
 .gama-artifacts/
+.vercel
+.env*.local
+.vercel*.env

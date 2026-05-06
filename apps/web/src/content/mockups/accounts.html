@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#e2e2e5",
+                    "on-background": "#28343b",
+                    "inverse-on-surface": "#9a9da0",
+                    "on-error-container": "#752121",
+                    "primary-fixed-dim": "#b6d8fb",
+                    "on-tertiary": "#faf8ff",
+                    "tertiary-fixed-dim": "#c4cbe9",
+                    "on-secondary": "#f9f8fc",
+                    "on-primary-fixed-variant": "#3d5e7d",
+                    "tertiary": "#575e78",
+                    "tertiary-fixed": "#d2d9f8",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#707d84",
+                    "on-tertiary-fixed-variant": "#4e556f",
+                    "surface-variant": "#d7e4ed",
+                    "on-tertiary-container": "#444c65",
+                    "primary-dim": "#345573",
+                    "inverse-surface": "#0b0f11",
+                    "on-surface-variant": "#546168",
+                    "secondary-dim": "#525356",
+                    "secondary": "#5e5f62",
+                    "on-secondary-container": "#505255",
+                    "outline-variant": "#a7b4bc",
+                    "tertiary-container": "#d2d9f8",
+                    "surface": "#f7fafd",
+                    "surface-container-high": "#dfeaf1",
+                    "on-secondary-fixed-variant": "#5a5b5e",
+                    "on-surface": "#28343b",
+                    "on-error": "#fff7f6",
+                    "surface-bright": "#f7fafd",
+                    "primary-container": "#cee5ff",
+                    "error-container": "#fe8983",
+                    "on-secondary-fixed": "#3e3f42",
+                    "primary-fixed": "#cee5ff",
+                    "tertiary-dim": "#4b526c",
+                    "primary": "#20344b", 
+                    "on-primary-container": "#335572",
+                    "background": "#f7fafd",
+                    "inverse-primary": "#b3d5f9",
+                    "surface-container-low": "#eff4f9",
+                    "surface-dim": "#ccdce6",
+                    "error": "#9f403d",
+                    "on-primary-fixed": "#1f425f",
+                    "error-dim": "#4e0309",
+                    "secondary-fixed-dim": "#d4d4d7",
+                    "on-primary": "#f4f8ff",
+                    "surface-container": "#e7eff5",
+                    "secondary-fixed": "#e2e2e5",
+                    "on-tertiary-fixed": "#323951",
+                    "surface-tint": "#20344b",
+                    "surface-container-highest": "#d7e4ed",
+                    "brand-green": "#74c44c",
+                    "bank-chase": "#117aca",
+                    "bank-ally": "#4b2670",
+                    "bank-sapphire": "#0a1e36",
+                    "bank-amex": "#d4af37"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: #0b141a;
+            overflow-x: hidden;
+        }
+        .immersive-dark-top {
+            background: linear-gradient(180deg, #0b141a 0%, #0e1a22 70%, #12212a 100%);
+        }
+        .glass-island {
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 4px 24px 0 rgba(65, 98, 129, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .glass-island-dark {
+            background: rgba(255, 255, 255, 0.13);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .ios-glass-pill {
+            background: rgba(255, 255, 255, 0.97);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .ios-emerald-glass {
+            background: rgba(116, 196, 76, 0.72);
+            border: 1px solid rgba(116, 196, 76, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .showcase-soft-number {
+            font-weight: 800 !important;
+            letter-spacing: -0.04em !important;
+        }
+        .text-\[32px\].font-extrabold,
+        .text-\[16px\].font-black,
+        .text-\[15px\].font-black,
+        .text-\[12px\].font-bold,
+        .text-\[10px\].font-extrabold {
+            font-weight: 800 !important;
+            letter-spacing: -0.04em !important;
+        }
+        .immersive-dark-top > header h1.text-\[10px\].font-extrabold {
+            letter-spacing: 0.18em !important;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        .chart-glow-emerald {
+            filter: drop-shadow(0 0 8px rgba(116, 196, 76, 0.5));
+        }
+        .text-shadow-sm {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+        }
+        .physical-card {
+            width: 80px;
+            height: 50px;
+            border-radius: 8px;
+            position: relative;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 8px;
+            overflow: hidden;
+        }
+        .card-chip {
+            width: 12px;
+            height: 10px;
+            background: linear-gradient(135deg, #d4af37 0%, #f9e29c 50%, #b8860b 100%);
+            border-radius: 2px;
+        }
+        .card-logo {
+            font-size: 8px;
+            font-weight: 800;
+            font-style: italic;
+            color: white;
+        }
+        .card-dots {
+            font-size: 7px;
+            color: rgba(255,255,255,0.7);
+            font-weight: 600;
+        }
+        .micro-card {
+            background: white;
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .micro-card:active {
+            transform: scale(0.98);
+        }
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
+        }
+        .path-animate {
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: draw 2s ease-out forwards;
+        }
+        /* Mobile Viewport Constraint */
+        .mobile-container {
+            width: 100%;
+            max-width: 390px;
+            margin: 0 auto;
+            position: relative;
+            min-height: 100vh;
+            background: #f2f5f7;
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-on-surface antialiased bg-[#0b141a]">
+<div class="mobile-container">
+<!-- Top Section -->
+<section class="immersive-dark-top px-3 relative pt-4 pb-12">
+<header class="flex justify-between items-center mb-10">
+<div class="glass-island-dark w-10 h-10 flex items-center justify-center rounded-full hover:scale-95 transition-transform cursor-pointer overflow-hidden ring-1 ring-white/10">
+<span class="material-symbols-outlined text-white font-bold text-[18px]">person</span>
+</div>
+<div class="glass-island-dark px-4 py-1.5 rounded-full border border-white/10 flex items-center justify-center">
+<h1 class="text-[10px] font-extrabold tracking-[0.18em] text-white/90 uppercase">Accounts</h1>
+</div>
+<div class="glass-island-dark w-10 h-10 flex items-center justify-center rounded-full hover:scale-95 transition-transform cursor-pointer ring-1 ring-white/10">
+<span class="material-symbols-outlined text-white font-bold text-[18px]">settings</span>
+</div>
+</header>
+<div class="w-full flex flex-col relative">
+<div class="flex justify-between items-start z-10 mb-2">
+<div class="flex flex-col">
+<span class="text-[8px] font-extrabold tracking-[0.14em] text-white/50 uppercase font-headline">Total Accounts</span>
+<div class="flex items-baseline gap-2">
+<span class="text-[32px] font-extrabold tracking-tighter text-white leading-tight font-headline text-shadow-sm">$142,530</span>
+</div>
+</div>
+<!-- Status Pill -->
+<div class="ios-emerald-glass px-3 py-1.5 rounded-full flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)] animate-pulse"></div>
+<p class="text-[10px] font-extrabold text-white tracking-tight uppercase drop-shadow-sm">+2.4%</p>
+</div>
+</div>
+<!-- Trend Chart area -->
+<div class="relative w-full z-10 h-28 mb-2">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 200 100">
+<defs>
+<lineargradient id="curve-gradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#74c44c" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#74c44c" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,85 C25,85 45,70 70,75 C100,80 130,50 160,55 C185,60 190,40 200,35 V100 H0 Z" fill="url(#curve-gradient)"></path>
+<path class="chart-glow-emerald path-animate" d="M0,85 C25,85 45,70 70,75 C100,80 130,50 160,55 C185,60 190,40 200,35" fill="none" stroke="#74c44c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<circle cx="200" cy="35" fill="#74c44c" r="3.5" stroke="#0e1a22" stroke-width="2.5"></circle>
+</svg>
+</div>
+<div class="flex justify-center items-center z-10 mt-2">
+<div class="flex items-center bg-black/50 p-0.5 rounded-full border border-white/5">
+<button class="px-4 py-1.5 rounded-full text-[8px] font-extrabold text-white bg-white/10 uppercase tracking-[0.08em]">1W</button>
+<button class="px-4 py-1.5 rounded-full text-[8px] font-extrabold text-white/30 uppercase tracking-[0.08em]">1M</button>
+<button class="px-4 py-1.5 rounded-full text-[8px] font-extrabold text-white/30 uppercase tracking-[0.08em]">3M</button>
+<button class="px-4 py-1.5 rounded-full text-[8px] font-extrabold text-white/30 uppercase tracking-[0.08em]">YTD</button>
+<button class="px-4 py-1.5 rounded-full text-[8px] font-extrabold text-white/30 uppercase tracking-[0.08em]">1Y</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Grounded Architecture Bottom Sheet -->
+<main class="relative z-10 px-3 pb-36 min-h-[60vh] bg-[#f2f5f7] pt-18">
+<!-- Bridge Component: Refined Minimal Style -->
+<div class="absolute left-3 right-3 z-30 -top-8">
+<div class="ios-glass-pill shadow-2xl p-2.5 flex gap-2 rounded-[1.75rem]">
+<div class="flex-1 p-3 border flex flex-col items-center justify-center active:scale-[0.98] transition-all cursor-pointer bg-emerald-50/80 border-emerald-200/50 rounded-2xl">
+<span class="text-[7px] font-black text-primary/40 uppercase tracking-[0.12em] mb-1">Total Assets</span>
+<div class="flex items-center gap-1.5">
+<span class="text-[16px] font-black text-primary tracking-tighter">$168,430</span>
+<span class="text-[10px] font-bold text-emerald-500">↑</span>
+</div>
+</div>
+<div class="flex-1 p-3 border flex flex-col items-center justify-center active:scale-[0.98] transition-all cursor-pointer bg-red-50/80 border-red-200/50 rounded-2xl">
+<span class="text-[7px] font-black text-primary/40 uppercase tracking-[0.12em] mb-1">Total Debt</span>
+<div class="flex items-center gap-1.5">
+<span class="text-[16px] font-black text-primary tracking-tighter">$25,899</span>
+<span class="text-[10px] font-bold text-red-500">↓</span>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-8 pt-4">
+<!-- Cash & Banking Section -->
+<section class="space-y-4">
+<div class="flex justify-between items-end px-1">
+<h2 class="text-[10px] font-black text-primary/40 tracking-[0.12em] uppercase">Cash &amp; Banking</h2>
+<span class="text-[12px] font-bold text-primary/80">$42,299.00</span>
+</div>
+<div class="space-y-2.5">
+<!-- Chase -->
+<div class="module-row micro-card rounded-2xl flex items-center justify-between py-3 px-4 shadow-sm">
+<div class="flex flex-col w-20">
+<p class="font-black text-primary tracking-tight text-[15px]">-$2,840</p>
+<p class="text-[8px] font-bold text-primary/30 uppercase tracking-[0.12em] mt-0.5">Balance</p>
+</div>
+<div class="flex-1 flex justify-center">
+<div class="physical-card bg-[#117aca]">
+<span class="card-logo">CHASE</span>
+<div class="flex justify-between items-end">
+<div class="card-chip"></div>
+<span class="card-dots">•• 4291</span>
+</div>
+</div>
+</div>
+<div class="text-right w-20">
+<p class="font-bold text-primary tracking-tight text-[12px]">Primary</p>
+<p class="text-[8px] font-bold text-primary/30 uppercase tracking-[0.12em] mt-0.5">Status</p>
+</div>
+</div>
+<!-- Ally -->
+<div class="module-row micro-card rounded-2xl flex items-center justify-between py-3 px-4 shadow-sm">
+<div class="flex flex-col w-20">
+<p class="font-black text-primary tracking-tight text-[15px]">-$1,369</p>
+<p class="text-[8px] font-bold text-primary/30 uppercase tracking-[0.12em] mt-0.5">Balance</p>
+</div>
+<div class="flex-1 flex justify-center">
+<div class="physical-card bg-[#4b2670]">
+<span class="card-logo">ALLY</span>
+<div class="flex justify-between items-end">
+<div class="card-chip"></div>
+<span class="card-dots">•• 8823</span>
+</div>
+</div>
+</div>
+<div class="text-right w-20">
+<p class="font-bold text-brand-green tracking-tight text-[12px]">4.25% APY</p>
+<p class="text-[8px] font-bold text-primary/30 uppercase tracking-[0.12em] mt-0.5">Yield</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Credit Cards Section -->
+<section class="space-y-4">
+<div class="flex justify-between items-end px-1">
+<h2 class="text-[10px] font-black text-primary/40 tracking-[0.12em] uppercase">Credit Cards</h2>
+<span class="text-[12px] font-bold text-error/80">-$4,210.00</span>
+</div>
+<div class="space-y-2.5">
+<!-- Sapphire -->
+<div class="module-row micro-card rounded-2xl flex items-center justify-between py-3 px-4 shadow-sm">
+<div class="flex flex-col w-20">
+<p class="font-black text-primary tracking-tight text-[15px]">$12,450</p>
+<p class="text-[8px] font-bold text-primary/30 uppercase tracking-[0.12em] mt-0.5">Balance</p>
+</div>
+<div class="flex-1 flex justify-center">
+<div class="physical-card bg-[#0a1e36]">
+<span class="card-logo !text-[7px]">SAPPHIRE</span>
+<div class="flex justify-between items-end">
+<div class="card-chip !bg-gradient-to-br !from-slate-200 !to-slate-400"></div>
+<span class="card-dots">•• 1004</span>
+</div>
+</div>
+</div>
+<div class="text-right w-20">
+<p class="font-bold text-orange-600 tracking-tight text-[12px]">12%</p>
+<p class="text-[8px] font-bold text-primary/30 uppercase tracking-[0.12em] mt-0.5">Usage</p>
+</div>
+</div>
+<!-- Amex -->
+<div class="module-row micro-card rounded-2xl flex items-center justify-between py-3 px-4 shadow-sm">
+<div class="flex flex-col w-20">
+<p class="font-black text-primary tracking-tight text-[15px]">-$1,369</p>
+<p class="text-[8px] font-bold text-primary/30 uppercase tracking-[0.12em] mt-0.5">Balance</p>
+</div>
+<div class="flex-1 flex justify-center">
+<div class="physical-card bg-gradient-to-br from-[#d4af37] to-[#f9e29c]">
+<span class="card-logo !text-amber-900">AMEX</span>
+<div class="flex justify-between items-end">
+<div class="card-chip !bg-gradient-to-br !from-amber-100 !to-amber-300"></div>
+<span class="card-dots !text-amber-900/60">•• 2003</span>
+</div>
+</div>
+</div>
+<div class="text-right w-20">
+<p class="font-bold text-primary/60 tracking-tight text-[12px]">4%</p>
+<p class="text-[8px] font-bold text-primary/30 uppercase tracking-[0.12em] mt-0.5">Usage</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Navigation (Contained within mobile container) -->
+<nav class="absolute left-0 w-full z-50 flex justify-between px-3 pointer-events-none bottom-12">
+<div class="glass-island p-1.5 rounded-full border border-white/60 shadow-2xl flex gap-1 pointer-events-auto">
+<div class="w-12 h-12 rounded-full flex items-center justify-center text-primary/40 hover:text-primary transition-all cursor-pointer scale-90">
+<span class="material-symbols-outlined text-xl">grid_view</span>
+</div>
+<div class="w-12 h-12 rounded-full flex items-center justify-center bg-primary text-white shadow-lg cursor-pointer scale-90">
+<span class="material-symbols-outlined text-xl active-icon">account_balance_wallet</span>
+</div>
+<div class="w-12 h-12 rounded-full flex items-center justify-center text-primary/40 hover:text-primary transition-all cursor-pointer scale-90">
+<span class="material-symbols-outlined text-xl">insights</span>
+</div>
+</div>
+<div class="glass-island w-14 h-14 rounded-full border border-white/60 shadow-2xl pointer-events-auto flex items-center justify-center cursor-pointer hover:scale-95 transition-transform">
+<div class="bg-primary text-white rounded-full w-11 h-11 flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined font-bold text-xl active-icon">add</span>
+</div>
+</div>
+</nav>
+</div>
+</body></html>

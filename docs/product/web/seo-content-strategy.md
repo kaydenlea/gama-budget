@@ -31,7 +31,7 @@ Start with problem framing and category education, then move into artifact and u
 ## Implementation Phases
 
 1. Foundation
-   Route-level metadata ownership, sitemap, robots, canonical URL support, schema factories, breadcrumb support, environment-safe noindex defaults, and typed landing or waitlist content structure for the planned public domain `gama.money`.
+   Route-level metadata ownership, sitemap, robots, canonical URL support, schema factories, breadcrumb support, environment-safe noindex defaults, and typed landing or waitlist content structure for the planned public domain `gamabudget.com`.
 2. Launch Surfaces
    Landing, waitlist, privacy, and trust pages that stay faithful to the MVP and avoid unsupported claims.
 3. Educational Content
@@ -43,6 +43,6 @@ Start with problem framing and category education, then move into artifact and u
 
 - register new indexable pages in the shared page registry so metadata, sitemap, and breadcrumb output stay aligned
 - keep non-production environments non-indexable by default
-- use localhost or clearly synthetic hosts for non-production examples until `gama.money` is actually provisioned
+- use localhost or clearly synthetic hosts for non-production examples until `gamabudget.com` is actually provisioned
 - distinguish AI search discovery from AI training access when adding crawler rules
 - do not add structured data types unless the visible page content already supports them

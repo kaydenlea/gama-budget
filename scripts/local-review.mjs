@@ -149,6 +149,27 @@ function assessWorkflowEvidence(files, tags) {
   };
 }
 
+function hasUnsafeDangerouslySetInnerHtml(content) {
+  const staticInnerHtmlPattern =
+    /dangerouslySetInnerHTML\s*=\s*\{\s*\{\s*__html\s*:\s*(?:`([\s\S]*?)`|"((?:\\"|[^"])*)"|'((?:\\'|[^'])*)')\s*\}\s*\}/g;
+  let matchedStaticLiteral = false;
+
+  const strippedContent = content.replace(
+    staticInnerHtmlPattern,
+    (_match, templateLiteralValue, doubleQuotedValue, singleQuotedValue) => {
+      matchedStaticLiteral = true;
+      const literalValue = templateLiteralValue ?? doubleQuotedValue ?? singleQuotedValue ?? "";
+      return literalValue.includes("${") ? "__UNSAFE_DANGEROUSLY_SET_INNER_HTML__" : "__SAFE_DANGEROUSLY_SET_INNER_HTML__";
+    },
+  );
+
+  if (/dangerouslySetInnerHTML/.test(strippedContent)) {
+    return true;
+  }
+
+  return matchedStaticLiteral && /__UNSAFE_DANGEROUSLY_SET_INNER_HTML__/.test(strippedContent);
+}
+
 function scanRiskPatterns(files) {
   const findings = [];
   const selfScanningRuleFiles = new Set([
@@ -181,7 +202,7 @@ function scanRiskPatterns(files) {
       });
     }
 
-    if (/dangerouslySetInnerHTML|\.innerHTML\s*=/.test(content)) {
+    if (/\.innerHTML\s*=/.test(content) || hasUnsafeDangerouslySetInnerHtml(content)) {
       findings.push({
         severity: "medium",
         file,

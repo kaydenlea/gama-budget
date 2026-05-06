@@ -39,7 +39,11 @@ function createRobotsDirectives(indexable: boolean, environment: SiteEnvironment
 }
 
 function buildOpenGraphTitle(page: SitePageDefinition) {
-  return page.path === "/" ? siteConfig.title : `${page.title} | ${siteConfig.name}`;
+  return page.path === "/" ? siteConfig.title : `${page.title} | ${siteConfig.titleBrand}`;
+}
+
+function buildBrowserTitle(page: SitePageDefinition) {
+  return page.path === "/" ? siteConfig.title : `${siteConfig.titleBrand} | ${page.title}`;
 }
 
 export function createRootMetadata(environment: SiteEnvironment = siteEnvironment): Metadata {
@@ -48,7 +52,7 @@ export function createRootMetadata(environment: SiteEnvironment = siteEnvironmen
     applicationName: siteConfig.name,
     title: {
       default: siteConfig.title,
-      template: `%s | ${siteConfig.name}`
+      template: `${siteConfig.titleBrand} | %s`
     },
     description: siteConfig.description,
     category: siteConfig.category,
@@ -103,7 +107,9 @@ export function createPageMetadata(
   const socialTitle = buildOpenGraphTitle(page);
 
   return {
-    title: page.title,
+    title: {
+      absolute: buildBrowserTitle(page)
+    },
     description: page.description,
     alternates: {
       canonical: canonicalUrl

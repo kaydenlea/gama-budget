@@ -1,38 +1,133 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { SiteContainer } from "@gama/ui-web";
 import gamaLogo from "../../app/icon.png";
-import { siteCopy } from "../content/site-copy";
+
+function joinClasses(...classes: Array<string | false | undefined>) {
+  return classes.filter(Boolean).join(" ");
+}
 
 export function SiteHeader() {
-  return (
-    <header className="sticky top-0 z-20 border-b border-[var(--color-line)]/65 bg-[rgba(250,247,240,0.82)] py-4 backdrop-blur-xl">
-      <SiteContainer className="flex items-center justify-between gap-4">
-        <Link aria-label="Gama home" className="flex items-center gap-3" href="/">
-          <Image
-            alt="Gama logo"
-            className="h-11 w-11 rounded-[0.9rem] shadow-[0_10px_24px_rgba(17,32,51,0.16)]"
-            height={44}
-            priority
-            src={gamaLogo}
-            width={44}
-          />
-          <div>
-            <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-teal)]">Gama</div>
-            <div className="text-xs text-[var(--color-muted)]">Landing, waitlist, and future SEO lane</div>
-          </div>
-        </Link>
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const shellRef = useRef<HTMLDivElement | null>(null);
+  const highlightTimerRef = useRef<number | null>(null);
 
-        <nav aria-label="Primary" className="flex flex-wrap items-center justify-end gap-3 text-sm font-medium text-[var(--color-ink)]">
-          {siteCopy.navigation.map((link) => (
-            <Link key={link.href} className="rounded-full px-3 py-2 transition-colors hover:bg-white/80" href={link.href}>
-              {link.label}
-            </Link>
-          ))}
-          <Link className="site-link" href="/waitlist">
-            {siteCopy.hero.primaryCta.label}
+  const handleJoinEarlyAccessClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    const target = document.getElementById("hero-waitlist-cta");
+    const emailShell = target?.querySelector<HTMLElement>(".hero-email-shell");
+
+    if (!target) {
+      return;
+    }
+
+    event.preventDefault();
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "nearest",
+    });
+    window.history.replaceState(null, "", "#hero-waitlist-cta");
+
+    if (emailShell) {
+      if (highlightTimerRef.current !== null) {
+        window.clearTimeout(highlightTimerRef.current);
+      }
+
+      const triggerHighlight = () => {
+        emailShell.classList.remove("hero-email-shell-flash");
+        void emailShell.offsetWidth;
+        emailShell.classList.add("hero-email-shell-flash");
+      };
+
+      triggerHighlight();
+
+      highlightTimerRef.current = window.setTimeout(() => {
+        triggerHighlight();
+      }, 280);
+
+      window.setTimeout(() => {
+        emailShell.classList.remove("hero-email-shell-flash");
+      }, 1800);
+    }
+  };
+
+  useEffect(() => {
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > 18);
+
+      const shellRect = shellRef.current?.getBoundingClientRect();
+      const darkSections = document.querySelectorAll<HTMLElement>("[data-nav-theme='dark']");
+      let nextTheme: "light" | "dark" = "light";
+
+      if (shellRect) {
+        const navTop = shellRect.top + 8;
+        const navBottom = shellRect.bottom - 8;
+
+        for (const section of darkSections) {
+          const rect = section.getBoundingClientRect();
+          const overlapTop = Math.max(navTop, rect.top);
+          const overlapBottom = Math.min(navBottom, rect.bottom);
+
+          if (overlapBottom > overlapTop) {
+            nextTheme = "dark";
+            break;
+          }
+        }
+      }
+
+      setTheme((current) => (current === nextTheme ? current : nextTheme));
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      if (highlightTimerRef.current !== null) {
+        window.clearTimeout(highlightTimerRef.current);
+      }
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  return (
+    <header className="floating-nav-wrap">
+      <SiteContainer>
+        <div
+          ref={shellRef}
+          className={joinClasses(
+            "floating-nav-shell",
+            theme === "dark" && "floating-nav-shell-dark",
+            !isScrolled && "floating-nav-shell-top",
+            isScrolled && "floating-nav-shell-scrolled"
+          )}
+        >
+          <Link aria-label="Gama home" className="floating-brand" href="/">
+            <Image
+              alt="Gama logo"
+              className="floating-brand-mark"
+              height={40}
+              priority
+              src={gamaLogo}
+              width={40}
+            />
+            <div className="floating-brand-copy">
+              <div className="floating-brand-name">Gama</div>
+            </div>
           </Link>
-        </nav>
+          <Link
+            className="floating-nav-cta floating-nav-cta-inline"
+            href="/#hero-waitlist-cta"
+            onClick={handleJoinEarlyAccessClick}
+          >
+            <span className="floating-nav-cta-label-full">Join early access</span>
+            <span className="floating-nav-cta-label-compact">Join</span>
+            <span aria-hidden="true" className="floating-nav-cta-arrow">→</span>
+          </Link>
+        </div>
       </SiteContainer>
     </header>
   );

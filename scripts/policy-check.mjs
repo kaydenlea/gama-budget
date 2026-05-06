@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { listFiles, runCheck, assert, repoRoot } from "./common.mjs";
+import { tryRunGit } from "./git-helpers.mjs";
 
 const codeFilePattern = /\.(cjs|mjs|js|jsx|ts|tsx)$/i;
 
@@ -79,7 +80,9 @@ runCheck("no-client-service-role-exposure", () => {
 });
 
 runCheck("no-env-files-committed", () => {
-  const envFiles = listFiles(".", (file) => {
+  const tracked = tryRunGit(["ls-files"]);
+  const trackedFiles = tracked ? tracked.split(/\r?\n/).filter(Boolean) : [];
+  const envFiles = trackedFiles.filter((file) => {
     const basename = path.basename(file.replaceAll("\\", "/"));
     return basename === ".env" || (/^\.env\./.test(basename) && basename !== ".env.example");
   });

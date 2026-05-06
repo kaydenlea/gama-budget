@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Japan Trip | PocketCurb</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#20344b",
+                        "brand-green": "#74c44c",
+                        "on-surface": "#28343b",
+                        "surface-variant": "#d7e4ed",
+                        "luminous-blue": "#f0f7ff",
+                        "emerald": {
+                            "400": "#10b981",
+                            "500": "#10b981",
+                            "950": "#022c22",
+                        },
+                        "emerald-accent": "#10b981"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1.2rem",
+                        "lg": "2rem",
+                        "xl": "2.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: #0b141a;
+            min-height: 100vh;
+            color: #28343b;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        .immersive-dark-top {
+            position: relative;
+            background-color: #0b141a;
+        }
+        .header-bg-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+        .header-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(11, 20, 26, 0.4) 0%, rgba(11, 20, 26, 0.8) 70%, #0b141a 100%);
+        }
+        .glass-island {
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .glass-island-dark {
+            background: rgba(255, 255, 255, 0.13);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .luminous-glass-card {
+            background: rgba(22, 36, 54, 0.7);
+            
+            -webkit-
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+        }
+        .active-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        .squircle-refined {
+            border-radius: 1.75rem;
+        }
+        .category-item {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 1.25rem;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+        .category-item:active {
+            transform: scale(0.98);
+        }
+        .map-preview-container {
+            border-radius: 1.25rem;
+            overflow: hidden;
+            position: relative;
+            height: 160px;
+            background: #111;
+        }
+        .map-overlay-dark {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(17, 24, 39, 0) 0%, rgba(17, 24, 39, 0.6) 100%);
+            pointer-events: none;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .horizontal-module {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .horizontal-module:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary/10">
+<!-- Top Dark Section -->
+<section class="immersive-dark-top px-3 pt-4 pb-24">
+<img alt="Japan Trip" class="header-bg-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4LPIPH7sZ5wTTg1ppM9XNSZIoJ2fwcRvhQZ8XiZ3m4tSoGd4IVxK9mCgFQUjV-962iiLAmjNIaw6ItoQsGuBegia_Zb6jWPgNIFrxMat0l34tQ3KUGWWyg_EXOVk7r2dONhEM-hGM-HwBR6S6s1SmITj6B-3pBauveP8yvf_Wb9QBSv0QYcvWz17wGBLI9Pz5XbbyqgE3xiNzmKwXF1gFXIy11hfOSi1XlBDn-_pQjwGUdyav1oiLZIww03LKx8d_nfiqvCHHJebR"/>
+<div class="header-overlay"></div>
+<header class="relative z-20 flex justify-between items-center max-w-lg mx-auto mb-6">
+<div class="glass-island-dark w-10 h-10 flex items-center justify-center rounded-full hover:scale-95 transition-transform cursor-pointer overflow-hidden ring-1 ring-white/10">
+<img alt="User" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfZq7q9J5pO-u0LT-nAFwB8_MoomNtc4S-QH2JPrMAseRdVzS9WxFeETGYhXlTGYqUN90Tq09_n1gRbD-OfuiwseCD0J-SgSgzPTAM3kUufI46GB5L_fjiQOE8SKqtEoIbmDh4I4E4njz2lejU0qtvIKoVIscDG6hlfjHDKAfCtyB3yyczGm7X93Ic1R85fraGpGW0Ph_NVYET0BnjpP40fMbkghQ3A6mEVULg9Jjs0XabRMqQQzj397cHFU2PTxWFONtA5orGmfgM"/>
+</div>
+<div class="glass-island-dark px-4 py-1.5 rounded-full border border-white/10 flex items-center justify-center gap-1.5">
+<h1 class="text-[10px] font-extrabold tracking-[0.3em] text-white/90 uppercase">EVENT</h1>
+</div>
+<div class="glass-island-dark w-10 h-10 flex items-center justify-center rounded-full hover:scale-95 transition-transform cursor-pointer ring-1 ring-white/10">
+<span class="material-symbols-outlined text-white font-bold text-lg">close</span>
+</div>
+</header>
+<div class="relative z-20 text-center mb-4">
+<h2 class="text-3xl font-extrabold text-white tracking-tight mb-1 uppercase">Japan Trip</h2>
+<p class="text-white/60 font-medium text-xs tracking-wider mb-3">Oct 12 — Oct 26, 2023</p>
+<div class="inline-flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full px-3 py-1">
+<span class="text-[10px]">✈️</span>
+<span class="text-[9px] font-black text-blue-400 uppercase tracking-widest">Travel</span>
+</div>
+</div>
+</section>
+<!-- Grounded Activity Sheet -->
+<main class="relative z-10 px-3 pb-36 min-h-[60vh] bg-[#d7e4ed] pt-24">
+<!-- Bridge Container (Compact Layout) -->
+<div class="absolute left-3 right-3 z-30 max-w-lg mx-auto -top-20">
+<div class="bg-white/10 rounded-[2rem] p-1 shadow-2xl shadow-black/30 border border-white/10 overflow-hidden">
+<!-- Top Section: Metrics -->
+<div class="w-full p-4 rounded-[1.75rem] shadow-inner flex flex-col gap-2 relative overflow-hidden ring-1 ring-white/5 luminous-glass-card">
+<div class="absolute -top-10 -right-10 w-48 h-48 bg-emerald-accent/20 blur-[80px] rounded-full pointer-events-none"></div>
+<div class="relative z-10 space-y-2">
+<div class="flex items-start justify-between">
+<div class="space-y-0.5">
+<span class="text-[8px] font-black uppercase tracking-[0.2em] text-white/30 block">Total Spent</span>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-extrabold tracking-tighter text-white tabular-nums leading-none">$1,850.00</span>
+<span class="text-[10px] font-bold text-white/20 tracking-wide uppercase">/ 2.5k</span>
+</div>
+</div>
+<div class="px-2 py-0.5 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 text-[7px] font-black uppercase tracking-widest">On Track</div>
+</div>
+<div>
+<div class="flex items-center gap-3">
+<div class="h-1 flex-1 bg-white/10 rounded-full overflow-hidden relative">
+<div class="absolute inset-y-0 left-0 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)]" style="width: 74%"></div>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-1 h-1 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="text-[7px] font-bold text-white/40 tracking-widest uppercase">Sync</span>
+</div>
+</div>
+</div>
+<div class="flex justify-between border-t border-white/10 pt-2 mt-1 items-start">
+<div class="flex flex-col items-start">
+<span class="text-[8px] font-black uppercase tracking-[0.2em] text-white/40 block mb-1">Partners</span>
+<div class="flex -space-x-1.5 items-center h-6">
+<img alt="User 1" class="w-6 h-6 rounded-full border-2 border-[#162436] object-cover ring-1 ring-white/5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfZq7q9J5pO-u0LT-nAFwB8_MoomNtc4S-QH2JPrMAseRdVzS9WxFeETGYhXlTGYqUN90Tq09_n1gRbD-OfuiwseCD0J-SgSgzPTAM3kUufI46GB5L_fjiQOE8SKqtEoIbmDh4I4E4njz2lejU0qtvIKoVIscDG6hlfjHDKAfCtyB3yyczGm7X93Ic1R85fraGpGW0Ph_NVYET0BnjpP40fMbkghQ3A6mEVULg9Jjs0XabRMqQQzj397cHFU2PTxWFONtA5orGmfgM"/>
+<div class="w-6 h-6 rounded-full border-2 border-[#162436] bg-zinc-800 flex items-center justify-center text-[8px] font-bold text-white/80 ring-1 ring-white/5">MK</div>
+<img alt="User 3" class="w-6 h-6 rounded-full border-2 border-[#162436] object-cover ring-1 ring-white/5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBBxIxogEl7hdY7qQmTANYmrptu6uHG4P97rqIVSoekI0a-5-OeYtBLT_z-DDgqaozpRWtbgiclYKT6vez7XESmSy6CnOL9_GNakEPjVCVOtiYplumzeRAg_zxVDGm1odc9m-m-lElvDKlwJGhI9FZkKAs83WzcAwyMEL4wvGDpAQpKBEZ1PYMfSc48yW2SXrnU8q4KqqcXqI6zY1ahmM55CTMahAs45_A2TgDWbTBcFu7qw50oReHj94DS5e7wO_EZw8pTn_B5Ag6"/>
+</div>
+</div>
+<div class="text-right flex flex-col items-end">
+<p class="text-[8px] font-black uppercase tracking-[0.2em] text-white/40 mb-1 leading-none h-[12px] flex items-center">Avg Daily</p>
+<div class="h-6 flex items-center">
+<span class="text-base font-extrabold text-white tabular-nums tracking-tighter">$132.14</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Content Area -->
+<div class="max-w-md mx-auto space-y-8">
+<!-- Favorites Section -->
+<div class="space-y-4">
+<div class="flex justify-between items-center px-2">
+<h2 class="text-[10px] font-black tracking-[0.2em] text-primary/40 uppercase">FAVORITES</h2>
+<button class="flex items-center gap-2 group"><span class="text-[11px] font-bold group-hover:text-primary transition-colors text-primary/60">Manage</span><div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center shadow-md active:scale-90 transition-transform"><span class="material-symbols-outlined text-white text-[14px]">chevron_right</span></div></button>
+</div>
+<!-- Horizontal Scroll Reel -->
+<div class="flex overflow-x-auto no-scrollbar gap-3 px-2">
+<!-- Favorite Card 1 -->
+<div class="horizontal-module rounded-3xl flex flex-col justify-between shadow-sm min-w-[200px] flex-shrink-0 py-3 px-4"><div class="flex flex-col gap-1.5"><div class="w-11 h-11 rounded-xl overflow-hidden shadow-md border border-black/5"><img alt="Kinkaku-ji" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5u-VAYSBEwIiUrs1fR6p2p_6pwlnrcic9d1wpt8F9btGARQY2IHjx2wE9wuFUye5PxDKUgHAcjaX4WUKu8-q4PgPXHbGus1VborJrDJvnLfgfgvo0uSg9eQ77ylUrvw5dEDZ-ozqz1deaIGjuAA1X_SrplcE-zxEOQSDb61Du5-WK52gVRPr9OqVyQkiLUP7nOcYNrb-IiZZ8bbfPuR4q1ditvVx0A0gufdkWktJAm5VlVudcAOyuqK_YLyQDYFvmuA1BuJllyBbw"/></div><div class="flex flex-col"><h3 class="text-[13px] font-extrabold text-primary leading-tight">Kinkaku-ji</h3><span class="text-[8px] font-bold text-primary/40 uppercase mt-0">Kyoto</span></div></div><div class="flex items-center justify-between mt-2"><span class="text-[7px] font-black text-orange-600 bg-orange-100 px-1.5 py-0.5 rounded-md uppercase tracking-widest">⛩️ CULTURE</span><span class="text-[13px] font-black text-primary tabular-nums">$25.00</span></div></div>
+<!-- Favorite Card 2 -->
+<div class="horizontal-module rounded-3xl flex flex-col justify-between shadow-sm min-w-[200px] flex-shrink-0 py-3 px-4"><div class="flex flex-col gap-1.5"><div class="w-11 h-11 rounded-xl overflow-hidden shadow-md border border-black/5"><img alt="Sushi Zen" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxVQ-189w8TZiAUMDLyumWsqRjBPgbLWOkCgGuFgZosnxbDurdma__cgmm17UpWC6yJNhOmN9KoTb3KlP2JQ4R9UPunCoijKsWVeHgq9fa7Qj9ZwEpp3UJolKu8HySX_p0NJjBHUEVCqvxe4VVG5rNsVeq8VyYkis8dhdGDdSFoauklOCm_pScV4N_UMpTeYRtJEvFCTe9zBeQAcmZrkJrDP4ZfXEColBc-ddl8QbHryfLy67TGFtZHX4YjpWAjuOeCxZ88cHjvVyJ"/></div><div class="flex flex-col"><h3 class="text-[13px] font-extrabold text-primary leading-tight">Sushi Zen</h3><span class="text-[8px] font-bold text-primary/40 uppercase mt-0">Ginza</span></div></div><div class="flex items-center justify-between mt-2"><span class="text-[7px] font-black text-emerald-600 bg-emerald-100 px-1.5 py-0.5 rounded-md uppercase tracking-widest">🍣 DINING</span><span class="text-[13px] font-black text-primary tabular-nums">$142.00</span></div></div>
+<!-- Favorite Card 3 -->
+<div class="horizontal-module rounded-3xl flex flex-col justify-between shadow-sm min-w-[200px] flex-shrink-0 opacity-60 py-3 px-4"><div class="flex flex-col gap-1.5"><div class="w-11 h-11 rounded-xl bg-white/50 flex items-center justify-center"><span class="material-symbols-outlined text-primary/20 text-lg">add</span></div><div class="flex flex-col"><h3 class="text-[13px] font-extrabold text-primary/40 leading-tight">Add New</h3><span class="text-[8px] font-bold text-primary/20 uppercase mt-0">Location</span></div></div><div class="flex items-center justify-between mt-2"><span class="text-[7px] font-black text-primary/20 bg-primary/5 px-1.5 py-0.5 rounded-md uppercase tracking-widest">SELECT</span><span class="text-[13px] font-black text-primary/20 tabular-nums">$0.00</span></div></div>
+</div>
+</div>
+<!-- Category Insights Container (Spending) -->
+<div class="space-y-4">
+<div class="flex justify-between items-center px-2">
+<h2 class="text-[10px] font-black tracking-[0.2em] text-primary/40 uppercase">SPENDING</h2>
+<button class="flex items-center gap-2 group">
+<span class="text-[11px] font-bold group-hover:text-primary transition-colors text-primary/60">View All</span>
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center shadow-md active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-white text-[14px]">chevron_right</span>
+</div>
+</button>
+</div>
+<div class="glass-island squircle-refined p-2 space-y-2">
+<div class="map-preview-container group cursor-pointer border border-white/20 shadow-inner">
+<img alt="Tokyo Map" class="w-full h-full object-cover filter brightness-[0.5] grayscale contrast-[1.1]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDH-lJNIDxS__Qf8hkpcGmlbK6vpzuQuQPd_DdwGLQ6PW11f3VQ4XnkZBSxIcS6oEn_Q-2AF91oydX1j-zjEidUpgoi0vw7w6x0fVVUOV0kkZ9dnuOTUtv3CgyGKgtZ2FUgq7wmyUzwKd2PGPsHE_d1jvdfUR70QWRCH5bAK0dz1dVDQwnP63uSslsSrET3dB_n7bslnz985EEEaozo7nOMcG0XlBa7hS0Rqa9CKlX4hYFdk3idsCp3g9j0NfBs-9lztj_DrJYtBCh7"/>
+<div class="map-overlay-dark"></div>
+<div class="absolute inset-0 z-10 pointer-events-none">
+<div class="absolute top-[40%] left-[60%] flex flex-col items-center">
+<div class="w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-white/50 shadow-[0_0_12px_rgba(52,211,153,0.8)]"></div>
+<span class="text-[7px] font-black uppercase tracking-widest mt-1 text-white shadow-sm">GINZA</span>
+</div>
+<div class="absolute top-[25%] left-[35%] flex flex-col items-center">
+<div class="w-2.5 h-2.5 bg-blue-400 rounded-full border-2 border-white/50 shadow-[0_0_12px_rgba(96,165,250,0.8)]"></div>
+<span class="text-[7px] font-black uppercase tracking-widest mt-1 text-white shadow-sm">SHIBUYA</span>
+</div>
+</div>
+<div class="absolute bottom-3 right-3 glass-island-dark w-8 h-8 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-white text-base">open_in_full</span>
+</div>
+</div>
+<!-- Categories -->
+<div class="category-item">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-xl">✈️</div>
+<div class="flex flex-col">
+<span class="text-[13px] font-extrabold text-primary">Travel</span>
+<span class="text-[10px] font-bold text-primary/40 uppercase tracking-tight">8 Transactions</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="bg-red-100/50 rounded-full px-3 py-1 border border-red-200/50 flex items-center gap-1.5">
+<span class="text-[12px] font-black text-red-600">$890.00</span>
+<span class="text-[9px] font-bold text-red-600/40">/ $1k</span>
+</div>
+<span class="material-symbols-outlined text-primary/20 text-lg">chevron_right</span>
+</div>
+</div>
+<div class="category-item">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-xl">🛍️</div>
+<div class="flex flex-col">
+<span class="text-[13px] font-extrabold text-primary">Shopping</span>
+<span class="text-[10px] font-bold text-primary/40 uppercase tracking-tight">12 Transactions</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="bg-emerald-100/50 rounded-full px-3 py-1 border border-emerald-200/50 flex items-center gap-1.5">
+<span class="text-[12px] font-black text-emerald-600">$547.50</span>
+<span class="text-[9px] font-bold text-emerald-600/40">/ $900</span>
+</div>
+<span class="material-symbols-outlined text-primary/20 text-lg">chevron_right</span>
+</div>
+</div>
+<!-- Dining Category Added -->
+<div class="category-item">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-xl">🍣</div>
+<div class="flex flex-col">
+<span class="text-[13px] font-extrabold text-primary">Dining</span>
+<span class="text-[10px] font-bold text-primary/40 uppercase tracking-tight">15 Transactions</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="bg-emerald-100/50 rounded-full px-3 py-1 border border-emerald-200/50 flex items-center gap-1.5">
+<span class="text-[12px] font-black text-emerald-600">$412.50</span>
+<span class="text-[9px] font-bold text-emerald-600/40">/ $600</span>
+</div>
+<span class="material-symbols-outlined text-primary/20 text-lg">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Layer -->
+<nav class="fixed left-0 w-full z-50 flex justify-between px-3 pointer-events-none bottom-6">
+<div class="glass-island p-1.5 rounded-full border border-white/60 shadow-2xl flex gap-0.5 pointer-events-auto">
+<div class="w-11 h-11 rounded-full flex items-center justify-center text-primary/40 hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined text-xl" data-icon="grid_view">grid_view</span>
+</div>
+<div class="w-11 h-11 rounded-full flex items-center justify-center bg-primary text-white shadow-lg cursor-pointer">
+<span class="material-symbols-outlined text-xl active-icon" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<div class="w-11 h-11 rounded-full flex items-center justify-center text-primary/40 hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined text-xl" data-icon="insights">insights</span>
+</div>
+</div>
+<div class="glass-island w-14 h-14 rounded-full border border-white/60 shadow-2xl pointer-events-auto flex items-center justify-center cursor-pointer hover:scale-95 transition-transform">
+<span class="material-symbols-outlined font-bold text-2xl text-primary active-icon">edit</span>
+</div>
+</nav>
+</body></html>

@@ -1,66 +1,107 @@
 import Link from "next/link";
-import { MetricChip, SiteSection, SurfaceCard } from "@gama/ui-web";
+import { MetricChip } from "@gama/ui-web";
 import { siteCopy } from "../content/site-copy";
 import { sitePages } from "../lib/site-config";
 import { Breadcrumbs } from "./Breadcrumbs";
+import { ProductHeroVisual } from "./ProductVisuals";
+import { Reveal } from "./Reveal";
+import { WaitlistSignupForm } from "./WaitlistSignupForm";
 
 export function WaitlistPage() {
+  const featureCards = siteCopy.waitlist.differentiators.slice(0, 3);
+
   return (
-    <main id="main-content" className="site-shell flex flex-col gap-6 py-8 md:py-12">
+    <main id="main-content" className="site-shell waitlist-clean-page">
       <Breadcrumbs page={sitePages.waitlist} />
 
-      <SiteSection eyebrow="Waitlist plan" title={siteCopy.waitlist.title} lede={siteCopy.waitlist.body}>
-        <div className="mt-6 flex flex-wrap gap-3">
-          {siteCopy.waitlist.badges.map((badge) => (
-            <MetricChip key={badge.label} label={badge.label} value={badge.value} />
-          ))}
-        </div>
-      </SiteSection>
+      <Reveal>
+        <section className="waitlist-clean-hero">
+          <div className="waitlist-clean-hero-copy">
+            <span className="site-kicker">{siteCopy.waitlist.hero.eyebrow}</span>
+            <div className="waitlist-clean-hero-text">
+              <h1>
+                {siteCopy.waitlist.hero.title}
+              </h1>
+              <p>
+                {siteCopy.waitlist.hero.body}
+              </p>
+            </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_0.95fr]">
-        <SurfaceCard>
-          <h2 className="text-2xl font-semibold text-[var(--color-ink)]">What the future intake will ask</h2>
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {siteCopy.waitlist.intakeFields.map((field) => (
-              <div
-                key={field.label}
-                className="rounded-[1.4rem] border border-[var(--color-line)]/70 bg-[var(--color-surface-strong)] px-4 py-4"
-              >
-                <p className="text-base font-semibold text-[var(--color-ink)]">{field.label}</p>
-                <p className="mt-2 text-sm leading-7 text-[var(--color-muted)]">{field.note}</p>
-              </div>
+            <div className="waitlist-clean-actions">
+              <Link className="site-link" href={siteCopy.waitlist.hero.primaryCta.href}>
+                {siteCopy.waitlist.hero.primaryCta.label}
+              </Link>
+              <Link className="site-link-secondary" href={siteCopy.waitlist.hero.secondaryCta.href}>
+                {siteCopy.waitlist.hero.secondaryCta.label}
+              </Link>
+            </div>
+
+            <div className="waitlist-clean-chip-row">
+              {siteCopy.waitlist.hero.supporting.map((item) => (
+                <MetricChip key={item.label} label={item.label} value={item.value} />
+              ))}
+            </div>
+          </div>
+
+          <div className="waitlist-clean-hero-visual">
+            <ProductHeroVisual />
+          </div>
+        </section>
+      </Reveal>
+
+      <Reveal delayMs={70}>
+        <section className="waitlist-clean-summary" aria-label="What early access includes">
+          <div className="waitlist-clean-section-head">
+            <span className="site-kicker">{siteCopy.waitlist.positioning.eyebrow}</span>
+            <h2>{siteCopy.waitlist.positioning.title}</h2>
+            <p>{siteCopy.waitlist.positioning.body}</p>
+          </div>
+
+          <div className="waitlist-clean-card-grid">
+            {featureCards.map((card) => (
+              <article key={card.title} className="waitlist-clean-card">
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+              </article>
             ))}
           </div>
+        </section>
+      </Reveal>
 
-          <div className="mt-6 rounded-[1.6rem] border border-dashed border-[var(--color-line-strong)] bg-white/80 p-5">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-teal)]">Not live yet</p>
-            <p className="mt-3 text-sm leading-7 text-[var(--color-muted)] md:text-base">{siteCopy.waitlist.readinessNote}</p>
+      <Reveal delayMs={100}>
+        <section id="early-access" className="anchor-offset waitlist-clean-signup">
+          <div className="early-access-copy">
+            <p className="site-kicker">{siteCopy.waitlist.earlyAccess.eyebrow}</p>
+            <h2 className="early-access-title">
+              {siteCopy.waitlist.earlyAccess.title}
+            </h2>
+            <p className="early-access-body">
+              {siteCopy.waitlist.earlyAccess.body}
+            </p>
+
+            <div className="waitlist-clean-points">
+              {siteCopy.waitlist.earlyAccess.intakeFields.map((field) => (
+                <span key={field.title}>{field.title}</span>
+              ))}
+            </div>
           </div>
-        </SurfaceCard>
 
-        <SurfaceCard tone="mist">
-          <h2 className="text-2xl font-semibold text-[var(--color-ink)]">Expected follow-up behavior</h2>
-          <ul className="mt-5 grid gap-3 text-sm leading-7 text-[var(--color-muted)] md:text-base">
-            {siteCopy.waitlist.expectations.map((expectation) => (
-              <li
-                key={expectation}
-                className="rounded-[1.35rem] border border-[var(--color-line)]/70 bg-white/85 px-4 py-4"
-              >
-                {expectation}
-              </li>
-            ))}
-          </ul>
+          <WaitlistSignupForm expectations={siteCopy.waitlist.earlyAccess.expectations} />
+        </section>
+      </Reveal>
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link className="site-link-secondary" href="/">
-              Back to the landing page
-            </Link>
-            <Link className="site-link" href="/privacy">
-              Review the privacy stance
-            </Link>
+      <Reveal delayMs={130}>
+        <section className="waitlist-clean-trust">
+          <div className="waitlist-clean-trust-copy">
+            <span className="site-kicker">{siteCopy.waitlist.trust.eyebrow}</span>
+            <h2>{siteCopy.waitlist.trust.title}</h2>
+            <p>{siteCopy.waitlist.trust.body}</p>
           </div>
-        </SurfaceCard>
-      </div>
+          <Link className="site-link-secondary" href="/privacy">
+            Review the trust stance
+          </Link>
+        </section>
+      </Reveal>
     </main>
   );
 }

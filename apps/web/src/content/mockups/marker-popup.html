@@ -1,0 +1,413 @@
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+          tailwind.config = {
+            darkMode: "class",
+            theme: {
+              extend: {
+                "colors": {
+                        "secondary-container": "#e2e2e5",
+                        "on-background": "#28343b",
+                        "inverse-on-surface": "#9a9da0",
+                        "on-error-container": "#752121",
+                        "primary-fixed-dim": "#b6d8fb",
+                        "on-tertiary": "#faf8ff",
+                        "tertiary-fixed-dim": "#c4cbe9",
+                        "on-secondary": "#f9f8fc",
+                        "on-primary-fixed-variant": "#3d5e7d",
+                        "tertiary": "#575e78",
+                        "tertiary-fixed": "#d2d9f8",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#707d84",
+                        "on-tertiary-fixed-variant": "#4e556f",
+                        "surface-variant": "#d7e4ed",
+                        "on-tertiary-container": "#444c65",
+                        "primary-dim": "#345573",
+                        "inverse-surface": "#0b0f11",
+                        "on-surface-variant": "#546168",
+                        "secondary-dim": "#525356",
+                        "secondary": "#5e5f62",
+                        "on-secondary-container": "#505255",
+                        "outline-variant": "#a7b4bc",
+                        "tertiary-container": "#d2d9f8",
+                        "surface": "#ffffff",
+                        "surface-container-high": "#dfeaf1",
+                        "on-secondary-fixed-variant": "#5a5b5e",
+                        "on-surface": "#28343b",
+                        "on-error": "#fff7f6",
+                        "surface-bright": "#ffffff",
+                        "primary-container": "#cee5ff",
+                        "error-container": "#fe8983",
+                        "on-secondary-fixed": "#3e3f42",
+                        "primary-fixed": "#cee5ff",
+                        "tertiary-dim": "#4b526c",
+                        "primary": "#0b141a", 
+                        "on-primary-container": "#335572",
+                        "background": "#ffffff",
+                        "inverse-primary": "#b3d5f9",
+                        "surface-container-low": "#f8fafc",
+                        "surface-dim": "#ccdce6",
+                        "error": "#9f403d",
+                        "on-primary-fixed": "#1f425f",
+                        "error-dim": "#4e0309",
+                        "secondary-fixed-dim": "#d4d4d7",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#f1f5f9",
+                        "secondary-fixed": "#e2e2e5",
+                        "on-tertiary-fixed": "#323951",
+                        "surface-tint": "#0b141a",
+                        "surface-container-highest": "#d7e4ed",
+                        "brand-green": "#74c44c",
+                        "emerald-primary": "#10b981",
+                        "cat-dining": "#10b981",
+                        "cat-travel": "#3b82f6",
+                        "cat-shop": "#a855f7"
+                },
+                "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3.5rem",
+                        "full": "9999px"
+                },
+                "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                }
+              },
+            },
+          }
+        </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: #F1F5F9; 
+            overflow-x: hidden;
+            max-width: 430px; 
+            margin: 0 auto;
+            position: relative;
+            min-height: 100vh;
+            padding-inline: 0.48rem;
+        }
+        .immersive-dark-top {
+            background: #F1F5F9;
+            position: relative;
+            overflow: hidden;
+            margin-inline: 0.62rem;
+            border-radius: 1.1rem;
+        }
+        .map-gradient-overlay {
+            background: linear-gradient(180deg, rgba(241, 245, 249, 0) 0%, rgba(241, 245, 249, 0.2) 60%, rgba(241, 245, 249, 0.9) 100%);
+        }
+        .glass-island {
+            background: rgba(255, 255, 255, 0.65);
+            
+            -webkit-
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .glass-island-premium {
+            background: rgba(255, 255, 255, 0.92);
+            
+            -webkit-
+            border: 1px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.15), 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .transaction-card {
+            background: rgba(255, 255, 255, 0.97);
+            box-shadow: 0 6px 16px -4px rgba(65, 98, 129, 0.12), 0 2px 8px -2px rgba(0, 0, 0, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
+            border-radius: 1.25rem;
+            transition: all 0.2s ease;
+        }
+        .transaction-card:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .category-container {
+            background: rgba(248, 250, 252, 0.85);
+            
+            -webkit-
+            border: 1px solid rgba(255, 255, 255, 1);
+            border-radius: 2rem;
+            padding: 1.25rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+        }
+        .squircle-refined {
+            border-radius: 0.85rem;
+        }
+        .pin-glow { box-shadow: 0 0 15px 2px rgba(255, 255, 255, 0.8); }
+        .emoji-pin {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            border: 1.5px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .map-date-label {
+            font-size: 9px;
+            font-weight: 800;
+            color: #0b141a;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 2px 6px;
+            border-radius: 6px;
+            margin-top: 4px;
+            border: 0.5px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            letter-spacing: 0.08em;
+            font-family: 'Manrope', sans-serif;
+        }
+        .glass-popup {
+            background: rgba(255, 255, 255, 0.8);
+            
+            -webkit-
+            border: 1.5px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+            border-radius: 1.75rem;
+        }
+    </style>
+</head>
+<body class="text-on-surface antialiased bg-[#F1F5F9] relative min-h-screen" style="font-family: 'Manrope', sans-serif; background: #F1F5F9; overflow-x: hidden; margin: 0; position: relative; min-height: 100vh;">
+<!-- Top Immersive Section (Map View) -->
+<section class="immersive-dark-top h-[52vh] overflow-hidden relative">
+<!-- Map Background -->
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-[#F1F5F9]" id="map-container">
+<svg height="100%" preserveaspectratio="xMidYMid slice" viewbox="0 0 400 800" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path d="M 0 120 L 400 120 M 100 0 L 100 800 M 320 0 L 320 800 M 0 450 L 400 450 M 0 680 L 400 680" fill="none" stroke="#CBD5E1" stroke-width="4"></path>
+<path d="M 0 50 L 400 50 M 0 190 L 400 190 M 0 260 L 400 260 M 0 330 L 400 330 M 0 400 L 400 400 M 0 520 L 400 520 M 0 590 L 400 590 M 0 750 L 400 750" fill="none" stroke="#E2E8F0" stroke-width="1.5"></path>
+<path d="M 30 0 L 30 800 M 70 0 L 70 800 M 140 0 L 140 800 M 180 0 L 180 800 M 220 0 L 220 800 M 260 0 L 260 800 M 360 0 L 360 800" fill="none" stroke="#E2E8F0" stroke-width="1.5"></path>
+<path d="M -50 200 L 450 350 M -50 600 L 450 720" fill="none" opacity="0.4" stroke="#CBD5E1" stroke-width="4"></path>
+</svg>
+</div>
+<div class="absolute inset-0 map-gradient-overlay"></div>
+</div>
+<!-- Header UI -->
+<div class="relative z-20 px-3">
+<header class="flex justify-between items-center py-4">
+<div class="glass-island-premium w-11 h-11 flex items-center justify-center rounded-full hover:scale-95 transition-transform cursor-pointer shadow-lg overflow-hidden">
+<span class="material-symbols-outlined text-primary/80 text-xl">person</span>
+</div>
+<div class="glass-island-premium px-6 py-2 rounded-full flex items-center justify-center shadow-lg">
+<h1 class="text-[10px] font-extrabold tracking-[0.4em] text-primary/80 uppercase">Moments</h1>
+</div>
+<div class="glass-island-premium w-11 h-11 flex items-center justify-center rounded-full hover:scale-95 transition-transform cursor-pointer shadow-lg">
+<span class="material-symbols-outlined text-primary/80 text-xl">settings</span>
+</div>
+</header>
+</div>
+<!-- Map Pins -->
+<div class="absolute inset-0 z-10 pointer-events-none">
+<!-- Secondary pins -->
+<div class="absolute top-[28%] left-[22%] opacity-60 flex flex-col items-center">
+<div class="emoji-pin bg-white border border-slate-200 shadow-sm flex items-center justify-center">✈️</div>
+</div>
+<div class="absolute top-[35%] left-[65%] opacity-60 flex flex-col items-center">
+<div class="emoji-pin bg-white border border-slate-200 shadow-sm flex items-center justify-center">🛍️</div>
+</div>
+<!-- Highlighted Centered Pin -->
+<div class="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-10">
+<!-- Glassy Popup -->
+<div class="glass-popup p-4 w-[13.8rem] pointer-events-auto relative mb-3">
+<div class="flex items-start justify-between mb-3">
+<div>
+<h3 class="text-sm font-extrabold text-primary tracking-tight">Sushi Zen Ginza</h3>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="text-[9px] font-black text-emerald-600 uppercase tracking-wider">Dining</span>
+<span class="text-[9px] font-bold text-primary/30">• NOV 14</span>
+</div>
+</div>
+<span class="text-sm font-black text-primary tracking-tight">$86.40</span>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<button class="hover:bg-white border border-primary/10 text-primary text-[9px] font-black uppercase tracking-[0.1em] py-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.96] shadow-sm bg-slate-100/90">
+<span class="material-symbols-outlined text-sm">share</span>
+                        Share
+                    </button>
+<button class="hover:bg-white border border-primary/10 text-primary text-[9px] font-black uppercase tracking-[0.1em] py-2.5 rounded-xl flex items-center justify-center gap-1.5 transition-all active:scale-[0.96] shadow-sm bg-slate-100/90">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 0;">favorite</span>
+                        Favorite
+                    </button>
+</div>
+<div class="absolute left-1/2 -translate-x-1/2 w-4 h-4 glass-popup rotate-45 border-t-0 border-l-0 z-[-1]" style="bottom: -8px;"></div>
+</div>
+<!-- Active Pin Container -->
+<div class="relative flex flex-col items-center">
+<div class="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center ring-1 ring-emerald-500/40">
+<div class="emoji-pin bg-emerald-500 pin-glow flex items-center justify-center text-lg z-20">🍱</div>
+</div>
+<span class="map-date-label text-white border-none shadow-emerald-500/20 mt-2.5 bg-slate-600 px-2 py-0.5">SELECTED</span>
+</div>
+</div>
+</div>
+<!-- Map Overlay Buttons -->
+<div class="absolute bottom-20 right-4 z-30 flex flex-col gap-3">
+<button class="glass-island-premium w-10 h-10 flex items-center justify-center rounded-full hover:scale-95 transition-transform cursor-pointer shadow-xl">
+<span class="material-symbols-outlined text-primary/80 text-lg">layers</span>
+</button>
+<button class="glass-island-premium w-10 h-10 flex items-center justify-center rounded-full hover:scale-95 transition-transform cursor-pointer shadow-xl">
+<span class="material-symbols-outlined text-primary/80 text-lg">my_location</span>
+</button>
+</div>
+</section>
+<!-- Unified Bottom Sheet Section -->
+<main class="relative z-20 min-h-[55vh] -mt-12 shadow-[0_-24px_48px_rgba(0,0,0,0.08)] pt-8 border-t border-white/60 rounded-t-3xl px-3 pb-32 bg-[#f1f5f9]">
+<!-- Grab Bar Handle -->
+<div class="absolute top-0 left-0 right-0 flex justify-center pt-3 pb-4">
+<div class="w-10 h-1.5 rounded-full bg-primary/10"></div>
+</div>
+<!-- Controls Row -->
+<div class="flex justify-between items-center mb-6">
+<div class="flex gap-2">
+<button class="glass-island w-10 h-10 squircle-refined flex items-center justify-center text-primary/80 hover:bg-white/60 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-xl">search</span>
+</button>
+<button class="glass-island w-10 h-10 squircle-refined flex items-center justify-center text-primary/80 hover:bg-white/60 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-xl">tune</span>
+</button>
+</div>
+<div class="flex items-center glass-island squircle-refined overflow-hidden">
+<button class="w-9 h-10 flex items-center justify-center text-primary/60 hover:bg-white/40 transition-colors active:scale-90">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="flex items-center px-3 h-10 gap-1.5 border-x border-primary/10 hover:bg-white/40 transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[14px] text-primary/40">calendar_today</span>
+<span class="text-[10px] font-bold text-primary/80 uppercase tracking-widest leading-none">Nov 2024</span>
+</button>
+<button class="w-9 h-10 flex items-center justify-center text-primary/60 hover:bg-white/40 transition-colors active:scale-90">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Categorized Content -->
+<div class="space-y-6">
+<!-- Dining Category Container -->
+<div class="category-container space-y-4">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-1.5">
+<div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center text-base ring-1 ring-emerald-500/20 shadow-inner">🍱</div>
+<span class="text-[10px] font-black text-primary/60 uppercase tracking-[0.15em]">Dining</span>
+</div>
+<div class="relative min-w-[130px] h-7 rounded-full bg-primary/5 overflow-hidden flex items-center px-3">
+<div class="absolute left-0 top-0 bottom-0 bg-emerald-500/20" style="width: 82%;"></div>
+<div class="relative flex items-baseline gap-1 w-full justify-center">
+<span class="text-[10px] font-black tabular-nums text-slate-900">$123.64</span>
+<span class="text-[8px] font-bold text-primary/30 tabular-nums">/ $150</span>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="transaction-card p-3 flex items-center justify-between ring-2 bg-white/95 ring-primary/25 shadow-md">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-slate-50 flex items-center justify-center text-base border border-emerald-100 shadow-sm">🍱</div>
+<div>
+<p class="text-[12px] font-extrabold text-primary tracking-tight leading-none">Sushi Zen Ginza</p>
+<p class="text-[8px] font-bold text-primary/30 uppercase tracking-tight mt-1">TOKYO • NOV 14</p>
+</div>
+</div>
+<p class="text-[13px] font-black text-primary tracking-tight">-$86.40</p>
+</div>
+<div class="transaction-card p-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-slate-50/80 flex items-center justify-center text-base border border-white/80 shadow-sm">☕️</div>
+<div>
+<p class="text-[12px] font-bold text-primary tracking-tight leading-none">Starbucks</p>
+<p class="text-[8px] font-bold text-primary/30 uppercase tracking-tight mt-1">SEATTLE • NOV 14</p>
+</div>
+</div>
+<p class="text-[13px] font-black text-primary tracking-tight">-$5.25</p>
+</div>
+</div>
+</div>
+<!-- Travel Category Container -->
+<div class="category-container space-y-4">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-1.5">
+<div class="w-7 h-7 rounded-lg bg-blue-500/10 flex items-center justify-center text-base ring-1 ring-blue-500/20 shadow-inner">✈️</div>
+<span class="text-[10px] font-black text-primary/60 uppercase tracking-[0.15em]">Travel</span>
+</div>
+<div class="relative min-w-[130px] h-7 rounded-full bg-primary/5 overflow-hidden flex items-center px-3">
+<div class="absolute left-0 top-0 bottom-0 bg-orange-500/20" style="width: 85%;"></div>
+<div class="relative flex items-baseline gap-1 w-full justify-center">
+<span class="text-[10px] font-black tabular-nums text-slate-900">$342.00</span>
+<span class="text-[8px] font-bold text-primary/30 tabular-nums">/ $400</span>
+</div>
+</div>
+</div>
+<div class="transaction-card p-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-slate-50/80 flex items-center justify-center text-base border border-white/80 shadow-sm">✈️</div>
+<div>
+<p class="text-[12px] font-bold text-primary tracking-tight leading-none">Delta Airlines</p>
+<p class="text-[8px] font-bold text-primary/30 uppercase tracking-tight mt-1">NYC • NOV 13</p>
+</div>
+</div>
+<p class="text-[13px] font-black text-primary tracking-tight">-$342.00</p>
+</div>
+</div>
+<!-- Shop Category Container -->
+<div class="category-container space-y-4">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-1.5">
+<div class="w-7 h-7 rounded-lg bg-purple-500/10 flex items-center justify-center text-base ring-1 ring-purple-500/20 shadow-inner">🛍️</div>
+<span class="text-[10px] font-black text-primary/60 uppercase tracking-[0.15em]">Shop</span>
+</div>
+<div class="relative min-w-[130px] h-7 rounded-full bg-primary/5 overflow-hidden flex items-center px-3">
+<div class="absolute left-0 top-0 bottom-0 bg-emerald-500/20" style="width: 42%;"></div>
+<div class="relative flex items-baseline gap-1 w-full justify-center">
+<span class="text-[10px] font-black tabular-nums text-slate-900">$126.50</span>
+<span class="text-[8px] font-bold text-primary/30 tabular-nums">/ $300</span>
+</div>
+</div>
+</div>
+<div class="transaction-card p-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-slate-50/80 flex items-center justify-center text-base border border-white/80 shadow-sm">🧥</div>
+<div>
+<p class="text-[12px] font-bold text-primary tracking-tight leading-none">Uniqlo Ginza</p>
+<p class="text-[8px] font-bold text-primary/30 uppercase tracking-tight mt-1">TOKYO • NOV 14</p>
+</div>
+</div>
+<p class="text-[13px] font-black text-primary tracking-tight">-$126.50</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Navigation Islands -->
+<nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-full z-50 flex justify-between px-3 pointer-events-none">
+<div class="p-1.5 rounded-full border border-slate-200/40 shadow-[0_12px_40px_rgba(0,0,0,0.12)] flex gap-1 pointer-events-auto glass-island-premium">
+<div class="w-11 h-11 rounded-full flex items-center justify-center text-primary/40 hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined text-xl">grid_view</span>
+</div>
+<div class="w-11 h-11 rounded-full flex items-center justify-center bg-primary text-white shadow-xl cursor-pointer">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">timeline</span>
+</div>
+<div class="w-11 h-11 rounded-full flex items-center justify-center text-primary/40 hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined text-xl">insights</span>
+</div>
+</div>
+<div class="w-14 h-14 rounded-full border border-slate-200/40 shadow-[0_12px_40px_rgba(0,0,0,0.12)] pointer-events-auto flex items-center justify-center glass-island-premium">
+<div class="bg-primary text-white hover:bg-black transition-all rounded-full cursor-pointer w-11 h-11 flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined font-bold text-xl">calendar_today</span>
+</div>
+</div>
+</nav>
+</body></html>

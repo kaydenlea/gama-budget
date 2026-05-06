@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PocketCurb - Weekly Review</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#e2e2e5",
+                        "on-background": "#28343b",
+                        "inverse-on-surface": "#9a9da0",
+                        "on-error-container": "#752121",
+                        "primary-fixed-dim": "#b6d8fb",
+                        "on-tertiary": "#faf8ff",
+                        "tertiary-fixed-dim": "#c4cbe9",
+                        "on-secondary": "#f9f8fc",
+                        "on-primary-fixed-variant": "#3d5e7d",
+                        "tertiary": "#575e78",
+                        "tertiary-fixed": "#d2d9f8",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#707d84",
+                        "on-tertiary-fixed-variant": "#4e556f",
+                        "surface-variant": "#d7e4ed",
+                        "on-tertiary-container": "#444c65",
+                        "primary-dim": "#345573",
+                        "inverse-surface": "#0b0f11",
+                        "on-surface-variant": "#546168",
+                        "secondary-dim": "#525356",
+                        "secondary": "#5e5f62",
+                        "on-secondary-container": "#505255",
+                        "outline-variant": "#a7b4bc",
+                        "tertiary-container": "#d2d9f8",
+                        "surface": "#f7fafd",
+                        "surface-container-high": "#dfeaf1",
+                        "on-secondary-fixed-variant": "#5a5b5e",
+                        "on-surface": "#28343b",
+                        "on-error": "#fff7f6",
+                        "surface-bright": "#f7fafd",
+                        "primary-container": "#cee5ff",
+                        "error-container": "#fe8983",
+                        "on-secondary-fixed": "#3e3f42",
+                        "primary-fixed": "#cee5ff",
+                        "tertiary-dim": "#4b526c",
+                        "primary": "#20344b", 
+                        "on-primary-container": "#335572",
+                        "background": "#f7fafd",
+                        "inverse-primary": "#b3d5f9",
+                        "surface-container-low": "#eff4f9",
+                        "surface-dim": "#ccdce6",
+                        "error": "#9f403d",
+                        "on-primary-fixed": "#1f425f",
+                        "error-dim": "#4e0309",
+                        "secondary-fixed-dim": "#d4d4d7",
+                        "on-primary": "#f4f8ff",
+                        "surface-container": "#e7eff5",
+                        "secondary-fixed": "#e2e2e5",
+                        "on-tertiary-fixed": "#323951",
+                        "surface-tint": "#20344b",
+                        "surface-container-highest": "#d7e4ed",
+                        "brand-green": "#74c44c" 
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tracking-tightest { letter-spacing: -0.06em; }
+        .glass-ios {
+            background: rgba(255, 255, 255, 0.13);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        }
+        .text-shadow-premium {
+            text-shadow: 0 4px 16px rgba(0,0,0,0.4);
+        }
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+        .animate-progress {
+            animation: progress 9.6s linear infinite;
+        }
+        @keyframes story-scroll-sequence {
+            0%, 16% { transform: translate3d(0, 0, 0); }
+            48% { transform: translate3d(0, -199px, 0); }
+            54% { transform: translate3d(0, -211px, 0); }
+            58%, 100% { transform: translate3d(0, -214px, 0); }
+        }
+        .story-sequence {
+            position: relative;
+            width: 100%;
+            flex: 1 1 auto;
+            overflow: hidden;
+        }
+        .story-scroll-shell {
+            animation: story-scroll-sequence 9.6s linear infinite;
+            transform: translate3d(0, 0, 0);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        @keyframes story-button-press {
+            0%, 67%, 86%, 100% {
+                background-color: #ffffff;
+                color: #000000;
+                box-shadow: 0 20px 32px rgba(0, 0, 0, 0.34);
+            }
+            71%, 80% {
+                background-color: #74c44c;
+                color: #061006;
+                box-shadow:
+                    0 0 0 3px rgba(116, 196, 76, 0.2),
+                    0 12px 24px rgba(116, 196, 76, 0.24),
+                    0 8px 18px rgba(0, 0, 0, 0.28);
+            }
+        }
+        .story-adjust-button {
+            animation: story-button-press 9.6s linear infinite;
+            min-height: 3rem;
+            transform: translate3d(0, 0, 0);
+            transform-origin: center;
+            will-change: background-color, color, box-shadow;
+        }
+        .story-adjust-button .material-symbols-outlined,
+        .story-adjust-button span:last-child {
+            color: inherit;
+        }
+        @keyframes story-success-reveal {
+            0%, 76% {
+                opacity: 0;
+                transform: translate3d(0, 0.4rem, 0);
+            }
+            84%, 100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+        @keyframes story-confetti-pop {
+            0%, 79% {
+                opacity: 0;
+                transform: translateY(12px) scale(0.6);
+            }
+            88% {
+                opacity: 1;
+                transform: translateY(-6px) scale(1);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(-12px) scale(0.92);
+            }
+        }
+        .story-success-screen {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: stretch;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: translate3d(0, 0.4rem, 0);
+            animation: story-success-reveal 9.6s linear infinite;
+            pointer-events: none;
+            will-change: opacity, transform;
+            backface-visibility: hidden;
+        }
+        .story-success-card {
+            position: relative;
+            width: 100%;
+            min-width: 0;
+            height: 100%;
+            min-height: 100%;
+            border-radius: 0;
+            background: linear-gradient(180deg, rgba(10, 20, 14, 0.96), rgba(8, 14, 10, 0.98));
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            padding: 1.22rem 1.08rem 1rem;
+            overflow: hidden;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .story-success-card::before {
+            content: "";
+            position: absolute;
+            inset: -15% 25% auto;
+            height: 120px;
+            background: radial-gradient(circle, rgba(116, 196, 76, 0.44), transparent 72%);
+        }
+        .story-success-badge {
+            width: 2.65rem;
+            height: 2.65rem;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.48rem;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.18), rgba(116, 196, 76, 0.28));
+            box-shadow:
+                0 0 0 1px rgba(116, 196, 76, 0.24),
+                0 0 28px rgba(116, 196, 76, 0.24);
+        }
+        .story-success-confetti {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+        .story-success-confetti span {
+            position: absolute;
+            width: 0.62rem;
+            height: 0.62rem;
+            border-radius: 0.2rem;
+            animation: story-confetti-pop 9.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+            box-shadow: 0 0 18px rgba(255, 255, 255, 0.12);
+        }
+        .story-success-confetti span:nth-child(1) {
+            left: 16%;
+            top: 18%;
+            background: #facc15;
+        }
+        .story-success-confetti span:nth-child(2) {
+            right: 18%;
+            top: 22%;
+            background: #60a5fa;
+            animation-delay: 0.08s;
+        }
+        .story-success-confetti span:nth-child(3) {
+            left: 22%;
+            bottom: 26%;
+            background: #fb7185;
+            animation-delay: 0.14s;
+        }
+        .story-success-confetti span:nth-child(4) {
+            right: 22%;
+            bottom: 20%;
+            background: #74c44c;
+            animation-delay: 0.2s;
+        }
+        .story-success-burst {
+            position: absolute;
+            inset: 1rem 1rem auto;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+        .story-success-burst span {
+            font-size: 1.1rem;
+            line-height: 1;
+            opacity: 0;
+            animation: story-confetti-pop 9.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.16));
+        }
+        .story-success-burst span:nth-child(2) {
+            animation-delay: 0.12s;
+        }
+        .story-success-burst span:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+        .ios-26-glass {
+            background: rgba(255, 255, 255, 0.05);
+            
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-black text-white antialiased overflow-hidden select-none min-h-[100dvh]">
+<!-- Immersive Background -->
+<div class="fixed inset-0 z-0">
+<img alt="premium candlelit dining table close up" class="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlQLGIdypEKv2Fqz9d875Z-j-cPuY7xw242BGOexPpidPJixuk0XAvK8poQ-cFw6LT8MzqTfb32lRcsP__WgwMjtr5BVml90JvLRJR8462WEaAwGBCR_eLan8Y6PCEISgVXitQ_lsl6LAjtqZFWgMPO1nXfk2wdbFoQAsZjEL7dJ0iYWwefGVNSiuFvDs3-nWKegqVkc33esMgwMiHStd3FOB5m7r33Fvm0dEXg_9XXrlp63R0M0da7P5F0W2AOEGufDZehAUX0JCf"/>
+<div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/95"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="relative z-10 h-full flex flex-col items-start px-5 pt-6">
+<div class="story-sequence">
+<div class="story-scroll-shell relative w-full flex flex-col items-start">
+<div class="mx-auto mb-5" style="width: calc(100% - 1.1rem);">
+<div class="flex gap-1.5 w-full">
+<div class="h-[2px] flex-1 bg-white rounded-full"></div>
+<div class="h-[2px] flex-1 bg-white/30 rounded-full overflow-hidden">
+<div class="h-full bg-white animate-progress"></div>
+</div>
+<div class="h-[2px] flex-1 bg-white/30 rounded-full"></div>
+<div class="h-[2px] flex-1 bg-white/30 rounded-full"></div>
+</div>
+</div>
+<div class="w-full flex justify-between items-center mb-6">
+<button class="w-10 h-10 flex items-center justify-start active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[22px] text-white">close</span>
+</button>
+<div class="flex flex-col items-center">
+<span class="text-[10px] font-bold tracking-[0.3em] text-white uppercase">Weekly Review</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-end active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[22px] text-white">more_horiz</span>
+</button>
+</div>
+<!-- Category Label -->
+<div class="mb-4 bg-white/10 px-2.5 h-6 flex items-center rounded-full border border-white/10">
+<span class="text-[9px] font-bold tracking-[0.1em] text-white/90 uppercase leading-none">Top Category</span>
+</div>
+<!-- Headline Group -->
+<div class="mb-8 text-left">
+<h1 class="text-white text-[52px] font-extrabold tracking-tightest leading-[0.95] mb-3 text-shadow-premium">Dining.</h1>
+<p class="text-white/90 text-[15px] font-normal max-w-[226px] italic leading-[1.4] tracking-wide">
+                A week of savoring moments over shared plates and meaningful conversations.
+            </p>
+</div>
+<!-- Budget Impact Card -->
+<div class="glass-ios w-full max-w-[300px] p-6 rounded-[2.1rem] flex flex-col gap-5 mb-8 self-center">
+<div class="flex flex-col w-full">
+<p class="text-white/40 text-[9px] font-bold tracking-[0.18em] uppercase mb-1.5">Budget Impact</p>
+<div class="flex justify-between items-center w-full">
+<p class="text-white text-[38px] font-bold tracking-tightest leading-none">$482.50</p>
+<div class="w-10 h-10 rounded-[1.1rem] bg-white/5 border border-white/10 flex items-center justify-center text-[20px] translate-y-0.5">
+      🍴
+    </div>
+</div>
+</div>
+<div class="flex flex-col gap-5">
+<div class="flex items-center gap-2.5">
+<div class="h-5 px-2 bg-red-500/20 border border-red-500/30 rounded flex items-center">
+<span class="text-red-400 text-[9px] font-extrabold tracking-[0.16em] uppercase">$32.50 OVER PLAN</span>
+</div>
+<div class="h-[1px] flex-1 bg-white/10"></div>
+</div>
+<button class="story-adjust-button w-full bg-white text-black py-3.5 px-5 rounded-[1.1rem] flex items-center justify-center gap-2 shadow-xl shadow-black/40 transition-colors hover:bg-white/90">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="text-[10px] font-bold tracking-[0.06em] uppercase leading-none whitespace-nowrap">Adjust Budget to $450</span>
+</button>
+</div>
+</div>
+<!-- Presence Indicator (Side element) -->
+<div class="self-end flex flex-col items-end gap-1 mb-6">
+<span class="text-[8px] font-bold tracking-[0.14em] text-white/30 uppercase">Mindfulness</span>
+<div class="flex items-center gap-2.5">
+<p class="text-[12px] font-medium text-white/80">Presence over expense</p>
+<div class="w-1 h-8 bg-white/10 rounded-full relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-[70%] bg-brand-green rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="story-success-screen">
+<div class="story-success-card">
+<div class="story-success-confetti">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
+<div class="story-success-burst" aria-hidden="true">
+<span>+</span>
+<span>*</span>
+<span>+</span>
+</div>
+<div class="story-success-badge">
+<span class="material-symbols-outlined text-[30px] text-brand-green" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<p class="text-[8px] font-bold tracking-[0.17em] text-brand-green uppercase text-center mb-1.5">Budget Updated</p>
+<h2 class="text-[27px] font-extrabold tracking-tightest text-white text-center leading-[1.02] mb-1.5">Back on track.</h2>
+<p class="text-[12px] leading-[1.32] text-white/80 text-center max-w-[214px] mx-auto mb-3.5">
+  Dining is reset to a calmer target and the rest of the week stays protected.
+</p>
+<div class="glass-ios rounded-[1.25rem] px-3.25 py-2.25 flex items-center justify-between gap-2.5">
+  <div>
+    <p class="text-[7px] font-bold tracking-[0.14em] text-white/45 uppercase mb-0.5">New Safe-to-Spend</p>
+    <p class="text-[22px] font-extrabold tracking-tightest text-white">$94 today</p>
+  </div>
+  <div class="w-9 h-9 rounded-full bg-brand-green/20 flex items-center justify-center">
+    <span class="material-symbols-outlined text-[18px] text-brand-green" style="font-variation-settings: 'FILL' 1;">celebration</span>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

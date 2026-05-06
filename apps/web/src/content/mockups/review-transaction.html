@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>PocketCurb - Edit Transaction</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#43484B",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#dee3e5",
+                    "on-primary-fixed": "#001f24",
+                    "inverse-surface": "#2d3132",
+                    "on-surface": "#191c1d",
+                    "surface-container-low": "#f0f4f5",
+                    "inverse-on-surface": "#eff1f1",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#97f0ff",
+                    "tertiary-container": "#dee0ff",
+                    "secondary-dim": "#b1cbd1",
+                    "surface-dim": "#d5dada",
+                    "inverse-primary": "#4fd8eb",
+                    "tertiary": "#5b5d7e",
+                    "surface-container": "#e9eeef",
+                    "surface-container-highest": "#dee3e4",
+                    "surface-container-high": "#e3e9e9",
+                    "secondary-fixed-dim": "#b1cbd1",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#e1e0ff",
+                    "on-secondary": "#1e343a",
+                    "on-primary-fixed-variant": "#004f58",
+                    "on-tertiary-container": "#181a37",
+                    "secondary-fixed": "#cde7ed",
+                    "tertiary-dim": "#c4c5eb",
+                    "surface-tint": "#006973",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#434565",
+                    "on-secondary-fixed-variant": "#344a51",
+                    "on-tertiary-fixed": "#181a37",
+                    "surface-bright": "#f5fafb",
+                    "primary-fixed-dim": "#4fd8eb",
+                    "background": "#f5fafb",
+                    "secondary-container": "#cde7ed",
+                    "on-primary-container": "#001f24",
+                    "tertiary-fixed-dim": "#c4c5eb",
+                    "surface": "#f5fafb",
+                    "primary-dim": "#4fd8eb",
+                    "on-background": "#191c1d",
+                    "primary": "#20344b",
+                    "secondary": "#4c6268",
+                    "on-secondary-fixed": "#051f23",
+                    "on-primary": "#ffffff",
+                    "primary-container": "#97f0ff",
+                    "on-error-container": "#410002",
+                    "outline": "#70787a",
+                    "error-dim": "#ffb4ab",
+                    "outline-variant": "#bfc8ca",
+                    "on-secondary-container": "#051f23",
+                    "pc-emerald": "#006064",
+                    "brand-green": "#74c44c",
+                    "slate-deep": "#1a2b3c",
+                    "silk-beige": "#f9f1e8",
+                    "silk-rose": "#f9ebed"
+            },
+            "borderRadius": {
+                    "squircle": "1.25rem",
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body { font-family: "Manrope", sans-serif; -webkit-tap-highlight-color: transparent; }
+      .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+      .luminous-glass {
+          background: rgba(245, 250, 251, 0.94);
+          
+          border: 1px solid rgba(255, 255, 255, 0.8);
+      }
+      .island-nav {
+          background: rgba(255, 255, 255, 0.85);
+          
+          border: 1px solid rgba(255, 255, 255, 0.9);
+      }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      .grab-bar { width: 36px; height: 4px; background: rgba(0, 0, 0, 0.08); border-radius: 10px; }
+      
+      .confirm-handle {
+          background: #1a2b3c;
+          box-shadow: 0 4px 12px rgba(26, 43, 60, 0.35);
+      }
+      .home-bg-context {
+          background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCkYBs65-2lko6-c3fb8-10LXWJpzivm1z548_7dhuh_JzcMmxLugjd6OOXyXlecaPz5RKnKeT6s5YAKQOG1AC2CqRJLjlLJz-8WlaNDfs12Xy5Agt-FfDiMSCHRCBY5oCj11NqbIFY2rX-AivJpvt2xiuchvby9ZCxFAPeeAWcqmxhl3CQYkJ91PWXoxfxPDr9t5fh0Ayy7DNVXQefIIdobBnm2U-QESlzoZxa5rBs1926Jjikx1v8y-hDtQJtWpgKy7k17qcVNBrQ);
+          background-size: cover;
+          background-position: center;
+          filter: blur(12px) brightness(0.85);
+      }
+      .category-card {
+          background: rgba(249, 241, 232, 0.6);
+          border: 1px solid rgba(249, 241, 232, 0.8);
+      }
+      .event-card {
+          background: rgba(249, 235, 237, 0.6);
+          border: 1px solid rgba(249, 235, 237, 0.8);
+      }
+    </style>
+</head>
+<body class="bg-surface overflow-hidden min-h-screen">
+<!-- BACKGROUND: Home Screen Context -->
+<div class="fixed inset-0 z-0 home-bg-context"></div>
+<!-- MAIN INTERFACE: Surgical Sheet Overlay -->
+<div class="relative z-10 flex items-end justify-center min-h-screen bg-black/20-[4px]">
+<main class="luminous-glass w-full max-w-lg rounded-t-[3.5rem] shadow-2xl flex flex-col overflow-hidden border-b-0 h-[92vh]">
+<!-- HEADER -->
+<header class="relative px-3 pt-4 pb-2 shrink-0 flex flex-col items-center">
+<div class="grab-bar mb-2"></div>
+<div class="flex items-center space-x-4">
+<button class="w-9 h-9 rounded-full flex items-center justify-center island-nav shadow-sm active:scale-90 transition-all">
+<span class="material-symbols-outlined text-[20px] text-on-surface/50 font-bold">chevron_left</span>
+</button>
+<div class="px-5 py-2 island-nav rounded-full shadow-sm flex items-center space-x-2.5 border border-white/90">
+<div class="w-1.5 h-1.5 rounded-full bg-pc-emerald animate-pulse shadow-[0_0_8px_rgba(0,96,100,0.4)]"></div>
+<span class="text-[10px] font-extrabold tracking-[0.2em] uppercase text-on-surface/70">1 OF 3 TO REVIEW</span>
+</div>
+<button class="w-9 h-9 rounded-full flex items-center justify-center island-nav shadow-sm active:scale-90 transition-all">
+<span class="material-symbols-outlined text-[20px] text-on-surface/50 font-bold">chevron_right</span>
+</button>
+</div>
+</header>
+<!-- CONTENT -->
+<section class="px-3 pt-4 flex-1 overflow-y-auto no-scrollbar space-y-6 pb-2 pb-24">
+<!-- HERO SECTION -->
+<div class="text-center">
+<div class="inline-flex p-1.5 rounded-full bg-white shadow-md ring-1 ring-black/[0.03] mb-3">
+<img alt="Starbucks" class="w-11 h-11 rounded-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEhHAhgtmsni2Z6r5IYMto1Mie_r_I-13-JbDd5L-KrYh2aeGJBMfSnnpgV0mZwOl_JCWwuqB0FL3Qazn1yeCCU5napnXjJPkHGJR67-tu8enxfg_bf2YY4ocFQIomRnkJTVO_RoeE6rP5B2h6f2Ts5ywRGtsEqfPdhZhOWjZ-C9jANOVB7JIufxnNVKckyuvKSGajhlPrhfFWC1KJ7AhJJNTwbkpo2eFUI_kC3otP5GVA7yqKDC0WTcEjFd_XM9KybftFg6dWCGAD"/>
+</div>
+<p class="text-on-surface-variant/60 text-[10px] font-black uppercase tracking-[0.15em] mb-1.5">Starbucks Coffee • 09:14 AM</p>
+<h2 class="text-on-surface text-5xl font-black tracking-tighter leading-none">$4.50</h2>
+</div>
+<!-- DETAILS MODULE -->
+<div class="space-y-4">
+<!-- Color-Coded Illustrative Cards -->
+<div class="grid grid-cols-2 gap-3.5">
+<!-- Category Card (Dining) -->
+<button class="bg-white/70 rounded-[2rem] p-5 flex flex-col items-center text-center space-y-2.5 hover:bg-white/90 transition-colors group shadow-sm border border-black/5">
+<div class="w-12 h-12 rounded-full shadow-sm flex items-center justify-center text-on-surface-variant group-active:scale-95 transition-transform bg-white ring-1 ring-black/5"><span class="text-2xl">🍴</span></div>
+<div>
+<p class="text-on-surface/50 text-[10px] font-bold uppercase tracking-wider mb-1.5">Category</p>
+<span class="bg-[#f9f1e8] text-[#8b5e34] px-3.5 py-1 rounded-full text-[13px] font-extrabold">Dining</span>
+</div>
+</button>
+<!-- Event Card (Date Night) -->
+<button class="bg-white/70 rounded-[2rem] p-5 flex flex-col items-center text-center space-y-2.5 hover:bg-white/90 transition-colors group shadow-sm border border-black/5">
+<div class="w-12 h-12 rounded-full shadow-sm flex items-center justify-center text-on-surface-variant group-active:scale-95 transition-transform bg-white ring-1 ring-black/5"><span class="text-2xl">🎉</span></div>
+<div>
+<p class="text-on-surface/50 text-[10px] font-bold uppercase tracking-wider mb-1.5">Event</p>
+<span class="bg-[#f9ebed] text-[#a64452] px-3.5 py-1 rounded-full text-[13px] font-extrabold whitespace-nowrap">Date Night</span>
+</div>
+</button>
+</div>
+<!-- Minimal Form Layer -->
+<div class="bg-white/60 rounded-[2.5rem] px-6 py-2 flex flex-col divide-y divide-black/[0.05] border border-black/5 shadow-sm">
+<!-- Payment -->
+<div class="flex items-center justify-between py-4">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-6 bg-[#004a99] rounded-[4px] shadow-sm flex flex-col justify-between p-1 shrink-0 border border-white/10">
+<div class="w-1.5 h-1.5 bg-[#fdbd2c] rounded-full"></div>
+<div class="text-[4px] text-white font-black self-end tracking-tighter opacity-90 leading-none uppercase">Chase</div>
+</div>
+<div class="flex flex-col">
+<p class="text-on-surface/40 text-[8px] font-black uppercase tracking-widest leading-none mb-1">Payment Method</p>
+<p class="text-on-surface text-[14px] font-bold leading-tight">Sapphire Preferred • 4291</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface/20 text-[20px]">chevron_right</span>
+</div>
+<!-- Date -->
+<div class="flex items-center justify-between py-4">
+<div class="flex items-center space-x-4">
+<div class="w-10 h-10 rounded-xl bg-white/60 flex items-center justify-center text-[18px] shadow-sm"><span class="material-symbols-outlined text-on-surface-variant">calendar_today</span></div>
+<div class="flex flex-col">
+<p class="text-on-surface/40 text-[8px] font-black uppercase tracking-widest leading-none mb-1">Date of Expense</p>
+<p class="text-on-surface text-[14px] font-bold leading-tight">November 03, 2023</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface/20 text-[20px]">chevron_right</span>
+</div>
+<!-- Note -->
+<div class="flex items-center py-4">
+<div class="w-10 h-10 rounded-xl bg-white/60 flex items-center justify-center text-[18px] shadow-sm mr-4"><span class="material-symbols-outlined text-on-surface-variant">edit_note</span></div>
+<div class="flex-1">
+<p class="text-on-surface/40 text-[8px] font-black uppercase tracking-widest leading-none mb-1">Expense Note</p>
+<input class="bg-transparent border-none p-0 focus:ring-0 text-on-surface text-[14px] placeholder:text-on-surface/30 font-bold w-full leading-tight" placeholder="Tap to add note..." type="text"/>
+</div>
+</div>
+</div>
+</div>
+<!-- CONTEXT MODULE -->
+<div class="space-y-2">
+<p class="px-2.5 text-[10px] font-black text-on-surface/40 uppercase tracking-[0.25em]">Context</p>
+<div class="grid grid-cols-2 gap-3.5">
+<!-- Status Toggle -->
+<div class="bg-white/60 border border-black/5 rounded-[2rem] p-4 flex flex-col justify-between min-h-[96px] shadow-sm">
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded-full bg-white/80 flex items-center justify-center text-[20px] shadow-sm"><span class="material-symbols-outlined text-on-surface-variant">payments</span></div>
+<label class="relative inline-flex items-center cursor-pointer scale-90 origin-right">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant/40 rounded-full peer peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-on-surface/40"></div>
+</label>
+</div>
+<div class="mt-3">
+<p class="text-on-surface/40 text-[7px] font-black uppercase tracking-widest leading-none mb-1">Status</p>
+<p class="text-on-surface text-[11px] font-black uppercase tracking-wider">Reimbursable</p>
+</div>
+</div>
+<!-- Attachments -->
+<div class="bg-white/60 border border-black/5 rounded-[2rem] p-4 flex flex-col justify-between min-h-[96px] shadow-sm">
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded-full bg-white/80 flex items-center justify-center text-[20px] shadow-sm"><span class="material-symbols-outlined text-on-surface-variant">photo_camera</span></div>
+<span class="material-symbols-outlined text-on-surface/40 text-[20px] cursor-pointer hover:text-pc-emerald transition-colors">add_circle</span>
+</div>
+<div class="mt-3">
+<p class="text-on-surface/40 text-[7px] font-black uppercase tracking-widest leading-none mb-1">Attachments</p>
+<p class="text-on-surface text-[13px] font-bold">Add Receipt</p>
+</div>
+</div>
+</div>
+</div>
+</section><div class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[calc(100%-3rem)] max-w-sm h-[68px] rounded-full p-2 flex items-center group shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden bg-[#1a2b3c] z-50">
+<!-- Label Text -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<span class="text-white/40 text-[10px] font-black tracking-[0.5em] uppercase pl-12">Slide to Confirm</span>
+</div>
+<!-- Handle -->
+<div class="h-14 w-14 bg-white rounded-full flex items-center justify-center z-10 cursor-pointer shadow-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[#1a2b3c] text-[24px] font-bold">double_arrow</span>
+</div>
+<!-- Success Glow -->
+<div class="absolute inset-y-0 left-0 w-[40%] bg-gradient-to-r from-pc-emerald/30 to-transparent pointer-events-none opacity-0 group-active:opacity-100 transition-opacity"></div>
+</div>
+<!-- FOOTER: Anchored at the bottom -->
+</main>
+</div>
+</body></html>
