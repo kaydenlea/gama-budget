@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Manrope } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { SiteFooter } from "../src/components/SiteFooter";
 import { SiteHeader } from "../src/components/SiteHeader";
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className="flex-1">{children}</div>
           <SiteFooter />
         </div>
+        <Analytics />
       </body>
     </html>
   );
