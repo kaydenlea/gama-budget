@@ -68,21 +68,19 @@ export function ScrollFeatureShowcase({
 }) {
   const [allPreviewsReady, setAllPreviewsReady] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [outgoingIndex, setOutgoingIndex] = useState<number | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const allPreviewsReadyRef = useRef(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
   const regionRef = useRef<HTMLDivElement | null>(null);
   const activeIndexRef = useRef(0);
   const scrollProgressRef = useRef(0);
   const boundsRef = useRef({ top: 0, scrollableDistance: 1 });
-  const ignoreScrollUntilRef = useRef(0);
-  const awaitingManualActivationRef = useRef(false);
-  const initialScrollYRef = useRef(0);
-  const reloadProgressBaselineRef = useRef<number | null>(null);
   const desiredIndexRef = useRef(0);
   const readyIndicesRef = useRef<boolean[]>(steps.map(() => false));
 
   activeIndexRef.current = activeIndex;
   scrollProgressRef.current = scrollProgress;
+  allPreviewsReadyRef.current = allPreviewsReady;
 
   useEffect(() => {
     readyIndicesRef.current = steps.map(() => false);
@@ -95,7 +93,6 @@ export function ScrollFeatureShowcase({
       return;
     }
 
-    setOutgoingIndex(activeIndexRef.current);
     setActiveIndex(nextIndex);
   };
 
@@ -116,20 +113,6 @@ export function ScrollFeatureShowcase({
   };
 
   useEffect(() => {
-    if (outgoingIndex === null) {
-      return;
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      setOutgoingIndex((current) => (current === outgoingIndex ? null : current));
-    }, 160);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, [outgoingIndex]);
-
-  useEffect(() => {
     if (steps.length === 0) {
       return;
     }
@@ -137,23 +120,12 @@ export function ScrollFeatureShowcase({
     const desktopQuery = window.matchMedia(DESKTOP_BREAKPOINT_QUERY);
     let frame = 0;
     let resizeObserver: ResizeObserver | null = null;
-    const navigationEntries = window.performance.getEntriesByType("navigation");
-    const firstNavigationEntry = navigationEntries[0];
-    const isReloadNavigation =
-      firstNavigationEntry !== undefined &&
-      "type" in firstNavigationEntry &&
-      (firstNavigationEntry as PerformanceNavigationTiming).type === "reload";
 
     setActiveIndex(0);
-    setOutgoingIndex(null);
     setScrollProgress(0);
     activeIndexRef.current = 0;
     scrollProgressRef.current = 0;
     desiredIndexRef.current = 0;
-    ignoreScrollUntilRef.current = desktopQuery.matches ? Date.now() + 600 : 0;
-    awaitingManualActivationRef.current = false;
-    initialScrollYRef.current = window.scrollY;
-    reloadProgressBaselineRef.current = null;
 
     const measure = () => {
       const region = regionRef.current;
@@ -170,46 +142,12 @@ export function ScrollFeatureShowcase({
       };
     };
 
-    const applyReloadDesktopState = () => {
-      if (!desktopQuery.matches) {
-        awaitingManualActivationRef.current = false;
-        reloadProgressBaselineRef.current = null;
-        return;
-      }
-
-      measure();
-
+    const getDesktopActivationBounds = () => {
       const { top, scrollableDistance } = boundsRef.current;
-      const end = top + scrollableDistance;
-      const currentScrollY = window.scrollY;
+      const activationStart = top;
+      const activationEnd = top + scrollableDistance;
 
-      if (!isReloadNavigation) {
-        return;
-      }
-
-      if (currentScrollY >= end - 2) {
-        const lastIndex = Math.max(steps.length - 1, 0);
-        setActiveIndex(lastIndex);
-        setOutgoingIndex(null);
-        setScrollProgress(1);
-        activeIndexRef.current = lastIndex;
-        scrollProgressRef.current = 1;
-        desiredIndexRef.current = lastIndex;
-        awaitingManualActivationRef.current = false;
-        reloadProgressBaselineRef.current = null;
-        return;
-      }
-
-      if (currentScrollY > top + 2) {
-        setActiveIndex(0);
-        setOutgoingIndex(null);
-        setScrollProgress(0);
-        activeIndexRef.current = 0;
-        scrollProgressRef.current = 0;
-        desiredIndexRef.current = 0;
-        awaitingManualActivationRef.current = true;
-        initialScrollYRef.current = currentScrollY;
-      }
+      return { activationEnd, activationStart };
     };
 
     const updateDesktopStep = () => {
@@ -219,23 +157,14 @@ export function ScrollFeatureShowcase({
         return;
       }
 
-      if (!allPreviewsReady) {
+      if (!allPreviewsReadyRef.current) {
         return;
       }
 
       measure();
-      const { top, scrollableDistance } = boundsRef.current;
-      let progressStart = top;
-      let progressDistance = scrollableDistance;
-
-      if (reloadProgressBaselineRef.current !== null) {
-        if (window.scrollY <= top + 2) {
-          reloadProgressBaselineRef.current = null;
-        } else {
-          progressStart = Math.max(top, reloadProgressBaselineRef.current);
-          progressDistance = Math.max(scrollableDistance - (progressStart - top), 1);
-        }
-      }
+      const { activationEnd, activationStart } = getDesktopActivationBounds();
+      const progressStart = activationStart;
+      const progressDistance = Math.max(activationEnd - activationStart, 1);
 
       const consumed = Math.min(Math.max(window.scrollY - progressStart, 0), progressDistance);
       const progress = consumed / progressDistance;
@@ -246,17 +175,13 @@ export function ScrollFeatureShowcase({
         setScrollProgress(progress);
       }
 
-      if (allPreviewsReady && readyIndicesRef.current[nextIndex]) {
+      if (readyIndicesRef.current[nextIndex]) {
         commitActiveIndex(nextIndex);
       }
     };
 
     const requestUpdate = () => {
-      if (Date.now() < ignoreScrollUntilRef.current) {
-        return;
-      }
-
-      if (awaitingManualActivationRef.current) {
+      if (!allPreviewsReadyRef.current) {
         return;
       }
 
@@ -271,29 +196,11 @@ export function ScrollFeatureShowcase({
 
     const handleBreakpointChange = () => {
       if (!desktopQuery.matches) {
-        awaitingManualActivationRef.current = false;
-        reloadProgressBaselineRef.current = null;
-
         if (activeIndexRef.current !== 0) {
           setActiveIndex(0);
         }
 
         setScrollProgress(0);
-      } else {
-        applyReloadDesktopState();
-      }
-
-      requestUpdate();
-    };
-
-    const handleScroll = () => {
-      if (awaitingManualActivationRef.current) {
-        if (Math.abs(window.scrollY - initialScrollYRef.current) <= 2) {
-          return;
-        }
-
-        awaitingManualActivationRef.current = false;
-        reloadProgressBaselineRef.current = window.scrollY;
       }
 
       requestUpdate();
@@ -323,8 +230,8 @@ export function ScrollFeatureShowcase({
     }
 
     measure();
-    applyReloadDesktopState();
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    requestUpdate();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", handleResize);
     desktopQuery.addEventListener("change", handleBreakpointChange);
 
@@ -332,10 +239,64 @@ export function ScrollFeatureShowcase({
       cancelAnimationFrame(frame);
       viewportObserver.disconnect();
       resizeObserver?.disconnect();
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", handleResize);
       desktopQuery.removeEventListener("change", handleBreakpointChange);
     };
+  }, [steps.length]);
+
+  useEffect(() => {
+    if (!allPreviewsReady) {
+      return;
+    }
+
+    const desktopQuery = window.matchMedia(DESKTOP_BREAKPOINT_QUERY);
+
+    if (!desktopQuery.matches) {
+      return;
+    }
+
+    const region = regionRef.current;
+    const section = sectionRef.current;
+
+    if (!region || !section) {
+      return;
+    }
+
+    const sectionRect = section.getBoundingClientRect();
+
+    if (sectionRect.bottom <= 0 || sectionRect.top >= window.innerHeight) {
+      return;
+    }
+
+    const rect = region.getBoundingClientRect();
+    boundsRef.current = {
+      top: window.scrollY + rect.top,
+      scrollableDistance: Math.max(region.offsetHeight - window.innerHeight, 1),
+    };
+
+    const { top, scrollableDistance } = boundsRef.current;
+    const activationStart = top;
+    const activationEnd = top + scrollableDistance;
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY < activationStart || currentScrollY > activationEnd) {
+      return;
+    }
+
+    const progressDistance = Math.max(activationEnd - activationStart, 1);
+    const consumed = Math.min(Math.max(currentScrollY - activationStart, 0), progressDistance);
+    const progress = consumed / progressDistance;
+    const nextIndex = Math.min(steps.length - 1, Math.floor(progress * Math.max(steps.length, 1)));
+
+    setScrollProgress(progress);
+    scrollProgressRef.current = progress;
+    desiredIndexRef.current = nextIndex;
+
+    if (readyIndicesRef.current[nextIndex]) {
+      setActiveIndex(nextIndex);
+      activeIndexRef.current = nextIndex;
+    }
   }, [allPreviewsReady, steps.length]);
 
   if (steps.length === 0) {
@@ -346,7 +307,7 @@ export function ScrollFeatureShowcase({
   const desktopStepCount = Math.max(steps.length - 1, 0);
   const progressDisplay = `${activeIndex + 1}/${steps.length}`;
   return (
-    <section className="home-walkthrough-band" aria-label="Product walkthrough">
+    <section ref={sectionRef} className="home-walkthrough-band" aria-label="Product walkthrough">
       <div className="site-shell home-walkthrough-shell">
         <div aria-hidden="true" style={{ position: "absolute", width: 0, height: 0, overflow: "hidden", pointerEvents: "none" }}>
           {steps.map((step) => (
@@ -429,7 +390,6 @@ export function ScrollFeatureShowcase({
                             className={joinClasses(
                               "home-preview-layer",
                               index === activeIndex && "home-preview-layer-active",
-                              index === outgoingIndex && "home-preview-layer-outgoing",
                             )}
                             style={{ background: mockupPreviews[step.previewSlug].background }}
                           >

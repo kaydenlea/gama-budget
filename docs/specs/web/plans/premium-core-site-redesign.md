@@ -146,6 +146,8 @@ Copy, metadata, tests, and proof all align with the redesigned public surfaces.
 - review focus areas were unsupported-claim risk, responsive layout quality, reduced-motion safety, CTA honesty, and preservation of the existing SEO platform layer
 - the home-page polish follow-up focused specifically on heading balance, copy density, editorial card rhythm, and device-preview readability in the product-glimpse section
 - a later branch polish follow-up stayed inside the existing scope but refined the preview stack and mockup fidelity: shared device loading states, scroll-showcase step behavior, trust-carousel preview containment, social preview composition, and multiple mockup-level layout and alignment corrections
+- a later bugfix follow-up kept the signature-feature previews mounted through resize and removed paint-containment from the shared card viewport layers so offscreen resize no longer leaves partially rendered or clipped card content behind
+- a subsequent follow-up kept the signature-card viewport gates from pausing their internal animations while offscreen. That change was specifically to stabilize offscreen resize behavior in the `Budget your life moments` cards, where paused map/timeline layers could resume in a partially corrupted visual state
 - the supplied inspiration was used only for composition principles: rounded section shells, visual-first device staging, and calmer density. It was not used as truth for pricing, testimonials, or feature breadth
 - no re-plan trigger was hit; the redesign stayed within the planned file scope and did not require external assets or new dependencies
 
@@ -165,3 +167,4 @@ Copy, metadata, tests, and proof all align with the redesigned public surfaces.
 - `pnpm --dir apps/web build`: passed after rerunning outside the sandbox because the first sandboxed attempt hit Windows `spawn EPERM`
 - manual review completed for route roles, heading hierarchy, CTA flow, reduced-motion handling, and desktop/tablet/mobile layout intent
 - later branch polish iterations were rechecked repeatedly with `pnpm.cmd --filter @gama/web typecheck` while refining preview loading, scroll behavior, and mockup fidelity without changing route scope
+- the signature-feature resize fix re-ran `pnpm.cmd --filter @gama/web typecheck`; browser visual verification is still required for final confirmation because the original bug is resize and viewport-state dependent

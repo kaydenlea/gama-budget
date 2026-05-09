@@ -407,6 +407,7 @@ function DeviceShell({
   onLoad,
   overlay,
   preview = "overview-screen",
+  suspendWhenOffscreen = true,
   variant
 }: {
   className?: string;
@@ -415,6 +416,7 @@ function DeviceShell({
   onLoad?: () => void;
   overlay?: ReactNode;
   preview?: MockupPreviewSlug;
+  suspendWhenOffscreen?: boolean;
   variant?: PreviewVariant;
 }) {
   return (
@@ -428,6 +430,7 @@ function DeviceShell({
             className="device-iframe"
             eager={eager}
             previewSlug={preview}
+            suspendWhenOffscreen={suspendWhenOffscreen}
             title={`Gama ${preview} preview`}
             {...(onLoad ? { onLoad } : {})}
             {...(crop ? { crop } : {})}
@@ -444,17 +447,20 @@ export function MockupPreviewPhone({
   className,
   crop,
   preview,
+  suspendWhenOffscreen,
   variant,
 }: {
   className?: string;
   crop?: MockupPreviewCrop;
   preview: MockupPreviewSlug;
+  suspendWhenOffscreen?: boolean;
   variant?: PreviewVariant;
 }) {
   return (
     <DeviceShell
       className={className ?? ""}
       preview={preview}
+      {...(suspendWhenOffscreen !== undefined ? { suspendWhenOffscreen } : {})}
       {...(crop ? { crop } : {})}
       {...(variant ? { variant } : {})}
     />

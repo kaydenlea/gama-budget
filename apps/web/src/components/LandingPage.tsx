@@ -360,7 +360,11 @@ async function SignatureFeatureCard({ card }: { card: HomeSignatureFeatureCard }
         `home-signature-card-${card.id}`
       )}
     >
-      <ViewportMotionGate className="home-signature-card-device-window" rootMargin="28% 0px">
+      <ViewportMotionGate
+        className="home-signature-card-device-window"
+        pauseAnimationsWhenOutOfView={false}
+        rootMargin="28% 0px"
+      >
         {cardId === "overview-timeline" ? (
           <EventTimelineSignatureVisual />
         ) : cardId === "map-context" ? (
@@ -369,6 +373,7 @@ async function SignatureFeatureCard({ card }: { card: HomeSignatureFeatureCard }
           <MockupPreviewPhone
             className={joinClasses("home-signature-card-phone", "home-signature-card-phone-money-stories")}
             preview={previewSlug}
+            suspendWhenOffscreen={false}
           />
         ) : cardId === "receipt-recap" ? (
           <MockupPreviewPhone
@@ -378,12 +383,14 @@ async function SignatureFeatureCard({ card }: { card: HomeSignatureFeatureCard }
               "home-signature-card-phone-receipt-recap"
             )}
             preview={previewSlug}
+            suspendWhenOffscreen={false}
             variant="framed"
           />
         ) : (
           <MockupPreviewPhone
             className={joinClasses("home-signature-card-phone", `home-signature-card-phone-${cardId}`)}
             preview={previewSlug}
+            suspendWhenOffscreen={false}
           />
         )}
       </ViewportMotionGate>

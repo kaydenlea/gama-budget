@@ -9,10 +9,12 @@ function joinClasses(...classes: Array<string | false | null | undefined>) {
 export function ViewportMotionGate({
   children,
   className,
+  pauseAnimationsWhenOutOfView = true,
   rootMargin = "20% 0px",
 }: {
   children: ReactNode;
   className?: string;
+  pauseAnimationsWhenOutOfView?: boolean;
   rootMargin?: string;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -43,7 +45,12 @@ export function ViewportMotionGate({
   }, [rootMargin]);
 
   return (
-    <div ref={ref} className={joinClasses(className)} data-in-view={isInView ? "true" : "false"}>
+    <div
+      ref={ref}
+      className={joinClasses(className)}
+      data-in-view={isInView ? "true" : "false"}
+      data-pause-animations={pauseAnimationsWhenOutOfView ? "true" : "false"}
+    >
       {children}
     </div>
   );
