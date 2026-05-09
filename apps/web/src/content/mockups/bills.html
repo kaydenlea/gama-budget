@@ -3,7 +3,7 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-<title>Subscriptions &amp; Bills | PocketCurb</title>
+<title>Subscriptions &amp; Bills | Gama</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -73,8 +73,11 @@
             border-radius: 1.25rem;
         }
         .bridge-glass {
-            background: rgba(255, 255, 255, 0.97);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background: rgb(249, 252, 255);
+            border: 1px solid rgb(216, 227, 237);
+            box-shadow:
+                0 12px 28px rgba(32, 52, 75, 0.1),
+                inset 0 1px 0 rgba(255,255,255,0.7);
         }
         .progress-indicator-glow {
             filter: drop-shadow(0 0 12px rgba(116, 196, 76, 0.4));
@@ -124,6 +127,18 @@
             font-weight: 700;
             letter-spacing: -0.03em;
         }
+        .bridge-metric-panel {
+            border-radius: 0.95rem;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.22);
+        }
+        .bridge-metric-panel-remaining {
+            background:
+                linear-gradient(180deg, rgba(206, 229, 255, 0.31), rgba(206, 229, 255, 0.18));
+        }
+        .bridge-metric-panel-settled {
+            background:
+                linear-gradient(180deg, rgba(214, 242, 198, 0.31), rgba(214, 242, 198, 0.18));
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-primary/10">
@@ -162,7 +177,7 @@
 <div class="absolute left-3 right-3 z-30 max-w-lg mx-auto top-0 -translate-y-1/2">
 <div class="bridge-glass p-3 grid grid-cols-[minmax(0,1fr)_3.55rem_minmax(0,1fr)] items-center gap-0 rounded-[1.6rem]">
 <!-- Remaining (Left) -->
-<div class="min-w-0 py-[0.95rem] px-2.5 -mr-[0.88rem] flex flex-col items-start justify-center text-left rounded-[0.95rem] bg-blue-100/20 ring-1 ring-blue-200/24">
+<div class="bridge-metric-panel bridge-metric-panel-remaining min-w-0 py-[0.95rem] px-2.5 -mr-[0.88rem] flex flex-col items-start justify-center text-left">
 <span class="bridge-metric-label text-blue-900/55 font-black uppercase mb-1">Remaining</span>
 <span class="bridge-metric-value text-[15px] text-primary leading-none">$40.00</span>
 </div>
@@ -178,7 +193,7 @@
 </div>
 </div>
 <!-- Settled (Right) -->
-<div class="min-w-0 py-[0.95rem] px-2.5 -ml-[0.88rem] flex flex-col items-end justify-center text-right rounded-[0.95rem] bg-emerald-100/20 ring-1 ring-emerald-200/24">
+<div class="bridge-metric-panel bridge-metric-panel-settled min-w-0 py-[0.95rem] px-2.5 -ml-[0.88rem] flex flex-col items-end justify-center text-right">
 <span class="bridge-metric-label text-emerald-800/55 font-black uppercase mb-1">Settled</span>
 <span class="bridge-metric-value text-[15px] text-brand-green leading-none">$2,718</span>
 </div>
@@ -202,7 +217,7 @@
 <div class="flex flex-col">
 <div class="flex items-center gap-2">
 <span class="text-[13px] font-extrabold text-primary">Netflix</span>
-<span class="px-1.5 py-0.5 rounded-md bg-red-100/80 text-red-600 text-[6px] font-black uppercase">ENT</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-full bg-red-50 text-red-600 border border-red-100/50 text-[8px] font-black uppercase tracking-tighter leading-none">ENT</span>
 </div>
 <span class="text-[10px] font-bold text-primary/40">Due in 2 days</span>
 </div>
@@ -219,7 +234,7 @@
 <div class="flex flex-col">
 <div class="flex items-center gap-2">
 <span class="text-[13px] font-extrabold text-primary">Equinox</span>
-<span class="px-1.5 py-0.5 rounded-md bg-orange-100/80 text-orange-600 text-[6px] font-black uppercase">FIT</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-full bg-orange-50 text-orange-600 border border-orange-100/50 text-[8px] font-black uppercase tracking-tighter leading-none">FIT</span>
 </div>
 <span class="text-[10px] font-bold text-primary/40">Due in 4 days</span>
 </div>
@@ -236,7 +251,7 @@
 <div class="flex flex-col">
 <div class="flex items-center gap-2">
 <span class="text-[13px] font-extrabold text-primary">Car</span>
-<span class="px-1.5 py-0.5 rounded-md bg-blue-100/80 text-blue-600 text-[6px] font-black uppercase">AUTO</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-600 border border-blue-100/50 text-[8px] font-black uppercase tracking-tighter leading-none">AUTO</span>
 </div>
 <span class="text-[10px] font-bold text-primary/40">Due in 6 days</span>
 </div>

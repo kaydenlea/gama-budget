@@ -16,7 +16,7 @@ Implemented files:
 - `apps/web/src/server/waitlist.ts` stores signups in Supabase and sends Resend emails.
 - `apps/web/src/server/waitlist.unit.test.ts` covers storage, duplicate recovery, config, and email error behavior.
 - `supabase/migrations/20260418000100_create_waitlist_signups.sql` defines the waitlist table and service-role-only policy.
-- `scripts/setup-pocketcurb-supabase-env.mjs` helps populate local Supabase env values.
+- `scripts/setup-gama-supabase-env.mjs` helps populate local Supabase env values.
 
 Verified on 2026-04-19:
 

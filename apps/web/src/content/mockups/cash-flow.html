@@ -98,11 +98,55 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .ios-glass-pill {
-            background: rgba(255, 255, 255, 0.97);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background: rgb(249, 252, 255);
+            border: 1px solid rgb(216, 227, 237);
+            box-shadow:
+                0 12px 28px rgba(32, 52, 75, 0.1),
+                inset 0 1px 0 rgba(255,255,255,0.7);
         }
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+        }
+        .section-total-pill {
+            border-radius: 999px;
+            padding: 0.26rem 0.72rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.38rem;
+            border: 0;
+            box-shadow: none;
+        }
+        .section-total-pill-positive {
+            background: rgba(214, 242, 198, 0.26);
+            border-color: rgba(116, 196, 76, 0.12);
+        }
+        .section-total-pill-negative {
+            background: rgba(254, 226, 226, 0.4);
+            border-color: rgba(239, 68, 68, 0.12);
+        }
+        .section-total-pill-dot {
+            width: 0.375rem;
+            height: 0.375rem;
+            border-radius: 999px;
+            flex: 0 0 auto;
+        }
+        .section-total-pill-dot-positive {
+            background: #74c44c;
+        }
+        .section-total-pill-dot-negative {
+            background: #d9716d;
+        }
+        .section-total-pill-value {
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            font-size: 0.69rem;
+            line-height: 1;
+        }
+        .section-total-pill-value-positive {
+            color: #4b8d36;
+        }
+        .section-total-pill-value-negative {
+            color: rgba(159, 64, 61, 0.82);
         }
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
@@ -246,22 +290,22 @@
 </div>
 <div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer">
 <div class="w-full flex justify-center items-end gap-[3px] h-8">
-<div class="w-[3px] rounded-full bg-brand-green/80" style="height: 75%"></div>
-<div class="w-[3px] rounded-full bg-error/70" style="height: 50%"></div>
+<div class="w-[4px] rounded-full bg-brand-green/80" style="height: 75%"></div>
+<div class="w-[4px] rounded-full bg-error/70" style="height: 50%"></div>
 </div>
 <span class="text-[7px] font-bold uppercase tracking-widest text-primary/60 group-hover:text-primary transition-colors">Apr</span>
 </div>
 <div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer">
 <div class="w-full flex justify-center items-end gap-[3px] h-8">
-<div class="w-[3px] rounded-full bg-brand-green/80" style="height: 65%"></div>
-<div class="w-[3px] rounded-full bg-error/70" style="height: 55%"></div>
+<div class="w-[4px] rounded-full bg-brand-green/80" style="height: 65%"></div>
+<div class="w-[4px] rounded-full bg-error/70" style="height: 55%"></div>
 </div>
 <span class="text-[7px] font-bold uppercase tracking-widest text-primary/60 group-hover:text-primary transition-colors">May</span>
 </div>
 <div class="flex-1 flex flex-col items-center gap-1 group cursor-pointer">
 <div class="w-full flex justify-center items-end gap-[3px] h-8">
-<div class="w-[3px] rounded-full bg-brand-green/80" style="height: 85%"></div>
-<div class="w-[3px] rounded-full bg-error/70" style="height: 60%"></div>
+<div class="w-[4px] rounded-full bg-brand-green/80" style="height: 85%"></div>
+<div class="w-[4px] rounded-full bg-error/70" style="height: 60%"></div>
 </div>
 <span class="text-[7px] font-bold uppercase tracking-widest text-primary/60 group-hover:text-primary transition-colors">Jun</span>
 </div>
@@ -277,7 +321,7 @@
 <div class="w-full bg-white/90 rounded-full p-1 border border-white/48 shadow-[0_10px_20px_rgba(32,52,75,0.06)]">
 <div class="flex items-center justify-between text-center">
 <button class="flex-1 py-1.5 rounded-full text-[8px] font-extrabold text-primary/55 uppercase tracking-wider">Week</button>
-<button class="flex flex-1 items-center justify-center py-1.5 rounded-full text-[8px] font-extrabold text-white bg-primary/92 shadow-[0_9px_18px_rgba(18,29,44,0.24)] uppercase tracking-wider leading-none">Month</button>
+<button class="flex flex-1 items-center justify-center py-[0.52rem] rounded-full text-[8px] font-extrabold text-white bg-primary/92 shadow-[0_9px_18px_rgba(18,29,44,0.24)] uppercase tracking-wider leading-none">Month</button>
 <button class="flex-1 py-1.5 rounded-full text-[8px] font-extrabold text-primary/55 uppercase tracking-wider">Quarter</button>
 <button class="flex-1 py-1.5 rounded-full text-[8px] font-extrabold text-primary/55 uppercase tracking-wider">Year</button>
 </div>
@@ -288,11 +332,13 @@
 <!-- Income Flow Section -->
 <section class="space-y-4">
 <div class="flex justify-between items-center px-1">
-<h2 class="text-[10px] font-extrabold text-primary/40 tracking-[0.25em] uppercase flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-brand-green"></span>
+<h2 class="text-[10px] font-extrabold text-primary/40 tracking-[0.25em] uppercase">
                     Income Flow
                 </h2>
-<div class="text-[10px] font-black text-brand-green">$12,450.00</div>
+<div class="section-total-pill section-total-pill-positive">
+<div class="section-total-pill-dot section-total-pill-dot-positive"></div>
+<span class="section-total-pill-value section-total-pill-value-positive">$12,450.00</span>
+</div>
 </div>
 <div class="glass-island rounded-3xl p-1.5 space-y-1">
 <!-- Paychecks (Interactive Category) -->
@@ -305,7 +351,7 @@
 </div>
 <div class="text-[12px] font-bold text-primary">$9,013.80 <span class="text-[10px] text-primary/40 font-bold ml-1">(72.4%)</span></div>
 </div>
-<div class="w-full h-[4px] bg-brand-green/10 rounded-full overflow-hidden">
+<div class="w-full h-[5px] bg-brand-green/10 rounded-full overflow-hidden">
 <div class="h-full bg-brand-green" style="width: 72.4%"></div>
 </div>
 </button>
@@ -319,7 +365,7 @@
 </div>
 <div class="text-[12px] font-bold text-primary">$3,436.20 <span class="text-[10px] text-primary/40 font-bold ml-1">(27.6%)</span></div>
 </div>
-<div class="w-full h-[4px] bg-brand-green/10 rounded-full overflow-hidden">
+<div class="w-full h-[5px] bg-brand-green/10 rounded-full overflow-hidden">
 <div class="h-full bg-brand-green" style="width: 27.6%"></div>
 </div>
 </button>
@@ -328,11 +374,13 @@
 <!-- Expense Flow Section -->
 <section class="space-y-4">
 <div class="flex justify-between items-center px-1">
-<h2 class="text-[10px] font-extrabold text-error/40 tracking-[0.25em] uppercase flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+<h2 class="text-[10px] font-extrabold text-primary/40 tracking-[0.25em] uppercase">
                     Expense Flow
                 </h2>
-<div class="text-[10px] font-black text-error">$8,170.00</div>
+<div class="section-total-pill section-total-pill-negative">
+<div class="section-total-pill-dot section-total-pill-dot-negative"></div>
+<span class="section-total-pill-value section-total-pill-value-negative">$8,170.00</span>
+</div>
 </div>
 <div class="glass-island rounded-3xl p-1.5 space-y-1">
 <!-- Housing (Expanded State with Sub-categories) -->

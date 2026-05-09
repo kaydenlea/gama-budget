@@ -30,7 +30,6 @@ export function SiteHeader() {
       block: "center",
       inline: "nearest",
     });
-    window.history.replaceState(null, "", "#hero-waitlist-cta");
 
     if (emailShell) {
       if (highlightTimerRef.current !== null) {

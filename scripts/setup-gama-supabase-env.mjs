@@ -40,7 +40,7 @@ function formatEnvValue(value) {
 }
 
 function buildWebEnv(values) {
-  return `# Local web env for the Gama web lane using the PocketCurb Supabase project.
+  return `# Local web env for the Gama web lane using the Gama Supabase project.
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 GAMA_DISABLE_INDEXING=true
 
@@ -53,7 +53,7 @@ WAITLIST_NOTIFY_EMAIL=${formatEnvValue(values.WAITLIST_NOTIFY_EMAIL)}
 }
 
 function buildMobileEnv(values) {
-  return `# Local Expo env for the Gama mobile app using the PocketCurb Supabase project.
+  return `# Local Expo env for the Gama mobile app using the Gama Supabase project.
 EXPO_PUBLIC_SUPABASE_URL=${formatEnvValue(values.SUPABASE_URL)}
 EXPO_PUBLIC_SUPABASE_ANON_KEY=${formatEnvValue(values.SUPABASE_ANON_KEY)}
 EXPO_PUBLIC_SENTRY_DSN=
@@ -74,7 +74,7 @@ try {
   writeEnvFile("apps/web/.env.local", buildWebEnv(values), force);
   writeEnvFile("apps/mobile/.env.local", buildMobileEnv(values), force);
 
-  console.log("\nPocketCurb Supabase env setup complete.");
+  console.log("\nGama Supabase env setup complete.");
   console.log("These files are git-ignored and should not be committed.");
 } catch (error) {
   console.error(error instanceof Error ? error.message : String(error));

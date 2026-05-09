@@ -169,7 +169,7 @@ export const siteCopy = {
   home: {
     hero: {
       eyebrow: "Decision-first money clarity",
-      title: "Budget the moments that matter, not just the month.",
+      title: "Budget what matters, not just the month.",
       body: "Safe-to-Spend, forward-looking cash flow, and shared-spend clarity for everyday spending, events, and shared plans.",
       primaryCta: { href: "#main-content", label: "Join waitlist" },
       secondaryCta: { href: "#home-trust-title", label: "See the trust stance" },

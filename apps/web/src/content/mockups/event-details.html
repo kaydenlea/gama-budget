@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
       name="viewport"
     />
-    <title>Japan Trip | PocketCurb</title>
+    <title>Japan Trip | Gama</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap"
@@ -111,7 +111,9 @@
         border-radius: 1.75rem;
       }
       .category-item {
-        background: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.76);
+        border: 1px solid rgba(226, 232, 240, 0.88);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
         border-radius: 1.25rem;
         padding: 1rem;
         display: flex;
@@ -136,53 +138,54 @@
         pointer-events: none;
       }
       .inbox-item {
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.76);
         border-radius: 1rem;
         padding: 0.75rem;
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(226, 232, 240, 0.88);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
       }
       @keyframes event-details-scroll-sequence {
         0%,
-        8% {
+        10% {
           transform: translate3d(0, 0, 0);
         }
-        24% {
-          transform: translate3d(0, -164px, 0);
-        }
-        29% {
+        28%,
+        40% {
           transform: translate3d(0, -176px, 0);
         }
-        38% {
-          transform: translate3d(0, -176px, 0);
-        }
-        55% {
-          transform: translate3d(0, -326px, 0);
-        }
-        60% {
+        58%,
+        70% {
           transform: translate3d(0, -338px, 0);
         }
-        68% {
-          transform: translate3d(0, -338px, 0);
-        }
-        78% {
-          transform: translate3d(0, -684px, 0);
-        }
-        84%,
-        94% {
+        86%,
+        99.5% {
           transform: translate3d(0, -700px, 0);
-        }
-        99% {
-          transform: translate3d(0, -12px, 0);
         }
         100% {
           transform: translate3d(0, 0, 0);
         }
       }
+      @keyframes event-details-scroll-fade {
+        0%,
+        4% {
+          opacity: 0;
+        }
+        10%,
+        90% {
+          opacity: 1;
+        }
+        97%,
+        100% {
+          opacity: 0;
+        }
+      }
       .event-details-scroll-shell {
-        animation: event-details-scroll-sequence 15.8s linear infinite;
+        animation:
+          event-details-scroll-sequence 15.8s linear infinite,
+          event-details-scroll-fade 15.8s linear infinite;
         transform: translate3d(0, 0, 0);
         will-change: transform;
         backface-visibility: hidden;
@@ -370,6 +373,13 @@
       .event-details-scroll-shell .map-preview-container .absolute.bottom-3.right-3.w-8.h-8 {
         width: 1.72rem !important;
         height: 1.72rem !important;
+        min-width: 1.72rem !important;
+        min-height: 1.72rem !important;
+        max-width: 1.72rem !important;
+        max-height: 1.72rem !important;
+        aspect-ratio: 1 / 1 !important;
+        border-radius: 9999px !important;
+        padding: 0 !important;
       }
       .event-details-scroll-shell .map-preview-container .absolute.bottom-3.right-3.w-8.h-8 .material-symbols-outlined {
         font-size: 0.9rem !important;
@@ -614,7 +624,7 @@
             <div class="glass-island squircle-refined p-3 space-y-2">
               <div class="inbox-item">
                 <div
-                  class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-lg"
+                  class="w-10 h-10 rounded-full bg-slate-50 border border-slate-200/80 shadow-sm flex items-center justify-center text-lg"
                 >
                   🏪
                 </div>
@@ -636,7 +646,7 @@
               </div>
               <div class="inbox-item">
                 <div
-                  class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-lg"
+                  class="w-10 h-10 rounded-full bg-slate-50 border border-slate-200/80 shadow-sm flex items-center justify-center text-lg"
                 >
                   🚕
                 </div>
@@ -710,7 +720,7 @@
                   </div>
                 </div>
                 <div
-                  class="absolute bottom-3 right-3 glass-island-dark w-8 h-8 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"
+                  class="absolute bottom-3 right-3 glass-island-dark w-8 min-w-8 max-w-8 h-8 min-h-8 max-h-8 shrink-0 aspect-square p-0 rounded-full flex items-center justify-center leading-none group-hover:scale-110 transition-transform"
                 >
                   <span class="material-symbols-outlined text-white text-base">open_in_full</span>
                 </div>
@@ -719,7 +729,7 @@
               <div class="category-item">
                 <div class="flex items-center gap-3">
                   <div
-                    class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-xl"
+                    class="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200/80 shadow-sm flex items-center justify-center text-xl"
                   >
                     ✈️
                   </div>
@@ -742,7 +752,7 @@
               <div class="category-item">
                 <div class="flex items-center gap-3">
                   <div
-                    class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-xl"
+                    class="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200/80 shadow-sm flex items-center justify-center text-xl"
                   >
                     🛍️
                   </div>
@@ -765,7 +775,7 @@
               <div class="category-item">
                 <div class="flex items-center gap-3">
                   <div
-                    class="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-xl"
+                    class="w-10 h-10 rounded-xl bg-slate-50 border border-slate-200/80 shadow-sm flex items-center justify-center text-xl"
                   >
                     🍽️
                   </div>

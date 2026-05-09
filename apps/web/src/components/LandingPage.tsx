@@ -412,7 +412,27 @@ export async function LandingPage() {
       <section className="hero-freeform hero-home">
           <div className="hero-freeform-inner">
             <div className="hero-home-copy">
-              <span className="site-kicker">{siteCopy.home.hero.eyebrow}</span>
+              <span className="site-kicker hero-home-kicker">
+                <span className="hero-home-kicker-icon" aria-hidden="true">
+                  <svg viewBox="0 0 20 20" fill="none">
+                    <path
+                      d="M4.6 13.2L8.2 9.6L10.7 12.1L15.4 7.4"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.7"
+                    />
+                    <path
+                      d="M12.6 7.4H15.4V10.2"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.7"
+                    />
+                  </svg>
+                </span>
+                <span className="hero-home-kicker-copy">{siteCopy.home.hero.eyebrow}</span>
+              </span>
               <h1 className="hero-home-title">{siteCopy.home.hero.title}</h1>
               <p className="hero-home-body">{siteCopy.home.hero.body}</p>
 

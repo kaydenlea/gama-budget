@@ -3,7 +3,7 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>PocketCurb - Weekly Review</title>
+<title>Gama - Weekly Review</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -103,10 +103,15 @@
             animation: progress 9.6s linear infinite;
         }
         @keyframes story-scroll-sequence {
-            0%, 16% { transform: translate3d(0, 0, 0); }
-            48% { transform: translate3d(0, -199px, 0); }
-            54% { transform: translate3d(0, -211px, 0); }
-            58%, 100% { transform: translate3d(0, -214px, 0); }
+            0%, 10% {
+                transform: translate3d(0, 0, 0);
+            }
+            68%, 96% {
+                transform: translate3d(0, -214px, 0);
+            }
+            100% {
+                transform: translate3d(0, 0, 0);
+            }
         }
         .story-sequence {
             position: relative;
@@ -115,10 +120,23 @@
             overflow: hidden;
         }
         .story-scroll-shell {
-            animation: story-scroll-sequence 9.6s linear infinite;
+            animation:
+                story-scroll-sequence 9.6s linear infinite,
+                story-scroll-fade 9.6s linear infinite;
             transform: translate3d(0, 0, 0);
             will-change: transform;
             backface-visibility: hidden;
+        }
+        @keyframes story-scroll-fade {
+            0%, 4% {
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 1;
+            }
+            97%, 100% {
+                opacity: 0;
+            }
         }
         @keyframes story-button-press {
             0%, 67%, 86%, 100% {
@@ -234,13 +252,13 @@
             box-shadow: 0 0 18px rgba(255, 255, 255, 0.12);
         }
         .story-success-confetti span:nth-child(1) {
-            left: 16%;
-            top: 18%;
+            left: 10%;
+            top: 32%;
             background: #facc15;
         }
         .story-success-confetti span:nth-child(2) {
-            right: 18%;
-            top: 22%;
+            right: 10%;
+            top: 30%;
             background: #60a5fa;
             animation-delay: 0.08s;
         }
@@ -258,7 +276,7 @@
         }
         .story-success-burst {
             position: absolute;
-            inset: 1rem 1rem auto;
+            inset: 1.35rem 1.2rem auto;
             display: flex;
             justify-content: space-between;
             pointer-events: none;
@@ -268,6 +286,7 @@
             line-height: 1;
             opacity: 0;
             animation: story-confetti-pop 9.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+            color: rgba(255, 255, 255, 0.72);
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.16));
         }
         .story-success-burst span:nth-child(2) {
@@ -290,10 +309,10 @@
 <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/95"></div>
 </div>
 <!-- Main Content Canvas -->
-<main class="relative z-10 h-full flex flex-col items-start px-5 pt-6">
+<main class="relative z-10 h-full flex flex-col items-start px-[1.4rem] pt-6">
 <div class="story-sequence">
 <div class="story-scroll-shell relative w-full flex flex-col items-start">
-<div class="mx-auto mb-5" style="width: calc(100% - 1.1rem);">
+<div class="mx-auto mb-5" style="width: calc(100% - 1.7rem);">
 <div class="flex gap-1.5 w-full">
 <div class="h-[2px] flex-1 bg-white rounded-full"></div>
 <div class="h-[2px] flex-1 bg-white/30 rounded-full overflow-hidden">
@@ -326,7 +345,7 @@
             </p>
 </div>
 <!-- Budget Impact Card -->
-<div class="glass-ios w-full max-w-[300px] p-6 rounded-[2.1rem] flex flex-col gap-5 mb-8 self-center">
+<div class="glass-ios w-full max-w-[292px] p-6 rounded-[2.1rem] flex flex-col gap-5 mb-8 self-center">
 <div class="flex flex-col w-full">
 <p class="text-white/40 text-[9px] font-bold tracking-[0.18em] uppercase mb-1.5">Budget Impact</p>
 <div class="flex justify-between items-center w-full">
@@ -377,17 +396,17 @@
 <div class="story-success-badge">
 <span class="material-symbols-outlined text-[30px] text-brand-green" style="font-variation-settings: 'FILL' 1;">check_circle</span>
 </div>
-<p class="text-[8px] font-bold tracking-[0.17em] text-brand-green uppercase text-center mb-1.5">Budget Updated</p>
-<h2 class="text-[27px] font-extrabold tracking-tightest text-white text-center leading-[1.02] mb-1.5">Back on track.</h2>
-<p class="text-[12px] leading-[1.32] text-white/80 text-center max-w-[214px] mx-auto mb-3.5">
+<p class="text-[8.5px] font-bold tracking-[0.16em] text-brand-green uppercase text-center mb-1.5">Budget Updated</p>
+<h2 class="text-[29px] font-extrabold tracking-tightest text-white text-center leading-[1.02] mb-1.5">Back on track.</h2>
+<p class="text-[12.5px] leading-[1.36] text-[rgba(255,255,255,0.82)] text-center max-w-[220px] mx-auto mb-3.5">
   Dining is reset to a calmer target and the rest of the week stays protected.
 </p>
-<div class="glass-ios rounded-[1.25rem] px-3.25 py-2.25 flex items-center justify-between gap-2.5">
-  <div>
-    <p class="text-[7px] font-bold tracking-[0.14em] text-white/45 uppercase mb-0.5">New Safe-to-Spend</p>
+<div class="glass-ios rounded-[1.25rem] px-[0.95rem] py-[0.8rem] flex items-center justify-between gap-3 overflow-hidden">
+  <div class="min-w-0 flex-1 pr-2">
+    <p class="text-[8px] font-bold tracking-[0.12em] text-white/55 uppercase mb-0.5">New Safe-to-Spend</p>
     <p class="text-[22px] font-extrabold tracking-tightest text-white">$94 today</p>
   </div>
-  <div class="w-9 h-9 rounded-full bg-brand-green/20 flex items-center justify-center">
+  <div class="w-9 h-9 shrink-0 rounded-full bg-brand-green/20 flex items-center justify-center">
     <span class="material-symbols-outlined text-[18px] text-brand-green" style="font-variation-settings: 'FILL' 1;">celebration</span>
   </div>
 </div>

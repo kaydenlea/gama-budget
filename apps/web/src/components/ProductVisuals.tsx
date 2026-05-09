@@ -1,7 +1,7 @@
 "use client";
 
 import { MetricChip } from "@gama/ui-web";
-import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { siteCopy } from "../content/site-copy";
 import { mockupPreviews, type MockupPreviewSlug } from "../content/mockup-previews";
 
@@ -9,7 +9,7 @@ type StoryScene = (typeof siteCopy.shared.storyScenes)[number];
 type MockupPreviewCrop = "events" | "eventDetails" | "storiesSignature";
 type PreviewMotionMode = "active" | "static";
 type PreviewVariant = "framed" | "trust" | "walkthrough";
-const PREVIEW_BUST = "20260503-12";
+const PREVIEW_BUST = "20260508-06";
 const PREVIEW_FADE_MS = 360;
 const PREVIEW_READY_MESSAGE = "gama-preview-ready";
 
@@ -64,7 +64,7 @@ function PreviewFrameLayer({
   useEffect(() => {
     hasMarkedReadyRef.current = false;
 
-    loadFallbackIdRef.current = window.setTimeout(markReady, eager ? 1200 : 2600);
+    loadFallbackIdRef.current = window.setTimeout(markReady, eager ? 4500 : 6500);
 
     return () => {
       if (loadFallbackIdRef.current !== undefined) {
@@ -112,7 +112,7 @@ function PreviewFrameLayer({
           window.clearTimeout(loadFallbackIdRef.current);
         }
 
-        loadFallbackIdRef.current = window.setTimeout(markReady, 120);
+        loadFallbackIdRef.current = window.setTimeout(markReady, eager ? 4500 : 6500);
       }}
       name={readyToken}
       sandbox="allow-scripts"
@@ -203,6 +203,7 @@ export function EmbeddedPreviewFrame({
 }) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const nextFrameIdRef = useRef(1);
+  const lastNotifiedReadySrcRef = useRef<string | null>(null);
   const [isNearViewport, setIsNearViewport] = useState(eager || !suspendWhenOffscreen);
   const src = useMemo(() => {
     const params = new URLSearchParams();
@@ -239,6 +240,21 @@ export function EmbeddedPreviewFrame({
       onActivePreviewChange?.(previewSlug);
     }
   }, [frames, onActivePreviewChange, previewSlug, src]);
+
+  useEffect(() => {
+    const activeReadyFrame = frames.find((frame) => frame.ready && frame.status === "active");
+
+    if (!activeReadyFrame || activeReadyFrame.src !== src) {
+      return;
+    }
+
+    if (lastNotifiedReadySrcRef.current === activeReadyFrame.src) {
+      return;
+    }
+
+    lastNotifiedReadySrcRef.current = activeReadyFrame.src;
+    onLoad?.();
+  }, [frames, onLoad, src]);
 
   useEffect(() => {
     if (!suspendWhenOffscreen || eager) {
@@ -369,7 +385,6 @@ export function EmbeddedPreviewFrame({
             frame={frame}
             onReady={handleFrameReady}
             title={title}
-            {...(onLoad ? { onHostLoad: onLoad } : {})}
           />
         ))
       ) : (
@@ -378,7 +393,7 @@ export function EmbeddedPreviewFrame({
           className={className}
           data-preview-placeholder="true"
           role="img"
-          style={{ background: mockupPreviews[previewSlug].background }}
+          style={{ background: "transparent" }}
         />
       )}
     </div>
@@ -390,6 +405,7 @@ function DeviceShell({
   crop,
   eager = false,
   onLoad,
+  overlay,
   preview = "overview-screen",
   variant
 }: {
@@ -397,6 +413,7 @@ function DeviceShell({
   crop?: MockupPreviewCrop;
   eager?: boolean;
   onLoad?: () => void;
+  overlay?: ReactNode;
   preview?: MockupPreviewSlug;
   variant?: PreviewVariant;
 }) {
@@ -416,6 +433,7 @@ function DeviceShell({
             {...(crop ? { crop } : {})}
             {...(variant ? { variant } : {})}
           />
+          {overlay}
         </div>
       </div>
     </div>
@@ -593,11 +611,6 @@ export function ProductHeroVisual({ compact = false }: { compact?: boolean }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const timeoutId = window.setTimeout(() => setReady(true), 1400);
-    return () => window.clearTimeout(timeoutId);
-  }, []);
-
-  useEffect(() => {
     const node = ref.current;
 
     if (!node) {
@@ -710,14 +723,19 @@ export function ProductHeroVisual({ compact = false }: { compact?: boolean }) {
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [ready]);
 
   return (
     <div
       ref={ref}
-      className={joinClasses("premium-hero-visual", compact && "premium-hero-visual-compact")}
-      style={{ opacity: ready ? 1 : 0, transition: ready ? "opacity 420ms ease" : "none" }}
+      className={joinClasses(
+        "premium-hero-visual",
+        compact && "premium-hero-visual-compact",
+        ready ? "premium-hero-visual-ready" : "premium-hero-visual-loading",
+      )}
     >
+      {ready ? (
+        <>
       <HeroContextChip
         accentClassName="premium-context-chip-icon-safe"
         chipClassName="premium-context-chip-safe"
@@ -778,8 +796,16 @@ export function ProductHeroVisual({ compact = false }: { compact?: boolean }) {
         }}
         title="Loaded"
       />
+        </>
+      ) : null}
 
-      <DeviceShell className="premium-hero-device" eager onLoad={() => setReady(true)} preview="overview-screen" variant="framed" />
+      <DeviceShell
+        className="premium-hero-device"
+        eager
+        onLoad={() => setReady(true)}
+        preview="overview-screen"
+        variant="framed"
+      />
     </div>
   );
 }

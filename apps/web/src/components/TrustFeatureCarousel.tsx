@@ -92,22 +92,25 @@ export function TrustFeatureCarousel({ slides }: { slides: readonly TrustSlide[]
     }
 
     let timeoutId: number | undefined;
-    let cancelled = false;
 
     const schedule = () => {
       timeoutId = window.setTimeout(() => {
-        if (cancelled) return;
         setActiveIndex((current) => (current + 1) % slides.length);
         setAnimationKey((k) => k + 1);
-        schedule();
       }, 5200);
     };
 
-    schedule();
+    if (document.visibilityState === "visible") {
+      schedule();
+    }
 
     const handleVisibility = () => {
-      if (document.visibilityState === "visible" && !cancelled) {
-        if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+        timeoutId = undefined;
+      }
+
+      if (document.visibilityState === "visible") {
         schedule();
       }
     };
@@ -115,11 +118,10 @@ export function TrustFeatureCarousel({ slides }: { slides: readonly TrustSlide[]
     document.addEventListener("visibilitychange", handleVisibility);
 
     return () => {
-      cancelled = true;
       if (timeoutId !== undefined) window.clearTimeout(timeoutId);
       document.removeEventListener("visibilitychange", handleVisibility);
     };
-  }, [slides.length]);
+  }, [activeIndex, animationKey, slides.length]);
 
   if (slides.length === 0) {
     return null;

@@ -329,10 +329,30 @@ function buildSharedStyle(
 
         .preview-scale-root .ios-glass-pill,
         .preview-scale-root .bridge-glass {
-          background: rgba(255, 255, 255, 0.98) !important;
-          border-color: rgba(255, 255, 255, 0.7) !important;
+          background: rgb(249, 252, 255) !important;
+          border-color: rgb(216, 227, 237) !important;
+          background-image: none !important;
+          opacity: 1 !important;
+          box-shadow:
+            0 12px 28px rgba(32, 52, 75, 0.1),
+            inset 0 1px 0 rgba(255,255,255,0.7) !important;
           -webkit-backdrop-filter: none !important;
           backdrop-filter: none !important;
+        }
+
+        .preview-scale-root .bridge-metric-panel {
+          border-radius: 0.95rem !important;
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.22) !important;
+        }
+
+        .preview-scale-root .bridge-metric-panel-remaining {
+          background:
+            linear-gradient(180deg, rgba(206, 229, 255, 0.31), rgba(206, 229, 255, 0.18)) !important;
+        }
+
+        .preview-scale-root .bridge-metric-panel-settled {
+          background:
+            linear-gradient(180deg, rgba(214, 242, 198, 0.31), rgba(214, 242, 198, 0.18)) !important;
         }
 
         .preview-scale-root .glass-island.rounded-3xl,
@@ -433,6 +453,11 @@ function buildSharedStyle(
         .preview-scale-root .mobile-viewport > main.pt-24 {
           padding-top: 7.58rem !important;
         }
+
+        .preview-scale-root .mobile-viewport .ios-emerald-glass p.text-\\[10px\\].font-extrabold {
+          position: static !important;
+          top: auto !important;
+        }
       `
       : "";
   const overviewFramedStyle =
@@ -519,8 +544,8 @@ function buildSharedStyle(
     slug === "overview-screen"
       ? `
         .preview-scale-root .ios-emerald-glass {
-          background: rgba(116, 196, 76, 0.72) !important;
-          border-color: rgba(116, 196, 76, 0.3) !important;
+          background: rgba(116, 196, 76, 0.22) !important;
+          border-color: rgba(116, 196, 76, 0.14) !important;
         }
 
         .preview-scale-root .chart-glow-emerald {
@@ -720,6 +745,10 @@ function buildSharedStyle(
       scroll-behavior: auto !important;
       will-change: auto !important;
     }
+
+    html[data-preview-motion="static"] .path-animate {
+      stroke-dashoffset: 0 !important;
+    }
   `
       : "";
 
@@ -734,6 +763,12 @@ function buildSharedStyle(
       width: 100% !important;
       overflow-x: hidden !important;
       background: ${previewRootBackground} !important;
+    }
+    html:not([data-preview-ready="true"]) body > :not(script):not(style) {
+      opacity: 0 !important;
+    }
+    html[data-preview-ready="true"] body > :not(script):not(style) {
+      opacity: 1 !important;
     }
     body {
       min-height: 100vh !important;
