@@ -46,6 +46,14 @@ function buildBrowserTitle(page: SitePageDefinition) {
   return page.path === "/" ? siteConfig.title : `${siteConfig.titleBrand} | ${page.title}`;
 }
 
+const socialImageVersion = "20260509-01";
+
+function buildSocialImageUrl(path: "/opengraph-image" | "/twitter-image") {
+  const url = new URL(buildCanonicalUrl(path));
+  url.searchParams.set("v", socialImageVersion);
+  return url.toString();
+}
+
 export function createRootMetadata(environment: SiteEnvironment = siteEnvironment): Metadata {
   return {
     metadataBase: new URL(environment.canonicalOrigin),
@@ -74,7 +82,7 @@ export function createRootMetadata(environment: SiteEnvironment = siteEnvironmen
       description: siteConfig.description,
       images: [
         {
-          url: buildCanonicalUrl("/opengraph-image"),
+          url: buildSocialImageUrl("/opengraph-image"),
           width: 1200,
           height: 630,
           alt: "Gama decision-first personal finance preview"
@@ -85,7 +93,7 @@ export function createRootMetadata(environment: SiteEnvironment = siteEnvironmen
       card: "summary_large_image",
       title: siteConfig.title,
       description: siteConfig.description,
-      images: [buildCanonicalUrl("/twitter-image")]
+      images: [buildSocialImageUrl("/twitter-image")]
     }
   };
 }
@@ -124,7 +132,7 @@ export function createPageMetadata(
       description: page.description,
       images: [
         {
-          url: buildCanonicalUrl("/opengraph-image"),
+          url: buildSocialImageUrl("/opengraph-image"),
           width: 1200,
           height: 630,
           alt: "Gama decision-first personal finance preview"
@@ -135,7 +143,7 @@ export function createPageMetadata(
       card: "summary_large_image",
       title: socialTitle,
       description: page.description,
-      images: [buildCanonicalUrl("/twitter-image")]
+      images: [buildSocialImageUrl("/twitter-image")]
     }
   };
 }

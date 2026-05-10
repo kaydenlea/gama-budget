@@ -111,9 +111,9 @@ export const siteEnvironment = resolveSiteEnvironment({
 export const siteConfig = {
   name: "Gama",
   titleBrand: "Gama Budget",
-  title: "Gama Budget | Decision-first money clarity.",
+  title: "Gama Budget | Budget what matters, not just the month.",
   description:
-    "Gama is building a decision-first money product centered on Safe-to-Spend, forward-looking cash flow, shared-spending correctness, event context, and less admin work.",
+    "Safe-to-Spend, forward-looking cash flow, and shared-spend clarity for everyday spending, events, and shared plans.",
   category: "personal finance",
   themeColor: "#faf7f0",
   locale: "en_US",
@@ -125,9 +125,9 @@ const homeBreadcrumb = { label: "Home", path: "/" } as const;
 export const sitePages = {
   home: {
     path: "/",
-    title: "Decision-First Money Clarity",
+    title: "Budget What Matters",
     description:
-      "Gama is building a premium decision-first money product for Safe-to-Spend, forward-looking cash flow, shared-spending correctness, and less admin work.",
+      "Safe-to-Spend, forward-looking cash flow, and shared-spend clarity for everyday spending, events, and shared plans.",
     updatedAt: "2026-04-18",
     changeFrequency: "monthly",
     priority: 1,
